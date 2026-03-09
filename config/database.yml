@@ -87,6 +87,7 @@ test:
 production:
   primary: &primary_production
     <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
     database: memorise_app_production
     username: memorise_app
     password: <%= ENV["MEMORISE_APP_DATABASE_PASSWORD"] %>

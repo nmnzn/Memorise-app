@@ -7,3 +7,12 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+User.where.not(email: "test@test.com").destroy_all
+
+user = User.find_or_create_by!(email: "test@test.com") do |u|
+
+  u.password   = "password123"
+end
+
+puts "Seed OK - user: test@test.com / password123"

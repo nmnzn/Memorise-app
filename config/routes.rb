@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   resources :memos do
-    resources :cards, only: [:new, :create]
+    resources :cards, only: [:new, :create, :show, :destroy]
   end
 
   resources :answers, only: [:create]

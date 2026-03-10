@@ -1,5 +1,6 @@
+<%= link_to "Retour", memos_path, class:"btn btn-secondary" %>
+<%= link_to "Editer", edit_memo_card_path(@card), class:"btn btn-warning" %>
+
 <h1><%= @card.memo.name %></h1>
 <p><%= @card.ask %></p>
 <p><%= @card.answer %></p>
-
-<%= link_to "Retour", memos_path %>

@@ -4,7 +4,7 @@ class MemosController < ApplicationController
   end
 
   def show
-    @memo = Memo.find(params[:id])
+    @memo = current_user.memos.find(params[:id])
     @cards = @memo.cards
   end
 
@@ -24,10 +24,10 @@ class MemosController < ApplicationController
   end
 
   def destroy
-    @memo = Memo.find(params[:id])
+    @memo = current_user.memos.find(params[:id])
     @memo.destroy
     redirect_to memos_path
-   end
+  end
 
   private
 

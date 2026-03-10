@@ -1,9 +1,23 @@
 <h1><%= @memo.name %></h1>
-<%= link_to "Créer une card", new_memo_card_path(@memo) %>
-<%= link_to "Retour", memos_path %>
 
-<ul>
-  <% @cards.each do |card| %>
-    <li><%= link_to card.ask, memo_card_path(@memo, card) %></li>
+<div class="mb-3">
+  <%= link_to "Créer une card", new_memo_card_path(@memo), class: "btn btn-primary" %>
+  <%= link_to "Retour", memos_path, class: "btn btn-outline-secondary" %>
+
+  <% if @cards.any? %>
+    <%= link_to "Commencer", memo_card_path(@memo, @cards.first), class: "btn btn-success" %>
   <% end %>
-</ul>
+</div>
+
+<% if @cards.any? %>
+  <h2>Cards du mémo</h2>
+  <ul>
+    <% @cards.each do |card| %>
+      <li>
+        <%= link_to card.ask, memo_card_path(@memo, card) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Aucune card pour le moment. Crée ta première card pour commencer à réviser.</p>
+<% end %>

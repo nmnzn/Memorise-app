@@ -27,7 +27,7 @@ class MemosController < ApplicationController
     @memo = Memo.find(params[:id])
     @memo.destroy
     redirect_to memos_path
-   end
+  end
 
   private
 

@@ -1,0 +1,23 @@
+<h1>Créer un mémo</h1>
+
+<% if @memo.errors.any? %>
+  <div class="alert alert-danger">
+    <p>Impossible de créer le mémo :</p>
+    <ul>
+      <% @memo.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with model: @memo do |f| %>
+  <div>
+    <%= f.label :name, "Titre du mémo" %>
+    <%= f.text_field :name, placeholder: "Ex: Ruby, Histoire, Anglais" %>
+  </div>
+
+  <div>
+    <%= f.submit "Créer" %>
+  </div>
+<% end %>

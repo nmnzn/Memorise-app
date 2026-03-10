@@ -1,19 +1,114 @@
-<div class="container mt-5">
-  <h1>Pages#home</h1>
-  <p>Find me in app/views/pages/home.html.erb</p>
-    <div class="d-flex flex-column gap-2 col-2 border p-3 ">
-      <%= link_to "index Memos", memos_path , class: "btn btn-primary" %>
-      <%= link_to "New Memo", new_memo_path , class: "btn btn-primary" %>
-      <%= link_to "New Card", "new_memo_card_path(@memo)" , class: "btn btn-primary" %>
-      <%= link_to "show Memo", "memo_path(@memo)" , class: "btn btn-primary" %>
-      <%= link_to "show Cards", "memo_cards_path(@memo)" , class: "btn btn-primary" %>
-      <%= link_to "show Plays", "memo_plays_path(@memo)" , class: "btn btn-primary" %>
+<div class="memorise-home">
+  <div class="memorise-bg memorise-bg-1"></div>
+  <div class="memorise-bg memorise-bg-2"></div>
+  <div class="memorise-grid"></div>
+
+  <section class="hero-section container">
+    <div class="hero-badge">
+      Memorise App • Learn faster, remember longer
     </div>
 
-    <h3>bouton</h3>
-    <div class="d-flex flex-column gap-2 col-2 border p-3 ">
-      <%= link_to "supprimer memo", "memo_path(@memo)" , method: :delete, confirm: "Are you sure?", class: "btn btn-danger" %>
-      <%= link_to "supprimer card", "memo_card_path(@memo, @card)" , method: :delete, confirm: "Are you sure?", class: "btn btn-danger" %>
+    <div class="hero-content">
+      <div class="hero-copy">
+        <p class="hero-kicker">FLASHCARDS • RÉVISION • MÉMORISATION</p>
 
+        <h1>
+          Transforme tes
+          <span>révisions</span>
+          en réflexes.
+        </h1>
+
+        <p class="hero-description">
+          Memorise App t’aide à organiser tes sujets, créer tes flashcards
+          et réviser avec une interface claire, moderne et motivante.
+        </p>
+
+        <div class="hero-actions">
+          <% if user_signed_in? %>
+            <%= link_to "Voir mes sujets", memos_path, class: "btn hero-btn hero-btn-primary" %>
+            <%= link_to "Créer un sujet", new_memo_path, class: "btn hero-btn hero-btn-secondary" %>
+          <% else %>
+            <%= link_to "Commencer", new_user_registration_path, class: "btn hero-btn hero-btn-primary" %>
+            <%= link_to "Se connecter", new_user_session_path, class: "btn hero-btn hero-btn-secondary" %>
+          <% end %>
+        </div>
+
+        <div class="hero-stats">
+          <div class="hero-stat-card">
+            <strong>Sujets</strong>
+            <span>Classe tes apprentissages par thème</span>
+          </div>
+          <div class="hero-stat-card">
+            <strong>Flashcards</strong>
+            <span>Crée des cartes simples à réviser</span>
+          </div>
+          <div class="hero-stat-card">
+            <strong>Mémoire</strong>
+            <span>Retiens plus facilement dans le temps</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="visual-panel">
+          <div class="visual-panel-top">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+
+          <div class="visual-title">
+            <p class="mini-label">Ton espace d’apprentissage</p>
+            <h2>Une méthode simple, mais premium.</h2>
+          </div>
+
+          <div class="memo-preview-list">
+            <div class="memo-preview-card featured">
+              <div class="memo-preview-icon">M</div>
+              <div>
+                <h3>Anglais</h3>
+                <p>48 cartes • vocabulaire courant</p>
+              </div>
+            </div>
+
+            <div class="memo-preview-card">
+              <div class="memo-preview-icon">R</div>
+              <div>
+                <h3>Ruby</h3>
+                <p>32 cartes • syntaxe et méthodes</p>
+              </div>
+            </div>
+
+            <div class="memo-preview-card">
+              <div class="memo-preview-icon">H</div>
+              <div>
+                <h3>Histoire</h3>
+                <p>21 cartes • dates clés</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
+
+  <section class="memorise-features container">
+    <div class="feature-card">
+      <div class="feature-number">01</div>
+      <h3>Organise</h3>
+      <p>Crée des mémos par sujet pour structurer clairement ton apprentissage.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-number">02</div>
+      <h3>Apprends</h3>
+      <p>Ajoute des flashcards pour transformer tes notes en entraînement actif.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-number">03</div>
+      <h3>Retiens</h3>
+      <p>Révise plus souvent, plus vite, et garde l’essentiel en mémoire.</p>
+    </div>
+  </section>
 </div>

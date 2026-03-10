@@ -1,1 +1,8 @@
 <h1>hello index erb</h1>
+
+<% @memos.each do |memo| %>
+  <%= link_to memo.name, memo_path(memo) %>
+<% end %>
+
+<%= link_to "Retour", root_path %>
+

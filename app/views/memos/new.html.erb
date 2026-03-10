@@ -1,1 +1,4 @@
-<h1>hello new erb</h1>
+<%= form_with model: @memo do |f| %>
+  <%= f.text_field :name, placeholder: "Nom du mémo" %>
+  <%= f.submit "Créer" %>
+<% end %>

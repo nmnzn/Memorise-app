@@ -1,0 +1,9 @@
+<h1><%= @memo.name %></h1>
+<%= link_to "Créer une card", new_memo_card_path(@memo) %>
+<%= link_to "Retour", memos_path %>
+
+<ul>
+  <% @cards.each do |card| %>
+    <li><%= link_to card.ask, memo_card_path(@memo, card) %></li>
+  <% end %>
+</ul>

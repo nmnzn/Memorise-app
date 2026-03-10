@@ -5,13 +5,18 @@ class CardsController < ApplicationController
 
   def new
     @card = Card.new
+    @memo = Memo.find(params[:memo_id])
   end
 
   def create
     @card = Card.new(card_params)
-    @card.memo = Memo.find(params[:memo_id])
-    @card.save
-    redirect_to memo_path(@card.memo)
+    @memo = Memo.find(params[:memo_id])
+    @card.memo = @memo
+    if @card.save
+      redirect_to new_memo_card_path(@memo)
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def destroy
@@ -23,6 +28,6 @@ class CardsController < ApplicationController
   private
 
   def card_params
-    params.require(:card).permit(:ask, :question)
+    params.require(:card).permit(:ask, :answer)
   end
 end

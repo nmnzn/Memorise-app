@@ -26,6 +26,21 @@ class CardsController < ApplicationController
     redirect_to memo_path(@card.memo)
   end
 
+  def edit
+    @card = Card.find(params[:id])
+    @memo = Memo.find(@card.memo_id)
+  end
+
+  def update
+    @card = Card.find(params[:id])
+    @memo = Memo.find(params[:memo_id])
+    if @card.update(card_params)
+      redirect_to memo_card_path(@memo, @card)
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def card_params

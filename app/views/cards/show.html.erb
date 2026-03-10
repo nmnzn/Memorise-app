@@ -3,3 +3,4 @@
 <p><%= @card.answer %></p>
 
 <%= link_to "Retour", memos_path %>
+<%= link_to "Supprimer", memo_card_path(@memo, @card), data: { turbo_method: :delete, turbo_confirm: "Etes vous sûr(e) de vouloir supprimer cette card ?" } %>

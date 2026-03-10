@@ -1,17 +1,21 @@
+<div class="memorise-bg-gradient">
+
 <h1>Mes mémos</h1>
 
 <%= link_to "Retour", root_path %>
-
 <%= link_to "Créer un nouveau mémo", new_memo_path %>
 
 <% if @memos.any? %>
-  <ul>
-    <% @memos.each do |memo| %>
-      <li>
-        <%= link_to memo.name, memo_path(memo) %>
-      </li>
-    <% end %>
-  </ul>
+<div class="row g-4">
+  <% @memos.each do |memo| %>
+    <div class="col-md-4">
+      <%= link_to memo_path(memo), class: "memo-card" do %>
+        <h3><%= memo.name %></h3>
+      <% end %>
+    </div>
+  <% end %>
+</div>
 <% else %>
   <p>Aucun mémo pour le moment.</p>
 <% end %>
+</div>

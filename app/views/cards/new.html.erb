@@ -1,1 +1,17 @@
-<h1>card new</h1>
+.<div class="container">
+<h1>Crée une nouvelle card à mémoriser 🧠 </h1>
+<h3><%= @memo.name %></h3>
+<p>Il y a actuellement <%= @memo.cards.count %> card(s) dans ton mémo.</p>
+
+<div>
+    <%= simple_form_for [@memo, @card] do |f| %>
+        <%= f.input :ask, :label => 'Quelle est la question à mémoriser ? 👀', :placeholder => "Quel est le nom du chien de la grand-mère de mon voisin ?" %>
+        <%= f.input :answer, :label => 'Quelle est la réponse à cette question ?', :placeholder => "Son chien s'appelle Jacquot 🐶" %>
+        <%= f.button :submit, "Ajouter une autre card", class:"btn btn-primary" %>
+    <% end %>
+</div>
+
+<div>
+    <%= link_to "Terminer", memo_path(@memo), class:"btn btn-success" %>
+</div>
+</div>

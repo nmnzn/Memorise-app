@@ -27,6 +27,7 @@
           <% if user_signed_in? %>
             <%= link_to "Voir mes sujets", memos_path, class: "btn hero-btn hero-btn-primary" %>
             <%= link_to "Créer un sujet", new_memo_path, class: "btn hero-btn hero-btn-secondary" %>
+            <%= link_to "Play", play_path, class: "btn btn-success" %>
           <% else %>
             <%= link_to "Commencer", new_user_registration_path, class: "btn hero-btn hero-btn-primary" %>
             <%= link_to "Se connecter", new_user_session_path, class: "btn hero-btn hero-btn-secondary" %>

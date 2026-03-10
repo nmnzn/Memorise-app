@@ -15,6 +15,12 @@ class MemosController < ApplicationController
     @memo.user = current_user
   end
 
+  def destroy
+    @memo = Memo.find(params[:id])
+    @memo.destroy
+    redirect_to memos_path
+  end
+
   private
 
   def memo_params

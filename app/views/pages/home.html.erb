@@ -2,10 +2,10 @@
   <h1>Pages#home</h1>
   <p>Find me in app/views/pages/home.html.erb</p>
     <div class="d-flex flex-column gap-2 col-2 border p-3 ">
+      <%= link_to "Play", play_path, class: "btn btn-success" %>
       <%= link_to "index Memos", memos_path , class: "btn btn-primary" %>
       <%= link_to "New Memo", new_memo_path , class: "btn btn-primary" %>
       <%= link_to "New Card", "new_memo_card_path(@memo)" , class: "btn btn-primary" %>
-      <%= link_to "show Memo", "memo_path(@memo)" , class: "btn btn-primary" %>
       <%= link_to "show Cards", "memo_cards_path(@memo)" , class: "btn btn-primary" %>
       <%= link_to "show Plays", "memo_plays_path(@memo)" , class: "btn btn-primary" %>
     </div>

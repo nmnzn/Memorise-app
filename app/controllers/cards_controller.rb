@@ -27,7 +27,7 @@ class CardsController < ApplicationController
 
   def edit
     @card = Card.find(params[:id])
-    @memo = Memo.find(params[:memo_id])
+    @memo = Memo.find(@card.memo_id)
   end
 
   def update

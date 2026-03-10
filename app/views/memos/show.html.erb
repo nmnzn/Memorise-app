@@ -1,6 +1,7 @@
 <h1><%= @memo.name %></h1>
-<%= link_to "Créer une card", new_memo_card_path(@memo) %>
-<%= link_to "Retour", memos_path %>
+<%= link_to "Retour", memos_path, class:"btn btn-secondary" %>
+<%= link_to "Créer une card", new_memo_card_path(@memo), class:"btn btn-success" %>
+<%= link_to "Editer le mémo", edit_memo_path(@memo), class:"btn btn-warning" %>
 
 <ul>
   <% @cards.each do |card| %>

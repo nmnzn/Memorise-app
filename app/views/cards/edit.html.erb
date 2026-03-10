@@ -1,0 +1,11 @@
+.<div class="container">
+  <%= link_to "Retour", memo_card_path(@card), class:"btn btn-secondary" %>
+
+  <h1>Vous pouvez modifier la question et/ou la réponse de votre card :</h1>
+
+  <%= simple_form_for [@memo, @card] do |f| %>
+    <%= f.input :ask, label: "Question actuelle : #{@card.ask}", placeholder: "Saisir la nouvelle question" %>
+    <%= f.input :answer, label: "Réponse actuelle : #{@card.answer}", placeholder: "Saisir la nouvelle réponse" %>
+    <%= f.button :submit, "Enregistrer les modifications", class:"btn btn-warning" %>
+  <% end %>
+</div>

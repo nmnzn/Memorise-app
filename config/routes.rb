@@ -15,11 +15,11 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   resources :memos do
-    resources :cards, only: [:new, :create, :show, :destroy]
+    resources :cards, only: [:new, :create, :show, :destroy, :edit, :update]
   end
   get "play", to: "plays#show", as: :play
   get "play/reveal/:id", to: "plays#reveal", as: :reveal_play
 
-  resources :answers, only: [:create]
+  resources :answers, only: [:update]
 
 end

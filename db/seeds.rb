@@ -69,6 +69,6 @@ end
 puts ">>2 answers created for each card ☑️"
 puts "_________________________________"
 
-puts "✅ All set ! You have now in your DB : 1 user, 10 memos (topics), 5 cards (question) per memos, 2 answers per memo (one true and one false)"
+puts "✅ All set ! You have now in your DB : 1 user, 10 memos (topics), 5 cards (question) per memo, 2 answers per card (one true and one false)"
 
 

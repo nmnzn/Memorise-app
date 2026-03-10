@@ -8,3 +8,5 @@
     <li><%= link_to card.ask, memo_card_path(@memo, card) %></li>
   <% end %>
 </ul>
+
+<%= link_to "Supprimer", memo_path(@memo), data: { turbo_method: :delete, turbo_confirm: "Etes vous sûr(e) de vouloir supprimer ce mémo ?" } %>

@@ -9,6 +9,9 @@
 #   end
 
 require 'faker'
+
+Faker::Config.locale = 'fr'
+
 puts "Seeding ... "
 # creation d'un user TEST pour le développement
 User.where.not(email: "test@test.com").destroy_all
@@ -25,7 +28,7 @@ Memo.destroy_all
 puts 'SEEDING MEMOS : Creating 10 memos'
 10.times do
   memo = Memo.new(
-    name:    Faker::Educator.subject,
+    name:    Faker::Address.city,
     user_id: User.first.id
   )
   memo.save!
@@ -38,8 +41,8 @@ puts 'SEEDING CARDS : Creating 50 cards / 5 per memo'
 Memo.all.each do |memo|
   5.times do 
     card = Card.new(
-      ask:    Faker::Lorem.question,
-      answer: Faker::Lorem.sentence,
+      ask: "Quel est l'adresse de #{Faker::Name.name} ?",
+      answer: Faker::Address.full_address,
       memo_id: memo.id
     )
     card.save!
@@ -62,7 +65,7 @@ Card.all.each do |card|
   answer_false = Answer.new(
     user_id: User.first.id,
     card_id: card.id,
-    value: true
+    value: false
   )
   answer_false.save!
 end

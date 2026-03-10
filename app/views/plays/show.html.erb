@@ -1,3 +1,8 @@
-<h2><%= @card.ask %></h2>
+<div class="container py-5">
+  <div class="visual-panel w-75 mx-auto text-center">
 
-<%= link_to "Voir la réponse", reveal_play_path(@card) %>
+    <p class="mini-label">Question</p>
+    <h2 class="mb-4"><%= @card.ask %></h2>
+    <%= link_to "Voir la réponse", reveal_play_path(@card), class: "memorise-nav-button" %>
+  </div>
+</div>

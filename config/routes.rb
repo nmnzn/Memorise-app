@@ -20,6 +20,6 @@ Rails.application.routes.draw do
   get "play", to: "plays#show", as: :play
   get "play/reveal/:id", to: "plays#reveal", as: :reveal_play
 
-  resources :answers, only: [:create]
+  resources :answers, only: [:update]
 
 end

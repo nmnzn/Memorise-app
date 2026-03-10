@@ -5,6 +5,7 @@ class MemosController < ApplicationController
 
   def show
     @memo = Memo.find(params[:id])
+    @cards = @memo.cards
   end
 
   def new
@@ -20,8 +21,8 @@ class MemosController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-  end  
-  
+  end
+
   def destroy
     @memo = Memo.find(params[:id])
     @memo.destroy

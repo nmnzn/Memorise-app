@@ -14,11 +14,23 @@ class MemosController < ApplicationController
   def create
     @memo = Memo.new(memo_params)
     @memo.user = current_user
-  end
+
+    if @memo.save
+      redirect_to memos_path, notice: "Le mémo a bien été créé."
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end  
+  
+  def destroy
+    @memo = Memo.find(params[:id])
+    @memo.destroy
+    redirect_to memos_path
+   end
 
   private
 
   def memo_params
-    params.require(:memo).permit(:content)
+    params.require(:memo).permit(:name)
   end
 end

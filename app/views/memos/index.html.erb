@@ -1,8 +1,19 @@
 <h1>Mes mémos</h1>
 
-<% @memos.each do |memo| %>
-  <%= link_to memo.name, memo_path(memo) %>
-<% end %>
+
 
 <%= link_to "Retour", root_path %>
 
+<%= link_to "Créer un nouveau mémo", new_memo_path %>
+
+<% if @memos.any? %>
+  <ul>
+    <% @memos.each do |memo| %>
+      <li>
+        <%= link_to memo.name, memo_path(memo) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Aucun mémo pour le moment.</p>
+<% end %>

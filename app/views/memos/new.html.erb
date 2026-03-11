@@ -11,15 +11,18 @@
   </div>
 <% end %>
 
-<%= form_with model: @memo do |f| %>
-  <div>
-    <%= f.label :name, "Titre du mémo" %>
-    <%= f.text_field :name, placeholder: "Ex: Ruby, Histoire, Anglais" %>
-    <%= f.label :prompt, "Le sujet à mémoriser" %>
-    <%= f.text_area :prompt, placeholder: "Parle nous du sujet que tu souhaites mémoriser" %>
-  </div>
+<div class="container">
+  <%= simple_form_for @memo do |f| %>
+      <%= f.label :name, "Titre du mémo" %>
+      <%= f.text_field :name, placeholder: "Ex: Ruby, Histoire, Anglais" %>
 
-  <div>
-    <%= f.submit "Créer" %>
-  </div>
-<% end %>
+      <%= f.label :prompt, "Le sujet à mémoriser" %>
+      <%= f.text_area :prompt, placeholder: "Parle nous du sujet que tu souhaites mémoriser" %>
+
+      <%= f.input :volume, as: :radio_buttons, collection: @volume_collection, label: "Quel volume de connaissance souhaites-tu mémoriser ? (cela influencera le nombre de flashcards sur ce sujet) - \"Synthétique\" par défaut" %>
+
+      <%= f.input :profondeur, as: :radio_buttons, collection: @profondeur_collection, label: "Quelle profondeur de connaissance souhaites-tu mémoriser ? (cela influencera la nature des questions) - \"grandes lignes\" par défaut" %>
+
+      <%= f.submit "Créer", class: "btn btn-success btn-sm fw-bold" %>
+  <% end %>
+</div>

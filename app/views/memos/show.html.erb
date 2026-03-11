@@ -1,7 +1,7 @@
 <h1><%= @memo.name %></h1>
 <%= link_to "Retour", memos_path, class:"btn btn-secondary" %>
-<%= link_to "Créer une card", new_memo_card_path(@memo), class:"btn btn-success" %>
-<%= link_to "Editer le mémo", edit_memo_path(@memo), class:"btn btn-warning" %>
+<%= link_to "Créer une card", new_memo_card_path(@memo), class:"btn btn-success btn-sm text-dark fw-bold" %>
+<%= link_to "Editer le mémo", edit_memo_path(@memo), class:"btn btn-warning btn-sm text-dark fw-bold" %>
 
 <p>Sujet initial : <%= @memo.prompt %></p>
 
@@ -11,4 +11,4 @@
   <% end %>
 </ul>
 
-<%= link_to "Supprimer", memo_path(@memo), data: { turbo_method: :delete, turbo_confirm: "Etes vous sûr(e) de vouloir supprimer ce mémo ?" } %>
+<%= link_to "Supprimer", memo_path(@memo), class:"btn btn-danger btn-sm text-dark fw-bold", data: { turbo_method: :delete, turbo_confirm: "Etes vous sûr(e) de vouloir supprimer ce mémo ?" } %>

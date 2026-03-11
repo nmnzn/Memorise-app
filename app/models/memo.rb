@@ -4,3 +4,4 @@ class Memo < ApplicationRecord
 
   validates :name, presence: true
 end
+

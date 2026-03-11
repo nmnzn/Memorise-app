@@ -11,3 +11,4 @@ class Card < ApplicationRecord
     Answer.create!(card: self, user: memo.user, value: false)
   end
 end
+

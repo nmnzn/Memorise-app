@@ -15,11 +15,11 @@
   <div>
     <%= f.label :name, "Titre du mémo" %>
     <%= f.text_field :name, placeholder: "Ex: Ruby, Histoire, Anglais" %>
-    <%= f.label :prompt, "Le sujet à mémoriser" %>
-    <%= f.text_area :prompt, placeholder: "Parle nous du sujet que tu souhaites mémoriser" %>
+    <%= f.label :prompt, "Le mémo à mémoriser" %>
+    <%= f.text_area :prompt, placeholder: "Parle nous du mémo que tu souhaites mémoriser" %>
   </div>
 
   <div>
-    <%= f.submit "Créer" %>
+    <%= f.submit "Créer", class: "btn btn-success btn-sm fw-bold" %>
   </div>
 <% end %>

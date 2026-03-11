@@ -15,9 +15,9 @@
 
       <div class="d-flex flex-wrap gap-3 mb-5">
         <% if user_signed_in? %>
-          <%= link_to "Voir mes sujets", memos_path, class: "btn btn-primary btn-lg text-dark fw-bold" %>
-          <%= link_to "Créer un sujet", new_memo_path, class: "btn btn-outline-light btn-lg" %>
-          <%= link_to "Play", play_path, class: "btn btn-primary btn-lg text-dark fw-bold" %>
+          <%= link_to "Voir mes mémos", memos_path, class: "btn btn-outline-light btn-sm text-white fw-regular" %>
+          <%= link_to "Créer un mémo", new_memo_path, class: "btn btn-success btn-sm text-dark fw-bold" %>
+          <%= link_to "Jouer flaschards", play_path, class: "btn btn-primary btn-mobile btn-sm text-dark fw-bold" %>
         <% else %>
           <%= link_to "Commencer", new_user_registration_path, class: "btn btn-primary btn-lg text-dark fw-bold" %>
           <%= link_to "Se connecter", new_user_session_path, class: "btn btn-outline-light btn-lg" %>

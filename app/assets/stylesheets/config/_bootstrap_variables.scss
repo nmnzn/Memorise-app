@@ -7,22 +7,26 @@
 // General style
 $font-family-sans-serif: $body-font;
 $headings-font-family:   $headers-font;
-$body-bg:                $light-gray;
+$body-bg:                $dark-purple;
+$body-color:             #f0eaff;
 $font-size-base:         1rem;
 
+// Dark component color (navbar, cards)
+$dark: $dark-purple-light;
+
 // Colors
-$body-color: $gray;
-$primary:    $blue;
-$success:    $green;
-$info:       $yellow;
-$danger:     $red;
-$warning:    $orange;
+$primary:  $yellow;
+$success:  $green;
+$info:     $blue;
+$danger:   $red;
+$warning:  $orange;
+
+// Links
+$link-color: $yellow;
 
 // Buttons & inputs' radius
-$border-radius-sm:            .0625rem;
-$border-radius:               .125rem;
-$border-radius-lg:            .25rem;
-$border-radius-xl:            .5rem;
-$border-radius-xxl:           1rem;
-
-// Override other variables below!
+$border-radius-sm:  .0625rem;
+$border-radius:     .125rem;
+$border-radius-lg:  .25rem;
+$border-radius-xl:  .5rem;
+$border-radius-xxl: 1rem;

@@ -17,15 +17,21 @@ class MemosController < ApplicationController
   def create
     @volume_collection = Memo.volume_collection
     @profondeur_collection = Memo.profondeur_collection
+
     @memo = Memo.new(memo_params)
     @memo.user = current_user
+
     @volume = volume_for_system_prompt(params[:memo][:volume])
     @profondeur = profondeur_for_system_prompt(params[:memo][:profondeur])
-    @prompt_total = "#{system_prompt(@volume, @profondeur)}#{@memo.prompt}"
+
+    @system_prompt = system_prompt(@volume, @profondeur)
+    @user_prompt = @memo.prompt
+
     if @memo.save
       # call LLM avec @memo.prompt pour recevoir les questions/réponses
-      call_llm_for_questions_answers(@prompt_total)
+      @llm_response = call_llm_for_questions_answers(@system_prompt, @user_prompt)
       # méthode pour créer des cards avec le retour du LLM - en attente
+      raise
       redirect_to memo_path(@memo), notice: "Le mémo a bien été créé."
     else
       render :new, status: :unprocessable_entity
@@ -83,9 +89,8 @@ class MemosController < ApplicationController
       ]"
   end
 
-  def call_llm_for_questions_answers(prompt)
-    response = RubyLLM.chat.ask("#{@system_prompt}#{prompt}").content
-    raise
+  def call_llm_for_questions_answers(system_prompt, user_prompt)
+    response = RubyLLM.chat.with_instructions(system_prompt).ask(user_prompt).content
   end
 
   def volume_for_system_prompt(volume)

@@ -1,0 +1,32 @@
+<nav class="bottom-bar" data-controller="bottom-bar">
+
+
+  <%= link_to root_path, class: "bottom-bar__item" do %>
+    <i class="fa-solid fa-house"></i>
+    <span>ACCUEIL</span>
+  <% end %>
+
+
+  <%= link_to memos_path, class: "bottom-bar__item" do %>
+    <i class="fa-solid fa-chart-simple"></i>
+    <span>MEMOS</span>
+  <% end %>
+
+
+  <%= link_to new_memo_path, class: "bottom-bar__fab" do %>
+    <i class="fa-solid fa-plus"></i>
+  <% end %>
+
+
+  <%= link_to play_path, class: "bottom-bar__item" do %>
+    <i class="fa-solid fa-flag"></i>
+    <span>JOUER</span>
+  <% end %>
+
+  
+  <%= link_to edit_user_registration_path, class: "bottom-bar__item" do %>
+    <i class="fa-solid fa-user"></i>
+    <span>PROFIL</span>
+  <% end %>
+
+</nav>

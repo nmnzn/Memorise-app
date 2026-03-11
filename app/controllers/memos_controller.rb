@@ -17,6 +17,9 @@ class MemosController < ApplicationController
     @memo.user = current_user
 
     if @memo.save
+      # call LLM avec @memo.prompt pour recevoir les questions/réponses
+      call_llm_for_questions_answers(@memo.prompt)
+      # méthode pour créer des cards avec le retour du LLM
       redirect_to memos_path, notice: "Le mémo a bien été créé."
     else
       render :new, status: :unprocessable_entity
@@ -42,9 +45,16 @@ class MemosController < ApplicationController
     end
    end
 
+  SYSTEM_PROMPT = "Génère des questions et des réponses associées sur le sujet suivant : "
+
   private
 
   def memo_params
-    params.require(:memo).permit(:name)
+    params.require(:memo).permit(:name, :prompt)
   end
+
+  def call_llm_for_questions_answers(prompt)
+    response = RubyLLM.chat.ask("#{SYSTEM_PROMPT}#{prompt}").content
+  end
+
 end

@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>MemoriseApp</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= favicon_link_tag 'horse.png' %>
@@ -10,9 +10,11 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-      <%= render "shared/navbar" %>
-      <%= yield %>
-      <%= render "shared/footer" %>
-  </body>
+<body>
+  <main class="main-content">
+    <%= yield %>
+  </main>
+  <%= render "shared/bottom_bar" %>
+</body>
+
 </html>

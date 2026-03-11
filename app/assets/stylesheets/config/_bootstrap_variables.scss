@@ -7,22 +7,22 @@
 // General style
 $font-family-sans-serif: $body-font;
 $headings-font-family:   $headers-font;
-$body-bg:                $dark-purple;
+$body-bg:                $color-primary;
 $body-color:             #f0eaff;
 $font-size-base:         1rem;
 
 // Dark component color (navbar, cards)
-$dark: $dark-purple-light;
+$dark:                   $color-primary;
 
 // Colors
-$primary:  $yellow;
-$success:  $green;
-$info:     $blue;
-$danger:   $red;
-$warning:  $orange;
+$primary:  $color-secondary;
+$success:  $color-success;
+$info:     $color-tertiary;
+$danger:   $color-danger;
+$warning:  $color-secondary;
 
 // Links
-$link-color: $yellow;
+$link-color: $color-secondary;
 
 // Buttons & inputs' radius
 $border-radius-sm:  .0625rem;

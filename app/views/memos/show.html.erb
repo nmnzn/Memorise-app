@@ -12,13 +12,3 @@
 </ul>
 
 <%= link_to "Supprimer", memo_path(@memo), data: { turbo_method: :delete, turbo_confirm: "Etes vous sûr(e) de vouloir supprimer ce mémo ?" } %>
-
-<h1><%= @memo.name %></h1>
-<p><%= @memo.prompt %></p>
-
-<% @cards.each do |card| %>
-  <div class="card">
-    <p><strong>Question :</strong> <%= card.question %></p>
-    <p><strong>Réponse :</strong> <%= card.answer %></p>
-  </div>
-<% end %>

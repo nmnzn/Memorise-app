@@ -13,25 +13,24 @@ class MemosController < ApplicationController
   end
 
   def create
-    @memo = Memo.new(memo_params)
-    @memo.user = current_user
+  @memo = Memo.new(memo_params)
+  @memo.user = current_user
 
-    if @memo.save
-      # Appel au LLM avec le prompt du mémo
-      llm_cards = generate_cards_with_llm(@memo.prompt)
+  if @memo.save
+    llm_cards = generate_cards_with_llm(@memo.prompt)
 
-      # Création des cards avec le retour du LLM
-      llm_cards.each do |card_data|
-        @memo.cards.create!(
-          question: card_data["question"],
-          answer: card_data["answer"]
-        )
-      end
-
-      redirect_to memo_path(@memo), notice: "Le mémo a bien été créé."
-    else
-      render :new, status: :unprocessable_entity
+    llm_cards.each do |card_data|
+      @memo.cards.create!(
+        ask: card_data["question"],
+        answer: card_data["answer"]
+      )
     end
+
+    redirect_to memo_path(@memo), notice: "Le mémo a bien été créé."
+  else
+    render :new, status: :unprocessable_entity
+  end
+  
   rescue JSON::ParserError
     @memo.destroy if @memo.persisted?
     flash.now[:alert] = "Le format retourné par le LLM est invalide."

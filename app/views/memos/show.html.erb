@@ -3,6 +3,8 @@
 <%= link_to "Créer une card", new_memo_card_path(@memo), class:"btn btn-success" %>
 <%= link_to "Editer le mémo", edit_memo_path(@memo), class:"btn btn-warning" %>
 
+<p>Sujet initial : <%= @memo.prompt %></p>
+
 <ul>
   <% @cards.each do |card| %>
     <li><%= link_to card.ask, memo_card_path(@memo, card) %></li>

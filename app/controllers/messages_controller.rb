@@ -1,57 +1,46 @@
-class MemosController < ApplicationController
-  def index
-    @memos = current_user.memos
-  end
-
-  def show
-    @memo = Memo.find(params[:id])
-    @cards = @memo.cards
-  end
-
-  def new
-    @memo = Memo.new  
-  end
-
+class MessagesController < ApplicationController
   def create
+    @chat = Chat.find(params[:chat_id])
+    @message = Message.new(content: message_params[:content], role: "user", chat: @chat)
+    if @message.save
+      @volume_collection = Message.volume_collection
+      @profondeur_collection = Message.profondeur_collection
 
-    @memo = Memo.new(memo_params)
-    @memo.user = current_user
-    if @memo.save
-      redirect_to memo_path(@memo), notice: "Le mémo a bien été créé."
+      @volume = volume_for_system_prompt(message_params[:volume])
+      @profondeur = profondeur_for_system_prompt(message_params[:profondeur])
+
+      @system_prompt = system_prompt(@volume, @profondeur)
+
+      llm_cards = generate_cards_with_llm(@system_prompt, @message.content)
+
+      llm_cards.each do |card_data|
+        @chat.memo.cards.create!(
+          ask: card_data["question"],
+          answer: card_data["answer"]
+        )
+      end
+
+      redirect_to @chat.memo
     else
-      render :new, status: :unprocessable_entity
+      @message = Message.new
+      redirect_to @chat, notice: "veuillez recommencer"
     end
   end
 
-  def destroy
-    @memo = Memo.find(params[:id])
-    @memo.destroy
-    redirect_to memos_path
-  end
-
-  def edit
-    @memo = Memo.find(params[:id])
-  end
-
-  def update
-    @memo = Memo.find(params[:id])
-
-    if @memo.update(memo_params)
-      redirect_to memo_path(@memo)
-    else
-      render :edit, status: :unprocessable_entity
-    end
-  end
 
   private
 
-  def memo_params
-    params.require(:memo).permit(:name, :prompt)
+  def message_params
+    params.require(:message).permit(:content, :volume, :profondeur)
   end
 
   def generate_cards_with_llm(system_prompt, user_prompt)
-    response = RubyLLM.chat.with_instructions(system_prompt).ask(user_prompt).content
-    JSON.parse(response)
+    begin
+      response = RubyLLM.chat.with_instructions(system_prompt).ask(user_prompt).content
+      JSON.parse(response)
+    rescue
+      redirect_to @chat, notice: "Veuillez réessayer de générer vos cards"
+    end
   end
 
   def system_prompt(volume, profondeur)

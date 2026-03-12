@@ -15,12 +15,12 @@
 
       <div class="d-flex flex-wrap gap-3 mb-5">
         <% if user_signed_in? %>
-          <%= link_to "Voir mes mémos", memos_path, class: "btn btn-outline-light btn-sm text-white fw-regular" %>
-          <%= link_to "Créer un mémo", new_memo_path, class: "btn btn-success btn-sm text-dark fw-bold" %>
-          <%= link_to "Jouer flaschards", play_path, class: "btn btn-primary btn-mobile btn-sm text-dark fw-bold" %>
+          <%= link_to "Voir mes mémos", memos_path, class: "btn btn-info btn-sm" %>
+          <%= link_to "Créer un mémo", new_memo_path, class: "btn btn-primary btn-sm" %>
+          <%= link_to "Jouer mes flashcards", play_path, class: "btn btn-secondary btn-sm" %>
         <% else %>
-          <%= link_to "Commencer", new_user_registration_path, class: "btn btn-primary btn-lg text-dark fw-bold" %>
-          <%= link_to "Se connecter", new_user_session_path, class: "btn btn-outline-light btn-lg" %>
+          <%= link_to "Commencer", new_user_registration_path, class: "btn btn-primary btn-sm" %>
+          <%= link_to "Se connecter", new_user_session_path, class: "btn btn-secondary btn-sm" %>
         <% end %>
       </div>
 
@@ -41,47 +41,6 @@
           <div class="p-3 rounded bg-dark border border-secondary">
             <strong class="d-block text-light mb-1">Mémoire</strong>
             <span class="text-secondary small">Retiens plus facilement dans le temps</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-6">
-      <div class="card bg-dark border border-secondary shadow-lg">
-        <div class="card-body p-4">
-          <div class="d-flex gap-2 mb-4">
-            <span class="rounded-circle bg-secondary d-block" style="width:12px;height:12px"></span>
-            <span class="rounded-circle bg-secondary d-block" style="width:12px;height:12px"></span>
-            <span class="rounded-circle bg-secondary d-block" style="width:12px;height:12px"></span>
-          </div>
-
-          <p class="text-primary fw-bold small text-uppercase mb-1">Ton espace d'apprentissage</p>
-          <h2 class="text-light fw-bold mb-4">Une méthode simple, mais efficace.</h2>
-
-          <div class="d-flex flex-column gap-3">
-            <div class="d-flex align-items-center gap-3 p-3 rounded border border-primary">
-              <span class="badge bg-primary text-dark fw-bold fs-6 px-3 py-2">M</span>
-              <div>
-                <h6 class="text-light mb-0">Anglais</h6>
-                <small class="text-secondary">48 cartes • vocabulaire courant</small>
-              </div>
-            </div>
-
-            <div class="d-flex align-items-center gap-3 p-3 rounded border border-secondary">
-              <span class="badge bg-secondary fw-bold fs-6 px-3 py-2">R</span>
-              <div>
-                <h6 class="text-light mb-0">Ruby</h6>
-                <small class="text-secondary">32 cartes • syntaxe et méthodes</small>
-              </div>
-            </div>
-
-            <div class="d-flex align-items-center gap-3 p-3 rounded border border-secondary">
-              <span class="badge bg-secondary fw-bold fs-6 px-3 py-2">H</span>
-              <div>
-                <h6 class="text-light mb-0">Histoire</h6>
-                <small class="text-secondary">21 cartes • dates clés</small>
-              </div>
-            </div>
           </div>
         </div>
       </div>

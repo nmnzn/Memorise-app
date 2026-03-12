@@ -7,19 +7,19 @@
 // General style
 $font-family-sans-serif: $body-font;
 $headings-font-family:   $headers-font;
-$body-bg:                $color-primary;
+$body-bg:                $color-secondary;
 $body-color:             #f0eaff;
 $font-size-base:         1rem;
 
 // Dark component color (navbar, cards)
-$dark:                   $color-primary;
+$dark:                   $color-secondary;
 
 // Colors
-$primary:  $color-secondary;
+$primary:  $color-primary;
 $success:  $color-success;
 $info:     $color-tertiary;
 $danger:   $color-danger;
-$warning:  $color-secondary;
+$warning:  $color-violet-variant;
 
 // Links
 $link-color: $color-secondary;

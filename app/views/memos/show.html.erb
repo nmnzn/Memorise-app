@@ -4,9 +4,6 @@
 <%= link_to "Editer le mémo", edit_memo_path(@memo), class:"btn btn-warning btn-sm text-dark" %>
 <%= button_to "Générer des cards", memo_chats_path(@memo), class:"btn btn-warning btn-sm text-dark fw-bold" %>
 
-
-<p>Sujet initial : <%= @memo.prompt %></p>
-
 <div class="memo-cards-grid">
   <%= render partial: "cards/card", collection: @cards, as: :card, locals: { memo: @memo } %>
 </div>

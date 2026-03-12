@@ -19,6 +19,8 @@ export default class extends Controller {
   #fixPosition() {
     const vv = window.visualViewport
     const offset = window.innerHeight - vv.height - vv.offsetTop
-    this.element.style.transform = `translateY(${offset}px) translateZ(0)`
+    this.element.style.transform = `translateX(-50%) translateY(${offset}px) translateZ(0)`
+
+
   }
 }

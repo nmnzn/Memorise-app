@@ -46,7 +46,7 @@ class MemosController < ApplicationController
   private
 
   def memo_params
-    params.require(:memo).permit(:name, :prompt)
+    params.require(:memo).permit(:name)
   end
 
   def generate_cards_with_llm(system_prompt, user_prompt)

@@ -16,13 +16,6 @@
       <%= f.label :name, "Titre du mémo" %>
       <%= f.text_field :name, placeholder: "Ex: Ruby, Histoire, Anglais" %>
 
-      <%= f.label :prompt, "Le sujet à mémoriser" %>
-      <%= f.text_area :prompt, placeholder: "Parle nous du sujet que tu souhaites mémoriser" %>
-
-      <%= f.input :volume, as: :radio_buttons, collection: @volume_collection, label: "Quel volume de connaissance souhaites-tu mémoriser ? (cela influencera le nombre de flashcards sur ce sujet) - \"Synthétique\" par défaut" %>
-
-      <%= f.input :profondeur, as: :radio_buttons, collection: @profondeur_collection, label: "Quelle profondeur de connaissance souhaites-tu mémoriser ? (cela influencera la nature des questions) - \"grandes lignes\" par défaut" %>
-
       <%= f.submit "Créer", class: "btn btn-primary btn-sm" %>
   <% end %>
 </div>

@@ -23,8 +23,16 @@ end
 
 puts ">> SEED - USER : test@test.com / password123"
 
-# création de 10 mémos
+puts "cleaning models (user already cleaned)..."
+Message.destroy_all
+Chat.destroy_all
+Card.destroy_all
 Memo.destroy_all
+puts "Models empty except user with test@test.com"
+
+
+
+# création de 10 mémos
 puts 'SEEDING MEMOS : Creating 10 memos'
 10.times do
   memo = Memo.new(
@@ -36,7 +44,6 @@ end
 puts ">>#{Memo.all.count} memos created 💡 for user : #{User.first.email} ☑️"
 
 # création de 50 cards / 10 par mémo
-Card.destroy_all
 puts 'SEEDING CARDS : Creating 50 cards / 5 per memo'
 Memo.all.each do |memo|
   5.times do 
@@ -52,7 +59,6 @@ end
 puts ">>All cards created ! ☑️"
 
 # création de 2 answers per memo (une réponse vraie et une fausse) (jointure avec user id, card id, value (true/false))
-Answer.destroy_all
 puts "SEEDING ANSWER : creating one true answer and one false answer (join table) for each card (100 records) / we have only one user here"
 Card.all.each do |card|
   answer_true = Answer.new(

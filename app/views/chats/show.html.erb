@@ -1,10 +1,10 @@
-<h1>Créer un mémo</h1>
+<h1>Générer des cards</h1>
 
-<% if @memo.errors.any? %>
+<% if @chat.errors.any? %>
   <div class="alert alert-danger">
     <p>Impossible de créer le mémo :</p>
     <ul>
-      <% @memo.errors.full_messages.each do |message| %>
+      <% @chat.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
     </ul>
@@ -12,17 +12,15 @@
 <% end %>
 
 <div class="container">
-  <%= simple_form_for @memo do |f| %>
-      <%= f.label :name, "Titre du mémo" %>
-      <%= f.text_field :name, placeholder: "Ex: Ruby, Histoire, Anglais" %>
+  <%= simple_form_for [@chat, @message] do |f| %>
 
-      <%= f.label :prompt, "Le sujet à mémoriser" %>
-      <%= f.text_area :prompt, placeholder: "Parle nous du sujet que tu souhaites mémoriser" %>
+      <%= f.label :content, "Le sujet à mémoriser" %>
+      <%= f.text_area :content, placeholder: "Parle nous du sujet que tu souhaites mémoriser" %>
 
       <%= f.input :volume, as: :radio_buttons, collection: @volume_collection, label: "Quel volume de connaissance souhaites-tu mémoriser ? (cela influencera le nombre de flashcards sur ce sujet) - \"Synthétique\" par défaut" %>
 
       <%= f.input :profondeur, as: :radio_buttons, collection: @profondeur_collection, label: "Quelle profondeur de connaissance souhaites-tu mémoriser ? (cela influencera la nature des questions) - \"grandes lignes\" par défaut" %>
 
-      <%= f.submit "Créer", class: "btn btn-primary btn-sm" %>
+      <%= f.submit "Créer", class: "btn btn-success btn-sm fw-bold" %>
   <% end %>
 </div>

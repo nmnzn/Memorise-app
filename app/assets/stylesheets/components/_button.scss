@@ -1,15 +1,48 @@
+// Bouton de base : forme, padding & alignement du texte
 .btn{
   padding: 0.5em 1em;
   border-radius: 60rem;
   text-align: center;
   }
 
-.btn-mobile {
-    box-shadow: 0 0.3rem 0.6rem rgba(255,255,255,0.12);
-    transition: transform 0.1s ease, box-shadow 0.1s ease;
-}
+// Boutons généraux : couleurs, polices, bordures
+// Possibilité de changer les couleurs des boutons en modifiant les variables dans _bootstrap_variables.scss
 
-.btn-mobile:active {
-    transform: scale(0.97);
-    box-shadow: 0 0.1rem 0.2rem rgba(255,255,255,0.06);
-}
+// Boutton principal : jaune
+.btn-primary {
+  background-color: $color-primary;
+  color: $color-white;
+  border: none;
+  font-weight: 600;
+  }
+
+// Boutton secondaire : violet clair
+.btn-secondary {
+  background-color: $color-violet-variant;
+  color: $color-white;
+  font-weight: 600;
+  }
+
+// Boutton succès : vert
+.btn-success {
+  background-color: $color-success;
+  color: $color-white;
+  border: none;
+  font-weight: 600;
+  }
+
+// Boutton danger : rouge
+.btn-danger {
+  background-color: $color-danger;
+  color: $color-white;
+  border: none;
+  font-weight: 600;
+  }
+
+// Boutton info : transparent
+.btn-info {
+  background-color: $color-secondary;
+  color: $color-white;
+  border: 2px solid $color-white;
+  font-weight: 600;
+  }

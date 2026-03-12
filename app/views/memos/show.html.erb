@@ -7,10 +7,8 @@
 
 <p>Sujet initial : <%= @memo.prompt %></p>
 
-<ul>
-  <% @cards.each do |card| %>
-    <li><%= link_to card.ask, memo_card_path(@memo, card) %></li>
-  <% end %>
-</ul>
+<div class="memo-cards-grid">
+  <%= render partial: "cards/card", collection: @cards, as: :card, locals: { memo: @memo } %>
+</div>
 
 <%= link_to "Supprimer", memo_path(@memo), class:"btn btn-danger btn-sm text-dark", data: { turbo_method: :delete, turbo_confirm: "Etes vous sûr(e) de vouloir supprimer ce mémo ?" } %>

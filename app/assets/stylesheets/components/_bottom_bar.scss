@@ -1,4 +1,3 @@
-
 .bottom-bar {
   position: fixed;
   bottom: 0;
@@ -7,7 +6,9 @@
   width: 90%;
   margin-bottom: 12px;
   height: 65px;
-  background-color: #1a1a2e;
+  background-color: $color-secondary;
+  border: 2px solid #000;
+  box-shadow: 0 4px 0 #000;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -20,7 +21,7 @@
     flex-direction: column;
     align-items: center;
     gap: 3px;
-    color: #6c757d;
+    color: rgba($color-white, 0.4);
     text-decoration: none;
     font-size: 10px;
     font-weight: 700;
@@ -30,8 +31,9 @@
       font-size: 20px;
     }
 
-    &--active {
-      color: #4e6ef2;
+    &--active,
+    &:hover {
+      color: $color-primary;
     }
   }
 
@@ -41,12 +43,18 @@
     justify-content: center;
     width: 52px;
     height: 52px;
-    background-color: #f5a623;
+    background-color: $color-primary;
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0 #000;
     border-radius: 50%;
-    color: white;
-    font-size: 22px;
-    transform: translateY(-15px);
-    box-shadow: 0 4px 15px rgba(245, 166, 35, 0.5);
+    color: #000;
+    font-size: 20px;
     text-decoration: none;
+    transform: translateY(-16px);
+
+    &:hover {
+      box-shadow: 1px 1px 0 #000;
+      transform: translateY(-14px) translate(2px, 2px);
+    }
   }
 }

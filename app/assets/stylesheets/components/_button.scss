@@ -22,7 +22,7 @@
 
 // Ombre néo-brutalist — à ajouter en complément de .btn
 .btn-shadow {
-  border: 0.25rem solid #000;
+  border: 0.15rem solid #000;
   box-shadow: 4px 4px 0 #000;
   &:hover {
     box-shadow: 2px 2px 0 #000;
@@ -40,8 +40,7 @@
 // Boutton principal : jaune
 .btn-primary {
   background-color: $color-primary;
-  color: $color-secondary;
-  border: none;
+  color: #000;
   font-weight: 600;
   }
 
@@ -49,6 +48,7 @@
 .btn-secondary {
   background-color: $color-violet-variant;
   color: $color-white;
+  border: 0.15rem solid #000;
   font-weight: 600;
   }
 
@@ -56,15 +56,13 @@
 .btn-success {
   background-color: $color-success;
   color: $color-white;
-  border: none;
   font-weight: 600;
   }
 
 // Boutton danger : rouge
 .btn-danger {
   background-color: $color-danger;
-  color: $color-white;
-  border: none;
+  color: #000;
   font-weight: 600;
   }
 
@@ -73,5 +71,6 @@
   background-color: $color-secondary;
   color: $color-white;
   border: 2px solid $color-white;
+  box-shadow: 2px 2px 0 $color-white;
   font-weight: 600;
   }

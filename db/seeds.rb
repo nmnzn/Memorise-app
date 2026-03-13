@@ -13,6 +13,14 @@ require 'faker'
 Faker::Config.locale = 'fr'
 
 puts "Seeding ... "
+
+puts "cleaning models (user already cleaned)..."
+Message.destroy_all
+Chat.destroy_all
+Card.destroy_all
+Memo.destroy_all
+puts "Models empty except user with test@test.com"
+
 # creation d'un user TEST pour le développement
 User.where.not(email: "test@test.com").destroy_all
 
@@ -23,12 +31,7 @@ end
 
 puts ">> SEED - USER : test@test.com / password123"
 
-puts "cleaning models (user already cleaned)..."
-Message.destroy_all
-Chat.destroy_all
-Card.destroy_all
-Memo.destroy_all
-puts "Models empty except user with test@test.com"
+
 
 
 

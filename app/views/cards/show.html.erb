@@ -3,7 +3,9 @@
 
 
     <div class="d-flex justify-content-between align-items-start p-3">
-        <%= link_to "<", memos_path, class:"btn btn-secondary me-3" %>
+        <%= link_to memos_path, class: "memo-item__arrow text-decoration-none" do %>
+            <i class="fa-solid fa-arrow-left"></i>
+        <% end %>
         <h3 class="mb-4 text-font-family-sans-serif text-end">Cette card appartient au mémo:</h3>
     </div>
 

@@ -1,0 +1,31 @@
+
+.simple-form-generate {
+
+    textarea {
+        background-color: $color-secondary;
+        border-radius: 20px;
+        box-shadow: 4px 4px 0 $color-success;
+        height: 15vh;
+        width: 80vw;
+        margin-bottom: 20px;
+        padding:10px;
+        border: solid $color-success;
+        border-width: 3px;
+        border-style: inset; 
+        color: white; 
+    }
+
+    label {
+        color: white;
+        font-family: $headings-font-family;
+    }
+
+    ::placeholder {
+        color : white;
+        padding: 10px;
+    }
+
+    img {
+        height: 10vh;
+    }
+}

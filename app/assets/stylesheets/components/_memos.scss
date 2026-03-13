@@ -1,3 +1,57 @@
+.memo-new-page {
+  min-height: 80dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 16px;
+}
+
+.memo-new-form {
+  margin: 0 1.5rem;
+  background-color: $color-violet-variant;
+  border: 3px solid #000;
+  box-shadow: 5px 5px 0 #000;
+  border-radius: 1.5rem;
+  padding: 48px 28px;
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: $color-white;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__input {
+    width: 100%;
+    background-color: $color-secondary;
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0 #000;
+    border-radius: 60rem;
+    padding: 14px 20px;
+    color: $color-white;
+    font-size: 1rem;
+    font-weight: 600;
+    outline: none;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+      font-weight: 400;
+    }
+
+    &:focus {
+      box-shadow: 4px 4px 0 $color-primary;
+      border-color: $color-primary;
+    }
+  }
+}
+
 .memos-page {
   padding: 24px 16px;
 }

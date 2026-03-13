@@ -1,84 +1,37 @@
-<%# Hero %>
-<section class="container py-5">
-  <div class="row align-items-center g-5">
-    <div class="col-lg-6">
-      <p class="text-primary fw-bold small text-uppercase mb-3">Flashcards • Révision • Mémorisation</p>
+<div class="home-page">
 
-      <h1 class="display-4 fw-bold text-light mb-4">
-        Transforme tes <span class="text-primary">révisions</span> en réflexes.
-      </h1>
+  <div class="home-hero">
+    <p class="home-hero__tag">Flashcards • Révision • Mémorisation</p>
+    <h1 class="home-hero__title">Transforme tes <span>révisions</span> en réflexes.</h1>
+    <p class="home-hero__sub">Organise tes sujets, crée tes flashcards et révise avec une interface claire et motivante.</p>
 
-      <p class="lead text-secondary mb-4">
-        Memorise App t'aide à organiser tes sujets, créer tes flashcards
-        et réviser avec une interface claire, moderne et motivante.
-      </p>
-
-      <div class="d-flex flex-wrap gap-3 mb-5">
-        <% if user_signed_in? %>
-          <%= link_to "Voir mes mémos", memos_path, class: "btn btn-info btn-sm btn-shadow" %>
-          <%= link_to "Créer un mémo", new_memo_path, class: "btn btn-primary btn-sm btn-shadow" %>
-          <%= link_to "Jouer mes flashcards", play_path, class: "btn btn-secondary btn-sm btn-shadow" %>
-        <% else %>
-          <%= link_to "Commencer", new_user_registration_path, class: "btn btn-primary btn-sm btn-shadow" %>
-          <%= link_to "Se connecter", new_user_session_path, class: "btn btn-secondary btn-sm btn-shadow" %>
-        <% end %>
-      </div>
-
-      <div class="row g-3">
-        <div class="col-4">
-          <div class="p-3 rounded bg-dark border border-secondary">
-            <strong class="d-block text-light mb-1">Mémos</strong>
-            <span class="text-secondary small">Classe tes apprentissages par thème</span>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="p-3 rounded bg-dark border border-secondary">
-            <strong class="d-block text-light mb-1">Flashcards</strong>
-            <span class="text-secondary small">Crée des cartes simples à réviser</span>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="p-3 rounded bg-dark border border-secondary">
-            <strong class="d-block text-light mb-1">Mémoire</strong>
-            <span class="text-secondary small">Retiens plus facilement dans le temps</span>
-          </div>
-        </div>
-      </div>
+    <div class="home-hero__actions">
+      <% if user_signed_in? %>
+        <%= link_to "Mes mémos", memos_path, class: "btn btn-primary btn-shadow" %>
+        <%= link_to "Jouer", play_start_path, class: "btn btn-secondary btn-shadow" %>
+      <% else %>
+        <%= link_to "Commencer", new_user_registration_path, class: "btn btn-primary btn-shadow" %>
+        <%= link_to "Se connecter", new_user_session_path, class: "btn btn-secondary btn-shadow" %>
+      <% end %>
     </div>
   </div>
-</section>
 
-<%# Features %>
-<section class="container pb-5">
-  <div class="row g-4">
-    <div class="col-md-4">
-      <div class="card h-100 bg-dark border border-secondary">
-        <div class="card-body p-4">
-          <p class="text-primary fw-bold small mb-3">01</p>
-          <h3 class="text-light fw-bold mb-2">Organise</h3>
-          <p class="text-secondary mb-0">Crée des mémos par sujet pour structurer clairement ton apprentissage.</p>
-        </div>
-      </div>
+  <div class="home-features">
+    <div class="home-feature">
+      <span class="home-feature__num">01</span>
+      <h3 class="home-feature__title">Organise</h3>
+      <p class="home-feature__text">Crée des mémos par sujet pour structurer ton apprentissage.</p>
     </div>
-
-    <div class="col-md-4">
-      <div class="card h-100 bg-dark border border-secondary">
-        <div class="card-body p-4">
-          <p class="text-primary fw-bold small mb-3">02</p>
-          <h3 class="text-light fw-bold mb-2">Apprends</h3>
-          <p class="text-secondary mb-0">Ajoute des flashcards pour transformer tes notes en entraînement actif.</p>
-        </div>
-      </div>
+    <div class="home-feature">
+      <span class="home-feature__num">02</span>
+      <h3 class="home-feature__title">Apprends</h3>
+      <p class="home-feature__text">Ajoute des flashcards pour transformer tes notes en entraînement actif.</p>
     </div>
-
-    <div class="col-md-4">
-      <div class="card h-100 bg-dark border border-secondary">
-        <div class="card-body p-4">
-          <p class="text-primary fw-bold small mb-3">03</p>
-          <h3 class="text-light fw-bold mb-2">Retiens</h3>
-          <p class="text-secondary mb-0">Révise plus souvent, plus vite, et garde l'essentiel en mémoire.</p>
-        </div>
-      </div>
+    <div class="home-feature">
+      <span class="home-feature__num">03</span>
+      <h3 class="home-feature__title">Retiens</h3>
+      <p class="home-feature__text">Révise plus souvent, plus vite, et garde l'essentiel en mémoire.</p>
     </div>
   </div>
-</section>
+
+</div>

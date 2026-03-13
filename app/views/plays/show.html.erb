@@ -1,6 +1,8 @@
 <div class="play-page">
   <div class="play-topbar">
-    <%= link_to "←", memos_path, class: "play-back" %>
+    <%= link_to memos_path, class: "play-back" do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
   </div>
 
   <div class="play-card">

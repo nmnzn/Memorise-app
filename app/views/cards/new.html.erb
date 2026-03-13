@@ -1,17 +1,23 @@
-.<div class="container">
-    <h1>Crée une nouvelle card à mémoriser 🧠 </h1>
-    <h3><%= @memo.name %></h3>
-    <p>Il y a actuellement <%= @memo.cards.count %> card(s) dans ton mémo.</p>
+.<div class="container p-4">
+    <div class="d-flex justify-content-between align-items-start">
+        <%= link_to "<", memo_path(@memo), class:"btn btn-secondary me-5" %>
+        <h1 class="text-end text-headings-font-family">Crée une nouvelle card à mémoriser 🧠 </h1>
+     </div>
+
+     <div class="pt-3">
+        <h3 class="text-success text-headings-font-family fw-bold"><%= @memo.name %></h3>
+        <p class="text-secondary">Il y a actuellement <span class="text-success"><%= @memo.cards.count %>card(s)</span> dans ton mémo.</p>
+     </div>
+
 
     <div>
-        <%= link_to "Retourner au mémo #{@memo.name}", memo_path(@memo), class:"btn btn-secondary" %>
-    </div>
-
-    <div>
-        <%= simple_form_for [@memo, @card] do |f| %>
-            <%= f.input :ask, :label => 'Quelle est la question à mémoriser ? 👀', :placeholder => "Quel est le nom du chien de la grand-mère de mon voisin ?" %>
-            <%= f.input :answer, :label => 'Quelle est la réponse à cette question ?', :placeholder => "Son chien s'appelle Jacquot 🐶" %>
-            <%= f.button :submit, "Enregistrer la card", class:"btn btn-success" %>
+        <%= simple_form_for [@memo, @card], html: { class: "simple-form" } do |f| %>
+            <%= f.input :ask, :label => 'Question à mémoriser', :placeholder => "Quel est le nom du chien de la grand-mère de mon voisin ?" %>
+            <%= f.input :answer, :label => 'Réponse à la question', :placeholder => "Son chien s'appelle Jacquot 🐶" %>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+                <div class="text-start"><%= image_tag "mascotte_muscu" %></div>
+                <%= f.button :submit, "Enregistrer", class:"btn btn-success", id: "btn" %>
+            </div>
         <% end %>
     </div>
 </div>

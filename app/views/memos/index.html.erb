@@ -1,21 +1,29 @@
-<div class="memorise-bg-gradient">
+<div>
 
-<h1>Mes mémos</h1>
+  <div class="memos-header">
+    <h1>Mes mémos</h1>
+  </div>
+  <div class="text-center mb-4 mt-8">
+  <%= link_to "Nouveau Mémo", new_memo_path, class: " btn btn-lg btn-primary btn-shadow" %>
+  </div>
 
-<%= link_to "Retour", root_path, class: "btn btn-secondary" %>
-<%= link_to "Créer un nouveau mémo", new_memo_path, class: "btn btn-primary" %>
-
-<% if @memos.any? %>
-<div class="row g-4">
-  <% @memos.each do |memo| %>
-    <div class="col-md-4">
-      <%= link_to memo_path(memo), class: "memo-card" do %>
-        <h3><%= memo.name %></h3>
-      <% end %>
-    </div>
-  <% end %>
-</div>
-<% else %>
-  <p>Aucun mémo pour le moment.</p>
-<% end %>
+  <div class="memos-page">
+    <% if @memos.any? %>
+      <div class="memos-list">
+        <% @memos.each do |memo| %>
+            <div class="memo-item">
+            <div class="memo-item__info">
+              <span class="memo-item__name"><%= memo.name %></span>
+              <span class="memo-item__badge">0 / <%= memo.cards.count %></span>
+            </div>
+            <%= link_to memo_path(memo), class: "memo-item__arrow text-decoration-none" do %>
+              <i class="fa-solid fa-arrow-right"></i>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-center mt-4">Aucun mémo pour le moment.</p>
+    <% end %>
+  </div>
 </div>

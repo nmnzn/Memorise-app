@@ -1,0 +1,134 @@
+.memo-new-page {
+  min-height: 80dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 16px;
+}
+
+.memo-new-form {
+  margin: 0 1.5rem;
+  background-color: $color-violet-variant;
+  border: 3px solid #000;
+  box-shadow: 5px 5px 0 #000;
+  border-radius: 1.5rem;
+  padding: 48px 28px;
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: $color-white;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__input {
+    width: 100%;
+    background-color: $color-secondary;
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0 #000;
+    border-radius: 60rem;
+    padding: 14px 20px;
+    color: $color-white;
+    font-size: 1rem;
+    font-weight: 600;
+    outline: none;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+      font-weight: 400;
+    }
+
+    &:focus {
+      box-shadow: 4px 4px 0 $color-primary;
+      border-color: $color-primary;
+    }
+  }
+}
+
+.memos-page {
+  padding: 24px 16px;
+}
+
+.memos-header {
+  text-align: center;
+  margin: 5rem 5rem 3rem;
+  border: 2px solid #000;
+  border-radius: 2rem;
+  box-shadow: 3px 3px 0 #000;
+
+  h1 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    font-weight: 900;
+    color: $color-white;
+    line-height: 1.25;
+  }
+}
+
+.memos-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.memo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $color-violet-variant;
+  border: 3px solid #000;
+  box-shadow: 5px 5px 0 #000;
+  padding: 18px;
+  border-radius: 60rem;
+  padding: 14px 14px 14px 20px;
+  text-decoration: none;
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-left: 8px;
+  }
+
+  &__name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: $color-white;
+  }
+
+  &__badge {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: $color-white;
+    background-color: $color-tertiary;
+    border: 1px solid #000;
+    box-shadow: 3px 3px 0 #000;
+    border-radius: 60rem;
+    padding: 2px 10px;
+    width: fit-content;
+  }
+
+  &__arrow {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: $color-primary;
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0 #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(3, 3, 3);
+    font-size: 1.1rem;
+  }
+}

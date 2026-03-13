@@ -1,11 +1,30 @@
-<h1><%= @memo.name %></h1>
+<div class="memo-new-page">
 
-<%= link_to "Retour", memos_path, class: "btn btn-secondary" %>
-<%= link_to "Créer une card", new_memo_card_path(@memo), class: "btn btn-success btn-sm text-dark fw-bold" %>
-<%= link_to "Editer le mémo", edit_memo_path(@memo), class: "btn btn-warning btn-sm text-dark fw-bold" %>
+  <div class="memos-header">
+    <h1>Nouveau mémo</h1>
+  </div>
 
-<div class="memo-cards-grid">
-  <%= render partial: "cards/card", collection: @cards, as: :card, locals: { memo: @memo } %>
+  <% if @memo.errors.any? %>
+    <div class="alert alert-danger mx-4">
+      <p>Impossible de créer le mémo :</p>
+      <ul>
+        <% @memo.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="memo-new-form">
+    <%= simple_form_for @memo do |f| %>
+      <div class="memo-new-form__field">
+        <%= f.label :name, "Titre du mémo", class: "memo-new-form__label" %>
+        <%= f.text_field :name, placeholder: "Ex: Ruby, Histoire, Anglais", class: "memo-new-form__input" %>
+      </div>
+      <%= f.submit "Créer", class: "btn btn-primary btn-shadow w-100 mt-4" %>
+    <% end %>
+  </div>
+
 </div>
 
 <%= link_to "Supprimer",

@@ -19,13 +19,15 @@ Rails.application.routes.draw do
     resources :chats, only: [:new, :create, :show]
   end
 
-  resources :chats do 
+  resources :chats do
     resources :messages, only: [:create]
   end
 
-  get "play", to: "plays#show", as: :play
+  get "play", to: "plays#start", as: :play_start
+  get "play/:id", to: "plays#show", as: :play
   get "play/reveal/:id", to: "plays#reveal", as: :reveal_play
+  patch "play/:id/knew", to: "plays#knew", as: :knew_play
+  patch "play/:id/did_not_know", to: "plays#did_not_know", as: :did_not_know_play
 
   resources :answers, only: [:update]
-
 end

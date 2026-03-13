@@ -15,13 +15,14 @@
 
 // LG — CTA principal (~52px)
 .btn-lg {
-  padding: 0.875rem 1.75rem;
-  font-size: 1.0625rem; // 17px
+  padding: 0.775rem 1.75rem;
+  font-size: 1.1rem; // 17px
   border-radius: 60rem;
 }
 
 // Ombre néo-brutalist — à ajouter en complément de .btn
 .btn-shadow {
+  border: 0.25rem solid #000;
   box-shadow: 4px 4px 0 #000;
   &:hover {
     box-shadow: 2px 2px 0 #000;
@@ -39,7 +40,7 @@
 // Boutton principal : jaune
 .btn-primary {
   background-color: $color-primary;
-  color: $color-white;
+  color: $color-secondary;
   border: none;
   font-weight: 600;
   }

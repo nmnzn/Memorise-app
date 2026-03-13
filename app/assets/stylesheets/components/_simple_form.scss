@@ -1,0 +1,28 @@
+
+.simple-form {
+
+    textarea {
+        background-color: #2A185F;
+        border-radius: 20px;
+        border: none; 
+        box-shadow: 4px 4px 0 #000;
+        height: 15vh;
+    }
+
+    label {
+        color: $color-primary;
+        font-family: $headings-font-family;
+    }
+
+    ::placeholder {
+        color : black;
+    }
+
+    #btn {
+
+    }
+
+    img {
+        height: 10vh;
+    }
+}

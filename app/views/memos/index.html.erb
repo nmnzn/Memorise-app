@@ -10,17 +10,7 @@
   <div class="memos-page">
     <% if @memos.any? %>
       <div class="memos-list">
-        <% @memos.each do |memo| %>
-            <div class="memo-item">
-            <div class="memo-item__info">
-              <span class="memo-item__name"><%= memo.name %></span>
-              <span class="memo-item__badge">0 / <%= memo.cards.count %></span>
-            </div>
-            <%= link_to memo_path(memo), class: "memo-item__arrow text-decoration-none" do %>
-              <i class="fa-solid fa-arrow-right"></i>
-            <% end %>
-          </div>
-        <% end %>
+        <%= render @memos %>
       </div>
     <% else %>
       <p class="text-center mt-4">Aucun mémo pour le moment.</p>

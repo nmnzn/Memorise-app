@@ -1,3 +1,67 @@
+.memo-show-page {
+  padding: 24px 0 80px;
+}
+
+.memo-show-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px 24px;
+
+  &__back {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: $color-violet-variant;
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0 #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-white;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+
+  &__title {
+    flex: 1;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: $color-white;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  &__count {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: $color-white;
+    background-color: $color-tertiary;
+    border: 1px solid #000;
+    box-shadow: 2px 2px 0 #000;
+    border-radius: 60rem;
+    padding: 2px 10px;
+  }
+}
+
+.memo-show-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 30px 16px 24px;
+}
+
+.memo-show-danger {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 32px 16px 0;
+  width: fit-content;
+  margin: 0 auto;
+}
+
 .memo-new-page {
   min-height: 80dvh;
   display: flex;

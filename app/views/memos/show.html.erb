@@ -1,11 +1,33 @@
-<h1><%= @memo.name %></h1>
-<%= link_to "Retour", memos_path, class:"btn btn-secondary" %>
-<%= link_to "Créer une card", new_memo_card_path(@memo), class:"btn btn-success btn-sm text-dark" %>
-<%= link_to "Editer le mémo", edit_memo_path(@memo), class:"btn btn-warning btn-sm text-dark" %>
-<%= button_to "Générer des cards", memo_chats_path(@memo), class:"btn btn-warning btn-sm text-dark fw-bold" %>
+<div class="memo-show-page">
 
-<div class="memo-cards-grid">
-  <%= render partial: "cards/card", collection: @cards, as: :card, locals: { memo: @memo } %>
+  <div class="memos-header">
+   <h1>Mon Memo</h1>
+  </div>
+
+  <div class="memo-show-header">
+    <%= link_to memos_path, class: "memo-show-header__back" do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+    <h1 class="memo-show-header__title"><%= @memo.name %></h1>
+    <span class="memo-show-header__count"><%= @cards.count %> : Cards</span>
+  </div>
+
+  <div class="memo-cards-grid">
+    <%= render partial: "cards/card", collection: @cards, as: :card, locals: { memo: @memo } %>
+  </div>
+
+  <div class="memo-show-actions">
+    <%= button_to memo_chats_path(@memo), class: "btn-lg btn-secondary btn-shadow " do %>
+      <i class="fa-solid fa-wand-magic-sparkles me-1"></i> Générer les questions
+    <% end %>
+  </div>
+
+
+  <div class="memo-show-danger">
+    <%= link_to "Nouvelle Card", new_memo_card_path(@memo), class: "btn btn-primary btn-shadow" %>
+    <%= link_to "Modifier Memo", edit_memo_path(@memo), class: "btn btn-info " %>
+    <%= link_to "Supprimer Memo", memo_path(@memo), class: "btn btn-danger btn-shadow",
+        data: { turbo_method: :delete, turbo_confirm: "Supprimer ce mémo ?" } %>
+  </div>
+
 </div>
-
-<%= link_to "Supprimer", memo_path(@memo), class:"btn btn-danger btn-sm text-dark", data: { turbo_method: :delete, turbo_confirm: "Etes vous sûr(e) de vouloir supprimer ce mémo ?" } %>

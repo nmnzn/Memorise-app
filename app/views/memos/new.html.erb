@@ -1,21 +1,17 @@
-<h1>Créer un mémo</h1>
+<h1><%= @memo.name %></h1>
 
-<% if @memo.errors.any? %>
-  <div class="alert alert-danger">
-    <p>Impossible de créer le mémo :</p>
-    <ul>
-      <% @memo.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= link_to "Retour", memos_path, class: "btn btn-secondary" %>
+<%= link_to "Créer une card", new_memo_card_path(@memo), class: "btn btn-success btn-sm text-dark fw-bold" %>
+<%= link_to "Editer le mémo", edit_memo_path(@memo), class: "btn btn-warning btn-sm text-dark fw-bold" %>
 
-<div class="container">
-  <%= simple_form_for @memo do |f| %>
-      <%= f.label :name, "Titre du mémo" %>
-      <%= f.text_field :name, placeholder: "Ex: Ruby, Histoire, Anglais" %>
-
-      <%= f.submit "Créer", class: "btn btn-primary btn-sm" %>
-  <% end %>
+<div class="memo-cards-grid">
+  <%= render partial: "cards/card", collection: @cards, as: :card, locals: { memo: @memo } %>
 </div>
+
+<%= link_to "Supprimer",
+    memo_path(@memo),
+    class: "btn btn-danger btn-sm text-dark fw-bold",
+    data: {
+      turbo_method: :delete,
+      turbo_confirm: "Etes vous sûr(e) de vouloir supprimer ce mémo ?"
+    } %>

@@ -26,11 +26,3 @@
   </div>
 
 </div>
-
-<%= link_to "Supprimer",
-    memo_path(@memo),
-    class: "btn btn-danger btn-sm text-dark fw-bold",
-    data: {
-      turbo_method: :delete,
-      turbo_confirm: "Etes vous sûr(e) de vouloir supprimer ce mémo ?"
-    } %>

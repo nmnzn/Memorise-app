@@ -1,6 +1,8 @@
 .<div class="container p-4">
     <div class="d-flex justify-content-between align-items-start">
-        <%= link_to "<", memo_path(@memo), class:"btn btn-secondary me-5" %>
+        <%= link_to memo_path(@memo), class: "memo-item__arrow text-decoration-none" do %>
+            <i class="fa-solid fa-arrow-left"></i>
+        <% end %>
         <h1 class="text-end text-headings-font-family">Crée une nouvelle card à mémoriser 🧠 </h1>
      </div>
 

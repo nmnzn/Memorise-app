@@ -10,21 +10,24 @@
 
 require 'faker'
 require 'json'
+require 'pry-rails'
 
 Faker::Config.locale = 'fr'
 
-puts "Seeding ... "
+puts "Seeding ... 🌱 "
 
-puts "cleaning models (user already cleaned)..."
+puts "cleaning models..."
 Message.destroy_all
 Chat.destroy_all
 Card.destroy_all
 Memo.destroy_all
-puts "Models empty except user with test@test.com"
-puts "🗑️ _________ 🗑️"
+Answer.destroy_all
+
 
 # creation d'un user TEST pour le développement
 User.where.not(email: "test@test.com").destroy_all
+puts "All models empty"
+puts "🗑️ _________ 🗑️"
 
 user = User.find_or_create_by!(email: "test@test.com") do |u|
 
@@ -33,16 +36,11 @@ end
 
 puts ">> SEED - USER : test@test.com / password123"
 
-
-
-
-
-# création de 10 mémos avec 5 cards chacun
+# création de 10 mémos avec 5 cards chacun et mise à jour de la table answers avec des scores au hasard (si score = 1 alors value = true)
 puts 'SEEDING  10 MEMOS with 5 CARDS each...'
 
-file_path = File.join(__dir__, "..", "seed.json")
-p file_path
-file = File.read(file_path)
+file_path = File.join(__dir__, "seed.json")
+file = File.open(file_path).read
 data = JSON.parse file
 
 data.each do |memo_with_cards|
@@ -59,31 +57,11 @@ data.each do |memo_with_cards|
         memo_id: memo.id
       )
       new_card.save!
+      new_card.answers.first.update(value: card["value"])
+      new_card.answers.first.update(score: card["score"])
     end
-  puts "Memo created (#{memo.name} with #{memo.cards.count} cards) ☑️"
+  puts "Memo created (#{memo.name} with #{memo.cards.count} cards) and different answers scores (one answer record per card-user) ☑️"
 end
-
-# création de 2 answers per memo (une réponse vraie et une fausse) (jointure avec user id, card id, value (true/false))
-puts "SEEDING ANSWER : creating one true answer and one false answer (join table) for each card (100 records) / we have only one user here"
-Card.all.each do |card|
-
-  answer_true = Answer.new(
-    user_id: User.first.id,
-    card_id: card.id,
-    value: true
-  )
-  answer_true.save!
-
-  answer_false = Answer.new(
-    user_id: User.first.id,
-    card_id: card.id,
-    value: false
-  )
-  answer_false.save!
-  # puts "2 answers recorded for this question (#{card.ask}) - #{answer_true.value} and #{answer_false.value}"
-end
-puts ">>2 answers created for each card (true and false) ☑️"
-puts "_________________________________"
 
 puts "✅ All set ! You have now in your DB : 1 user, 10 memos (topics), 5 cards (question and answer) per memo, 2 answers (recorded) per card (one true and one false)"
 

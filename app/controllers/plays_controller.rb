@@ -2,6 +2,19 @@ class PlaysController < ApplicationController
   before_action :set_card, only: [:reveal, :knew, :did_not_know]
 
   def start
+
+    if params[:memo_id].nil?
+      #cards = current_user.cards.joins(:answers).where(answers: { user: current_user, value: false })
+      #cards_to_play = cards.where.not(id: exclude) if exclude
+      @memo = -1
+    else
+      #memo_to_play = Memo.find(params[:memo_id])
+      #memo_cards = memo_to_play.cards.joins(:answers).where(answers: { user: current_user, value: false })
+      #cards_to_play = memo_cards.where.not(id: exclude) if exclude
+      @memo = Memo.find(params[:memo_id])
+      #@cards_to_play = memo.cards
+    end
+
     session[:play_count] = 0
     first_card = next_unanswered_card
 
@@ -66,17 +79,23 @@ class PlaysController < ApplicationController
 
   def next_unanswered_card(exclude: nil)
     count = session[:play_count].to_i
-    cards = current_user.cards
-                        .joins(:answers)
-                        .where(answers: { user: current_user, value: false })
-    cards = cards.where.not(id: exclude) if exclude
+
+    if @memo == -1
+      cards = current_user.cards.joins(:answers).where(answers: { user: current_user, value: false })
+      cards = cards.where.not(id: exclude) if exclude
+      
+    else
+      memo_to_play = Memo.find(params[:memo_id])
+      cards = memo_to_play.cards.joins(:answers).where(answers: { user: current_user, value: false })
+      cards = cards.where.not(id: exclude) if exclude
+    end
 
     if count % 6 == 0 && count > 0
       cards.order("answers.score DESC").first
     elsif count % 3 == 0 && count > 0
       cards.order("answers.score ASC").first
     else
-    cards.shuffle.first
+      cards.shuffle.first
     end
   end
 end

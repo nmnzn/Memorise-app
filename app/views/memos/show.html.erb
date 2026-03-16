@@ -24,7 +24,8 @@
 
 
   <div class="memo-show-danger">
-    <%= link_to "Nouvelle Card", new_memo_card_path(@memo), class: "btn btn-primary btn-shadow" %>
+    <%= link_to "Jouer ce mémo", play_start_path(memo_id: @memo.id), class: "btn btn-primary btn-shadow" %>
+    <%= link_to "Nouvelle Card", new_memo_card_path(@memo), class: "btn btn-info btn-shadow" %>
     <%= link_to "Modifier Memo", edit_memo_path(@memo), class: "btn btn-info " %>
     <%= link_to "Supprimer Memo", memo_path(@memo), class: "btn btn-danger btn-shadow",
         data: { turbo_method: :delete, turbo_confirm: "Supprimer ce mémo ?" } %>

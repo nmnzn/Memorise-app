@@ -9,9 +9,17 @@
     <span>MEMOS</span>
   <% end %>
 
-  <%= link_to play_start_path, class: "bottom-bar__fab" do %>
-    <i class="fa-solid fa-flag"></i>
-  <% end %>
+  <div class="column_play">
+
+    <%= link_to play_start_path, class: "bottom-bar__fab" do %>
+        <i class="fa-solid fa-play"></i>
+    <% end %>
+
+    <%= link_to play_start_path, class: "bottom-bar__item" do %>
+        <span>JOUER</span>
+    <% end %>
+
+  </div>
 
   <%= link_to new_memo_path, class: "bottom-bar__item" do %>
     <i class="fa-solid fa-plus"></i>

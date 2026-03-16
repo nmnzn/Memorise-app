@@ -1,3 +1,4 @@
+
 .bottom-bar {
   position: fixed;
   bottom: 0;
@@ -50,11 +51,17 @@
     color: #000;
     font-size: 20px;
     text-decoration: none;
-    transform: translateY(-16px);
+    transform: translateY(-8px); 
 
     &:hover {
       box-shadow: 1px 1px 0 #000;
       transform: translateY(-14px) translate(2px, 2px);
     }
   }
+}
+
+.column_play {
+  display: flex;
+  flex-direction: column;
+  transform: translateY(-14px);
 }

@@ -1,46 +1,64 @@
 class MessagesController < ApplicationController
   def create
     @chat = Chat.find(params[:chat_id])
-    @message = Message.new(content: message_params[:content], role: "user", chat: @chat)
+
+    @message = @chat.messages.build(content: message_params[:content])
+
+    volume = params[:message][:volume]
+    profondeur = params[:message][:profondeur]
+
+    if @message.content.blank?
+      @message.errors.add(:content, "Le sujet ne peut pas être vide.")
+      render "chats/show", status: :unprocessable_entity
+      return
+    end
+
+    system_prompt_text = system_prompt(
+      volume_for_system_prompt(volume),
+      profondeur_for_system_prompt(profondeur)
+    )
+
     if @message.save
-      @volume_collection = Message.volume_collection
-      @profondeur_collection = Message.profondeur_collection
+      llm_cards = generate_cards_with_llm(system_prompt_text, @message.content)
 
-      @volume = volume_for_system_prompt(message_params[:volume])
-      @profondeur = profondeur_for_system_prompt(message_params[:profondeur])
-
-      @system_prompt = system_prompt(@volume, @profondeur)
-
-      llm_cards = generate_cards_with_llm(@system_prompt, @message.content)
+      unless llm_cards.is_a?(Array)
+        @message.errors.add(:base, "La génération des cards a échoué.")
+        render "chats/show", status: :unprocessable_entity
+        return
+      end
 
       llm_cards.each do |card_data|
+        next unless card_data.is_a?(Hash)
+
+        question = card_data["question"] || card_data[:question]
+        answer = card_data["answer"] || card_data[:answer]
+
+        next if question.blank? || answer.blank?
+
         @chat.memo.cards.create!(
-          ask: card_data["question"],
-          answer: card_data["answer"]
+          ask: question,
+          answer: answer
         )
       end
 
-      redirect_to @chat.memo
+      redirect_to memo_path(@chat.memo), notice: "Les cards ont bien été créées."
     else
-      @message = Message.new
-      redirect_to @chat, notice: "veuillez recommencer"
+      render "chats/show", status: :unprocessable_entity
     end
+  rescue JSON::ParserError
+    @message.errors.add(:base, "La réponse de l'IA est invalide.")
+    render "chats/show", status: :unprocessable_entity
   end
-
 
   private
 
   def message_params
-    params.require(:message).permit(:content, :volume, :profondeur)
+    params.require(:message).permit(:content)
   end
 
   def generate_cards_with_llm(system_prompt, user_prompt)
-    begin
-      response = RubyLLM.chat.with_instructions(system_prompt).ask(user_prompt).content
-      JSON.parse(response)
-    rescue
-      redirect_to @chat, notice: "Veuillez réessayer de générer vos cards"
-    end
+    response = RubyLLM.chat.with_instructions(system_prompt).ask(user_prompt).content
+    JSON.parse(response)
   end
 
   def system_prompt(volume, profondeur)
@@ -71,9 +89,9 @@ class MessagesController < ApplicationController
 
   def volume_for_system_prompt(volume)
     case volume
-    when @volume_collection[0]
+    when "Synthétique"
       "5"
-    when @volume_collection[1]
+    when "Large"
       "10"
     else
       "1"
@@ -82,9 +100,9 @@ class MessagesController < ApplicationController
 
   def profondeur_for_system_prompt(profondeur)
     case profondeur
-    when @profondeur_collection[0]
+    when "Grandes lignes"
       "les grandes lignes/les éléments clés à savoir/macro/grands concepts"
-    when @profondeur_collection[1]
+    when "Approfondie"
       "des éléments spécifiques, précis, des anecdotes"
     else
       "l'essentiel"

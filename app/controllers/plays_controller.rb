@@ -2,11 +2,7 @@ class PlaysController < ApplicationController
   before_action :set_card, only: [:reveal, :knew, :did_not_know]
 
   def start
-    first_card = current_user.cards
-                             .joins(:answers)
-                             .where(answers: { user: current_user, value: false })
-                             .shuffle
-                             .first
+    first_card = next_unanswered_card
 
     if first_card
       redirect_to play_path(first_card)
@@ -34,12 +30,7 @@ class PlaysController < ApplicationController
     @answer = Answer.find_or_create_by(card: @card, user: current_user)
     @answer.update(value: true)
 
-    next_card = current_user.cards
-                            .joins(:answers)
-                            .where(answers: { user: current_user, value: false })
-                            .where.not(id: @card.id)
-                            .shuffle
-                            .first
+    next_card = next_unanswered_card(exclude: @card.id)
 
     if next_card
       redirect_to play_path(next_card)
@@ -52,12 +43,7 @@ class PlaysController < ApplicationController
     @answer = Answer.find_or_create_by(card: @card, user: current_user)
     @answer.update(value: false)
 
-    next_card = current_user.cards
-                            .joins(:answers)
-                            .where(answers: { user: current_user, value: false })
-                            .where.not(id: @card.id)
-                            .shuffle
-                            .first
+    next_card = next_unanswered_card(exclude: @card.id)
 
     if next_card
       redirect_to play_path(next_card)
@@ -68,7 +54,16 @@ class PlaysController < ApplicationController
 
   private
 
+
   def set_card
     @card = current_user.cards.find(params[:id])
+  end
+
+  def next_unanswered_card(exclude: nil)
+    cards = current_user.cards
+                        .joins(:answers)
+                        .where(answers: { user: current_user, value: false })
+    cards = cards.where.not(id: exclude) if exclude
+    cards.shuffle.first
   end
 end

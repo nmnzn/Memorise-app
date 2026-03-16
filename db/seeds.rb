@@ -9,6 +9,7 @@
 #   end
 
 require 'faker'
+require 'json'
 
 Faker::Config.locale = 'fr'
 
@@ -20,6 +21,7 @@ Chat.destroy_all
 Card.destroy_all
 Memo.destroy_all
 puts "Models empty except user with test@test.com"
+puts "🗑️ _________ 🗑️"
 
 # creation d'un user TEST pour le développement
 User.where.not(email: "test@test.com").destroy_all
@@ -35,35 +37,36 @@ puts ">> SEED - USER : test@test.com / password123"
 
 
 
-# création de 10 mémos
-puts 'SEEDING MEMOS : Creating 10 memos'
-10.times do
+# création de 10 mémos avec 5 cards chacun
+puts 'SEEDING  10 MEMOS with 5 CARDS each...'
+
+file_path = File.join(__dir__, "..", "seed.json")
+p file_path
+file = File.read(file_path)
+data = JSON.parse file
+
+data.each do |memo_with_cards|
   memo = Memo.new(
-    name:    Faker::Address.city,
+    name: memo_with_cards["name"],
     user_id: User.first.id
   )
   memo.save!
-end
-puts ">>#{Memo.all.count} memos created 💡 for user : #{User.first.email} ☑️"
 
-# création de 50 cards / 10 par mémo
-puts 'SEEDING CARDS : Creating 50 cards / 5 per memo'
-Memo.all.each do |memo|
-  5.times do 
-    card = Card.new(
-      ask: "Quel est l'adresse de #{Faker::Name.name} ?",
-      answer: Faker::Address.full_address,
-      memo_id: memo.id
-    )
-    card.save!
-  end 
-  puts "5 cards created for memo : #{memo.name}"
+    memo_with_cards["cards"].each do |card|
+      new_card = Card.new(
+        ask: card["ask"],
+        answer: card["answer"],
+        memo_id: memo.id
+      )
+      new_card.save!
+    end
+  puts "Memo created (#{memo.name} with #{memo.cards.count} cards) ☑️"
 end
-puts ">>All cards created ! ☑️"
 
 # création de 2 answers per memo (une réponse vraie et une fausse) (jointure avec user id, card id, value (true/false))
 puts "SEEDING ANSWER : creating one true answer and one false answer (join table) for each card (100 records) / we have only one user here"
 Card.all.each do |card|
+
   answer_true = Answer.new(
     user_id: User.first.id,
     card_id: card.id,
@@ -77,10 +80,11 @@ Card.all.each do |card|
     value: false
   )
   answer_false.save!
+  # puts "2 answers recorded for this question (#{card.ask}) - #{answer_true.value} and #{answer_false.value}"
 end
-puts ">>2 answers created for each card ☑️"
+puts ">>2 answers created for each card (true and false) ☑️"
 puts "_________________________________"
 
-puts "✅ All set ! You have now in your DB : 1 user, 10 memos (topics), 5 cards (question) per memo, 2 answers per card (one true and one false)"
+puts "✅ All set ! You have now in your DB : 1 user, 10 memos (topics), 5 cards (question and answer) per memo, 2 answers (recorded) per card (one true and one false)"
 
 

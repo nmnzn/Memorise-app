@@ -1,9 +1,12 @@
-  <div class="memo-new-form mt-6">
-    <div class="auth-card">
-      <h2 class="auth-title">Connexion</h2>
-      <p class="auth-sub">Content de te revoir !</p>
+<div class="auth-page">
+  <div class="memos-header">
+    <h1>Connexion</h1>
+    <p class="auth-sub mb-4
+    ">Content de te revoir !</p>
+  </div>
 
-      <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="auth-card">
+    <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="form-inputs">
         <%= f.input :email,
                     required: false,
@@ -16,7 +19,7 @@
       </div>
 
       <div class="form-actions justify-items-center">
-        <%= f.button :submit, "Se connecter", class: "btn btn-primary" %>
+        <%= f.button :submit, "Se connecter", class: "btn btn-primary btn-shadow" %>
       </div>
     <% end %>
 

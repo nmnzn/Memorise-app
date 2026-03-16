@@ -154,6 +154,7 @@
   border-radius: 60rem;
   padding: 14px 14px 14px 20px;
   text-decoration: none;
+  position: relative;
 
   &__info {
     display: flex;
@@ -181,12 +182,17 @@
     width: fit-content;
   }
 
-  &__arrow {
+  &__actions {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__trash {
     flex-shrink: 0;
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background-color: $color-primary;
+    background-color: $color-danger;
     border: 2px solid #000;
     box-shadow: 3px 3px 0 #000;
     display: flex;
@@ -194,5 +200,6 @@
     justify-content: center;
     color: rgb(3, 3, 3);
     font-size: 1.1rem;
+    z-index: 1;
   }
 }

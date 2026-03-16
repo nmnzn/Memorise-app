@@ -1,37 +1,96 @@
-<div class="home-page">
+<% if user_signed_in? %>
+  <div class="dashboard-home">
+    <h1 class="dashboard-home__title">
+      Bienvenue <%= current_user.email.split("@").first.capitalize %> !
+    </h1>
 
-  <div class="home-hero">
-    <p class="home-hero__tag">Flashcards • Révision • Mémorisation</p>
-    <h1 class="home-hero__title">Transforme tes <span>révisions</span> en réflexes.</h1>
-    <p class="home-hero__sub">Organise tes sujets, crée tes flashcards et révise avec une interface claire et motivante.</p>
+    <div class="dashboard-home__actions">
+      <%= link_to "Mes mémos", memos_path, class: "dashboard-home__button dashboard-home__button--yellow" %>
+      <%= link_to "Créer un mémo", new_memo_path, class: "dashboard-home__button dashboard-home__button--purple" %>
+    </div>
 
-    <div class="home-hero__actions">
-      <% if user_signed_in? %>
-        <%= link_to "Mes mémos", memos_path, class: "btn btn-primary btn-shadow" %>
-        <%= link_to "Jouer", play_start_path, class: "btn btn-secondary btn-shadow" %>
-      <% else %>
+    <div class="dashboard-home__stats">
+      <div class="dashboard-home__circle">
+        <svg viewBox="0 0 120 120">
+          <circle class="dashboard-home__circle-bg" cx="60" cy="60" r="52"></circle>
+          <circle
+            class="dashboard-home__circle-value"
+            cx="60"
+            cy="60"
+            r="52"
+            stroke-dasharray="<%= 2 * Math::PI * 52 %>"
+            stroke-dashoffset="<%= 2 * Math::PI * 52 * (1 - (@progress_percent.to_f / 100)) %>">
+          </circle>
+        </svg>
+        <span><%= @progress_percent %>%</span>
+      </div>
+
+      <div class="dashboard-home__stats-text">
+        <h2>De flashcards que tu as déjà mémorisées !</h2>
+        <p><%= @known_cards_count %> sur <%= @total_cards_count %> cards maîtrisées</p>
+      </div>
+    </div>
+
+    <h2 class="dashboard-home__subtitle">Tes autres mémos</h2>
+
+    <% if @memos.any? %>
+      <div class="dashboard-home__list">
+        <% @memos.each do |memo| %>
+          <% total_cards = memo.cards.count %>
+          <% known_cards = memo.cards.joins(:answers).where(answers: { user: current_user, value: true }).distinct.count %>
+          <% percent = total_cards.zero? ? 0 : ((known_cards.to_f / total_cards) * 100).round %>
+
+          <%= link_to memo_path(memo), class: "dashboard-home__card" do %>
+            <div class="dashboard-home__card-text">
+              <h3><%= memo.name %></h3>
+              <p><%= known_cards %>/<%= total_cards %></p>
+
+              <div class="dashboard-home__bar">
+                <div class="dashboard-home__bar-fill" style="width: <%= percent %>%"></div>
+              </div>
+            </div>
+
+            <div class="dashboard-home__play">
+              Play
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="dashboard-home__empty">Tu n’as pas encore de mémo.</p>
+    <% end %>
+  </div>
+<% else %>
+  <div class="home-page">
+
+    <div class="home-hero">
+      <p class="home-hero__tag">Flashcards • Révision • Mémorisation</p>
+      <h1 class="home-hero__title">Transforme tes <span>révisions</span> en réflexes.</h1>
+      <p class="home-hero__sub">Organise tes sujets, crée tes flashcards et révise avec une interface claire et motivante.</p>
+
+      <div class="home-hero__actions">
         <%= link_to "Commencer", new_user_registration_path, class: "btn btn-primary btn-shadow" %>
         <%= link_to "Se connecter", new_user_session_path, class: "btn btn-secondary btn-shadow" %>
-      <% end %>
+      </div>
     </div>
-  </div>
 
-  <div class="home-features">
-    <div class="home-feature">
-      <span class="home-feature__num">01</span>
-      <h3 class="home-feature__title">Organise</h3>
-      <p class="home-feature__text">Crée des mémos par sujet pour structurer ton apprentissage.</p>
+    <div class="home-features">
+      <div class="home-feature">
+        <span class="home-feature__num">01</span>
+        <h3 class="home-feature__title">Organise</h3>
+        <p class="home-feature__text">Crée des mémos par sujet pour structurer ton apprentissage.</p>
+      </div>
+      <div class="home-feature">
+        <span class="home-feature__num">02</span>
+        <h3 class="home-feature__title">Apprends</h3>
+        <p class="home-feature__text">Ajoute des flashcards pour transformer tes notes en entraînement actif.</p>
+      </div>
+      <div class="home-feature">
+        <span class="home-feature__num">03</span>
+        <h3 class="home-feature__title">Retiens</h3>
+        <p class="home-feature__text">Révise plus souvent, plus vite, et garde l'essentiel en mémoire.</p>
+      </div>
     </div>
-    <div class="home-feature">
-      <span class="home-feature__num">02</span>
-      <h3 class="home-feature__title">Apprends</h3>
-      <p class="home-feature__text">Ajoute des flashcards pour transformer tes notes en entraînement actif.</p>
-    </div>
-    <div class="home-feature">
-      <span class="home-feature__num">03</span>
-      <h3 class="home-feature__title">Retiens</h3>
-      <p class="home-feature__text">Révise plus souvent, plus vite, et garde l'essentiel en mémoire.</p>
-    </div>
-  </div>
 
-</div>
+  </div>
+<% end %>

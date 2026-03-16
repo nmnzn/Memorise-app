@@ -1,0 +1,13 @@
+.top-bar {
+  background: $color-secondary;
+  padding: 16px 16px;
+  border: 2px solid #000;
+
+  &__logo {
+    font-family: "Bungee", sans-serif;
+    font-size: 1.4rem;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+}

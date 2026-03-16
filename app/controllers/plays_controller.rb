@@ -2,11 +2,8 @@ class PlaysController < ApplicationController
   before_action :set_card, only: [:reveal, :knew, :did_not_know]
 
   def start
-    first_card = current_user.cards
-                             .joins(:answers)
-                             .where(answers: { user: current_user, value: false })
-                             .shuffle
-                             .first
+    session[:play_count] = 0
+    first_card = next_unanswered_card
 
     if first_card
       redirect_to play_path(first_card)
@@ -32,14 +29,11 @@ class PlaysController < ApplicationController
 
   def knew
     @answer = Answer.find_or_create_by(card: @card, user: current_user)
-    @answer.update(value: true)
+    new_score = [@answer.score + 0.25, 1.0].min
+    @answer.update(score: new_score, value: new_score >= 1.0)
 
-    next_card = current_user.cards
-                            .joins(:answers)
-                            .where(answers: { user: current_user, value: false })
-                            .where.not(id: @card.id)
-                            .shuffle
-                            .first
+    session[:play_count] += 1
+    next_card = next_unanswered_card(exclude: @card.id)
 
     if next_card
       redirect_to play_path(next_card)
@@ -50,14 +44,11 @@ class PlaysController < ApplicationController
 
   def did_not_know
     @answer = Answer.find_or_create_by(card: @card, user: current_user)
-    @answer.update(value: false)
+    new_score = [@answer.score - 0.25, 0.0].max
+    @answer.update(score: new_score, value: false)
 
-    next_card = current_user.cards
-                            .joins(:answers)
-                            .where(answers: { user: current_user, value: false })
-                            .where.not(id: @card.id)
-                            .shuffle
-                            .first
+    session[:play_count] += 1
+    next_card = next_unanswered_card(exclude: @card.id)
 
     if next_card
       redirect_to play_path(next_card)
@@ -68,7 +59,24 @@ class PlaysController < ApplicationController
 
   private
 
+
   def set_card
     @card = current_user.cards.find(params[:id])
+  end
+
+  def next_unanswered_card(exclude: nil)
+    count = session[:play_count].to_i
+    cards = current_user.cards
+                        .joins(:answers)
+                        .where(answers: { user: current_user, value: false })
+    cards = cards.where.not(id: exclude) if exclude
+
+    if count % 6 == 0 && count > 0
+      cards.order("answers.score DESC").first
+    elsif count % 3 == 0 && count > 0
+      cards.order("answers.score ASC").first
+    else
+    cards.shuffle.first
+    end
   end
 end

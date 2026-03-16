@@ -2,39 +2,31 @@ class PlaysController < ApplicationController
   before_action :set_card, only: [:reveal, :knew, :did_not_know]
 
   def start
-
+    raise
     if params[:memo_id].nil?
-      #cards = current_user.cards.joins(:answers).where(answers: { user: current_user, value: false })
-      #cards_to_play = cards.where.not(id: exclude) if exclude
-      @memo = -1
+      @memo = nil
     else
-      #memo_to_play = Memo.find(params[:memo_id])
-      #memo_cards = memo_to_play.cards.joins(:answers).where(answers: { user: current_user, value: false })
-      #cards_to_play = memo_cards.where.not(id: exclude) if exclude
       @memo = Memo.find(params[:memo_id])
-      #@cards_to_play = memo.cards
     end
 
     session[:play_count] = 0
-    first_card = next_unanswered_card
-
-    if first_card
-      redirect_to play_path(first_card)
-    else
-      redirect_to memos_path, notice: "Bravo, tu as terminé toutes les cards."
-    end
-  end
-
-  def show
-    @cards = current_user.cards.joins(:answers).where(answers:
-     { user: current_user, value: false }).shuffle
-    redirect_to root_path, notice: "vous n'avez pas de card à jouer" if @cards.empty?
-    @card = @cards.first
-
     if @card.nil?
       redirect_to memos_path, notice: "Bravo, tu as terminé toutes les cards."
+    else
+      @card = next_unanswered_card
     end
   end
+
+  #def show
+    #@cards = current_user.cards.joins(:answers).where(answers:
+    # { user: current_user, value: false }).shuffle
+    #redirect_to root_path, notice: "vous n'avez pas de card à jouer" if @cards.empty?
+    #@card = @cards.first
+
+    #if @card.nil?
+      #redirect_to memos_path, notice: "Bravo, tu as terminé toutes les cards."
+    #end
+  #end
 
   def reveal
     @answer = Answer.find_by(card: @card, user: current_user)
@@ -80,10 +72,9 @@ class PlaysController < ApplicationController
   def next_unanswered_card(exclude: nil)
     count = session[:play_count].to_i
 
-    if @memo == -1
+    if @memo == nil
       cards = current_user.cards.joins(:answers).where(answers: { user: current_user, value: false })
       cards = cards.where.not(id: exclude) if exclude
-      
     else
       memo_to_play = Memo.find(params[:memo_id])
       cards = memo_to_play.cards.joins(:answers).where(answers: { user: current_user, value: false })

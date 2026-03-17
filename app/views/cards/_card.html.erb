@@ -1,15 +1,24 @@
-<article class="memo-card"
-        data-controller="navigate"
-        data-navigate-url-value="<%= memo_card_path(card.memo, card) %>"
-        data-action="click->navigate#go">
+<article class="memo-card" id="card_<%= card.id %>" data-controller="card">
 
-  <span class="memo-card__question"><%= card.ask %></span>
+  <div class="memo-card__header" data-action="click->card#toggle">
+    <span class="memo-card__question"><%= card.ask %></span>
+    <i class="fa-solid fa-chevron-down memo-card__chevron" data-card-target="chevron"></i>
+  </div>
 
-  <%= button_to memo_card_path(card.memo, card), method: :delete,
-      form: { data: { turbo_confirm: "Supprimer cette carte ?" } },
-      class: "memo-card__btn",
-      onclick: "event.stopPropagation();" do %>
-    <i class="fa-solid fa-trash"></i>
-  <% end %>
+  <div class="memo-card__body hidden" data-card-target="body">
+    <p class="memo-card__answer"><%= card.answer %></p>
+
+    <div class="memo-card__actions">
+      <%= link_to edit_memo_card_path(card.memo, card), class: "memo-card__btn memo-card__btn--edit" do %>
+        <i class="fa-solid fa-pen"></i>
+      <% end %>
+
+      <%= button_to memo_card_path(card.memo, card), method: :delete,
+          form: { data: { turbo_confirm: "Supprimer cette carte ?" } },
+          class: "memo-card__btn memo-card__btn--delete" do %>
+        <i class="fa-solid fa-trash"></i>
+      <% end %>
+    </div>
+  </div>
 
 </article>

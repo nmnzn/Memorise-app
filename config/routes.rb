@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     end
 
     resources :memo_shares, only: [:create, :destroy]
-    resources :cards, only: [:new, :create, :show, :destroy, :edit, :update]
+    resources :cards, only: [:new, :create, :destroy, :edit, :update]
     resources :chats, only: [:new, :create, :show]
   end
 

@@ -1,7 +1,7 @@
 class MemosController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_memo, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_owner!, only: [:edit, :update, :destroy]
+  before_action :set_memo, only: [:show, :edit, :update, :destroy, :toggle_visibility]
+  before_action :authorize_owner!, only: [:edit, :update, :destroy, :toggle_visibility]
 
   def index
     @memos = current_user.accessible_memos
@@ -17,7 +17,6 @@ class MemosController < ApplicationController
 
   def new
     @memo = Memo.new
-    3.times { @memo.cards.build }
   end
 
   def create
@@ -27,16 +26,8 @@ class MemosController < ApplicationController
     if @memo.save
       redirect_to memo_path(@memo), notice: "Le mémo a bien été créé."
     else
-      while @memo.cards.size < 3
-        @memo.cards.build
-      end
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def destroy
-    @memo.destroy
-    redirect_to memos_path
   end
 
   def edit
@@ -48,6 +39,24 @@ class MemosController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @memo.destroy
+    redirect_to memos_path
+  end
+
+  def toggle_visibility
+    @memo.update!(is_public: !@memo.is_public?)
+
+    notice_message =
+      if @memo.is_public?
+        "Le mémo est maintenant public."
+      else
+        "Le mémo est maintenant privé."
+      end
+
+    redirect_back fallback_location: memo_path(@memo), notice: notice_message
   end
 
   private

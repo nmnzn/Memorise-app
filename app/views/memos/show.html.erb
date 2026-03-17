@@ -1,7 +1,7 @@
 <div class="memo-show-page">
 
   <div class="memos-header">
-   <h1>Mon Memo</h1>
+    <h1>Mon Memo</h1>
   </div>
 
   <div class="memo-show-header">
@@ -9,11 +9,15 @@
       <i class="fa-solid fa-arrow-left"></i>
     <% end %>
     <h1 class="memo-show-header__title"><%= @memo.name %></h1>
-    <span class="memo-show-header__count"><%= @cards.count %> : Cards</span>
+    <%= link_to "Nouvelle Card", new_memo_card_path(@memo), class: "btn btn-primary btn-shadow" %>
   </div>
+
 
   <div class="memo-cards-grid">
     <%= render partial: "cards/card", collection: @cards, as: :card, locals: { memo: @memo } %>
+  </div>
+
+  <div class="memo-cards-grid mt-3 justify-content-center">
   </div>
 
   <div class="memo-show-actions">
@@ -27,8 +31,5 @@
     <%= link_to "Jouer ce mémo", play_start_path, class: "btn btn-primary btn-shadow" %>
     <%= link_to "Nouvelle Card", new_memo_card_path(@memo), class: "btn btn-info btn-shadow" %>
     <%= link_to "Modifier Memo", edit_memo_path(@memo), class: "btn btn-info " %>
-    <%= link_to "Supprimer Memo", memo_path(@memo), class: "btn btn-danger btn-shadow",
-        data: { turbo_method: :delete, turbo_confirm: "Supprimer ce mémo ?" } %>
   </div>
-
 </div>

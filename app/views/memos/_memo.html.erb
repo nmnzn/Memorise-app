@@ -1,11 +1,11 @@
 <div class="memo-item"
-     data-controller="navigate"
-     data-navigate-url-value="<%= memo_path(memo) %>"
-     data-action="click->navigate#go">
+    data-controller="navigate"
+    data-navigate-url-value="<%= memo_path(memo) %>"
+    data-action="click->navigate#go">
 
   <div class="memo-item__info">
     <span class="memo-item__name"><%= memo.name %></span>
-    <span class="memo-item__badge">0 / <%= memo.cards.count %></span>
+    <span class="memo-item__badge"><%= Answer.where(card: memo.cards, user: current_user, value: true).count %> / <%= memo.cards.count %></span>
   </div>
 
   <div class="memo-item__actions">

@@ -1,12 +1,11 @@
 <% if user_signed_in? %>
   <div class="dashboard-home">
-    <h1 class="dashboard-home__title">
-      Bienvenue <%= current_user.email.split("@").first.capitalize %> !
-    </h1>
+    <p>Bienvenue <%= current_user.email.split("@").first.capitalize %> ! Que souhaites-tu réviser aujourd’hui ?
+    </p>
 
     <div class="dashboard-home__actions">
-      <%= link_to "Mes mémos", memos_path, class: "dashboard-home__button dashboard-home__button--yellow" %>
-      <%= link_to "Créer un mémo", new_memo_path, class: "dashboard-home__button dashboard-home__button--purple" %>
+      <%= link_to "Mes mémos", memos_path, class: "btn btn-primary btn-shadow" %>
+      <%= link_to "Créer un mémo", new_memo_path, class: "btn btn-secondary btn-shadow" %>
     </div>
 
     <div class="dashboard-home__stats">
@@ -26,7 +25,7 @@
       </div>
 
       <div class="dashboard-home__stats-text">
-        <h2>De flashcards que tu as déjà mémorisées !</h2>
+        <h3>De flashcards que tu as déjà mémorisées !</h3>
         <p><%= @known_cards_count %> sur <%= @total_cards_count %> cards maîtrisées</p>
       </div>
     </div>

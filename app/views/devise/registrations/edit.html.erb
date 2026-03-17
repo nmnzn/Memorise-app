@@ -4,23 +4,23 @@
     <h1>Mon profil</h1>
   </div>
 
-  <div class="auth-card">
+  <div class="auth-card mt-2">
     <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
       <%= f.error_notification %>
 
-      <div class="auth-card__field">
+      <div class="auth-card__field mt-2">
         <%= f.input :email, required: true, autofocus: true, label: "Email", input_html: { class: "memo-new-form__input" }, label_html: { class: "memo-new-form__label" }, wrapper: false %>
       </div>
 
-      <div class="auth-card__field">
+      <div class="auth-card__fiel mt-2">
         <%= f.input :password, required: false, label: "Nouveau mot de passe", hint: "Laisser vide pour ne pas changer", input_html: { class: "memo-new-form__input", autocomplete: "new-password" }, label_html: { class: "memo-new-form__label" }, wrapper: false %>
       </div>
 
-      <div class="auth-card__field">
+      <div class="auth-card__field mb-2">
         <%= f.input :password_confirmation, required: false, label: "Confirmation", input_html: { class: "memo-new-form__input", autocomplete: "new-password" }, label_html: { class: "memo-new-form__label" }, wrapper: false %>
       </div>
 
-      <div class="auth-card__field">
+      <div class="auth-card__field mb-2">
         <%= f.input :current_password, required: true, label: "Mot de passe actuel", hint: "Requis pour valider les changements", input_html: { class: "memo-new-form__input", autocomplete: "current-password" }, label_html: { class: "memo-new-form__label" }, wrapper: false %>
       </div>
 

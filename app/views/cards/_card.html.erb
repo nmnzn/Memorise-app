@@ -1,6 +1,13 @@
-<article class="memo-card">
-  <span class="memo-card__question"><%= card.ask %></span>
-  <%= link_to memo_card_path(memo, card), class: "memo-card__btn" do %>
-    <i class="fa-solid fa-eye"></i>
-  <% end %>
-</article>
+
+  <article class="memo-card"
+          data-controller="navigate"
+          data-navigate-url-value="<%= memo_card_path(card.memo, card) %>"
+          data-action="click->navigate#go">
+
+    <span class="memo-card__question"><%= card.ask %></span>
+      <%= button_to memo_card_path(card.memo, card), method: :delete,
+        form: { data: { turbo_confirm: "Supprimer cette carte ?" } },class: "memo-item__trash" do %>
+        <i class="fa-solid fa-trash"></i>
+      <% end %>
+
+  </article>

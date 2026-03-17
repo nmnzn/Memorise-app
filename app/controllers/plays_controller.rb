@@ -2,26 +2,36 @@ class PlaysController < ApplicationController
   before_action :set_card, only: [:reveal, :knew, :did_not_know]
 
   def start
+
+    url = request.referer
+
+    if url.match?(%r{/memos/\d+})
+      memo_id = url.split("/").last.to_i
+      @memo = Memo.find(memo_id)
+      @cards = @memo.cards
+    elsif params[:memo_id].nil?
+      @memo = nil
+      @cards = current_user.cards
+    end
+
     session[:play_count] = 0
-    first_card = next_unanswered_card
-
-    if first_card
-      redirect_to play_path(first_card)
+    if @cards.nil?
+      redirect_to memos_path, notice: "Bravo, tu as terminé toutes les cards."
     else
-      redirect_to memos_path, notice: "Bravo, tu as terminé toutes les cards."
+      @card = next_unanswered_card
     end
   end
 
-  def show
-    @cards = current_user.cards.joins(:answers).where(answers:
-     { user: current_user, value: false }).shuffle
-    redirect_to root_path, notice: "vous n'avez pas de card à jouer" if @cards.empty?
-    @card = @cards.first
+  #def show
+    #@cards = current_user.cards.joins(:answers).where(answers:
+    # { user: current_user, value: false }).shuffle
+    #redirect_to root_path, notice: "vous n'avez pas de card à jouer" if @cards.empty?
+    #@card = @cards.first
 
-    if @card.nil?
-      redirect_to memos_path, notice: "Bravo, tu as terminé toutes les cards."
-    end
-  end
+    #if @card.nil?
+      #redirect_to memos_path, notice: "Bravo, tu as terminé toutes les cards."
+    #end
+  #end
 
   def reveal
     @answer = Answer.find_by(card: @card, user: current_user)
@@ -66,17 +76,22 @@ class PlaysController < ApplicationController
 
   def next_unanswered_card(exclude: nil)
     count = session[:play_count].to_i
-    cards = current_user.cards
-                        .joins(:answers)
-                        .where(answers: { user: current_user, value: false })
-    cards = cards.where.not(id: exclude) if exclude
+
+    if @memo == nil
+      cards = current_user.cards.joins(:answers).where(answers: { user: current_user, value: false })
+      cards = cards.where.not(id: exclude) if exclude
+    else
+      memo_to_play = @memo
+      cards = memo_to_play.cards.joins(:answers).where(answers: { user: current_user, value: false })
+      cards = cards.where.not(id: exclude) if exclude
+    end
 
     if count % 6 == 0 && count > 0
       cards.order("answers.score DESC").first
     elsif count % 3 == 0 && count > 0
       cards.order("answers.score ASC").first
     else
-    cards.shuffle.first
+      cards.shuffle.first
     end
   end
 end

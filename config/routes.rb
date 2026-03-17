@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   resources :memos do
+    member do
+      patch :toggle_visibility
+    end
+
     resources :memo_shares, only: [:create, :destroy]
     resources :cards, only: [:new, :create, :show, :destroy, :edit, :update]
     resources :chats, only: [:new, :create, :show]
@@ -24,8 +28,8 @@ Rails.application.routes.draw do
   end
 
   get "play", to: "plays#start", as: :play_start
-  get "play/:id", to: "plays#start", as: :play
-  #get "play/reveal/:id", to: "plays#reveal", as: :reveal_play
+  get "play/:id", to: "plays#show", as: :play
+  get "play/reveal/:id", to: "plays#reveal", as: :reveal_play
   patch "play/:id/knew", to: "plays#knew", as: :knew_play
   patch "play/:id/did_not_know", to: "plays#did_not_know", as: :did_not_know_play
 

@@ -14,7 +14,11 @@ class User < ApplicationRecord
   def accessible_memos
     Memo
       .left_joins(:memo_shares)
-      .where("memos.user_id = :user_id OR memo_shares.user_id = :user_id", user_id: id)
+      .where(
+        "memos.user_id = :user_id OR memo_shares.user_id = :user_id OR memos.is_public = :is_public",
+        user_id: id,
+        is_public: true
+      )
       .distinct
   end
 

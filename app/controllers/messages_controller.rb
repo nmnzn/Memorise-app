@@ -7,12 +7,18 @@ class MessagesController < ApplicationController
     @message.role = "user"
     if @message.save!
       #appeler une méthode qui renvoie une réponse du LLM pour l'afficher dans le chat
-      answer = llm_answering_to_user(@message.content)
-      message_from_llm = Message.new(content: answer, role: "assistant", chat_id: @chat.id)
-      if message_from_llm.save!
-        redirect_to memo_chat_path(@chat.memo, @chat)
+      hash_response_from_llm = llm_answering_to_user(@message.content)
+      llm_message = hash_response_from_llm["message"]
+
+      unless hash_response_from_llm["complete"] == "true"
+        message_from_llm = Message.new(content: llm_message, role: "assistant", chat_id: @chat.id)
+        if message_from_llm.save!
+          redirect_to memo_chat_path(@chat.memo, @chat)
+        else
+          render "chats/show", status: :unprocessable_entity
+        end
       else
-        render "chats/show", status: :unprocessable_entity
+        #appeler le LLM de génération de cards et lui donner l'historique de la conversation
       end
     end
   end
@@ -25,15 +31,48 @@ class MessagesController < ApplicationController
 
   private
 
+  require 'json'
+
   def message_params
     params.require(:message).permit(:content)
   end
 
-  def llm_answering_to_user(message)
-    collect_info = "Tu es un assistant afin de générer un programme de mémorisation, ton rôle est de question l'utilisateur
-    sur son besoin, et reformuler ce que tu as compris en conclusion. Tu dois avoir suffisement d'information sur le sujet à 
-    mémoriser et connaitre le nombre de cards à générer. fais des messages courts de quelques mots uniquement, comme des SMS."
-    RubyLLM.chat.with_instructions(collect_info).ask(message).content
+  def instructions_and_history
+    
   end
 
-end
+  def llm_answering_to_user(message)
+    collect_info = <<~PROMPT
+      Tu es un assistant pour générer un programme de mémorisation. Ton rôle est de questionner l'utilisateur
+      sur son besoin, et reformuler ce que tu as compris en conclusion. Tu dois avoir suffisamment d'information
+      sur le sujet à mémoriser et connaître le nombre de cards à générer. Une fois que tu as toutes les informations, reformule
+      ce que tu as compris à l'utilisateur pour lui demander son accord.
+      Fais des messages courts de quelques mots uniquement, comme des SMS.
+
+      Réponds UNIQUEMENT avec un objet JSON valide, sans markdown, sans balises code, sans texte autour.
+      Le format exact est :
+      {"complete": false, "message": "ta réponse"}
+
+      La clé "complete" vaut false tant que tu n'as pas toutes les informations, et true quand tu es prêt à générer le programme ET que l'utilisateur 
+      a donné son accord après ta reformulation.
+      Lorsque complete est true, le message sera "Super, je génère le programme de mémorisation !".
+    PROMPT
+
+    output_schema = {
+      type: "object",
+      properties: {
+        complete: { type: "boolean" },
+        message:  { type: "string" }
+      },
+      required: ["complete", "message"],
+      additionalProperties: false
+    }
+
+    llm_response = RubyLLM.chat.with_schema(output_schema).with_model("gpt-4.1-mini").with_instructions(collect_info).ask(message).content
+    #llm_hash = JSON.parse(llm_response)
+    return llm_response
+
+  end
+
+
+end 

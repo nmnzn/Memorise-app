@@ -1,0 +1,21 @@
+<div class="play-card" data-controller="play" data-play-correct-value="<%= card.answer %>">
+  <h2>Question de la card</h2>
+
+  <div class="play-question">
+    <%= card.ask %>
+  </div>
+
+  <div class="play-qcm-choices">
+    <% card.qcm_choices.each do |choice| %>
+      <button type="button"
+              class="play-qcm-btn"
+              data-action="play#selectChoice"
+              data-choice="<%= choice %>">
+        <%= choice %>
+      </button>
+    <% end %>
+  </div>
+
+  <%= button_to "Je savais",        knew_play_path(card),         method: :patch, class: "hidden", data: { play_target: "knewBtn" } %>
+  <%= button_to "Je ne savais pas", did_not_know_play_path(card), method: :patch, class: "hidden", data: { play_target: "nopeBtn" } %>
+</div>

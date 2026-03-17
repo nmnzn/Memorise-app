@@ -1,13 +1,55 @@
 .top-bar {
   background: $color-secondary;
   padding: 16px 16px;
-  border: 2px solid #000;
+  border-bottom: 1px solid $white;
+  display: flex;                    // ← ajouter
+  align-items: center;              // ← ajouter
+  justify-content: space-between;  // ← ajouter
+
+  .dropdown-menu {
+  background-color: $white;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  .dropdown-item {
+    color: $color-secondary;
+
+    &:hover {
+      background-color: lighten($color-secondary, 60%);
+    }
+  }
+
+  .dropdown-divider {
+    border-color: lighten($color-secondary, 60%);
+  }
+}
 
   &__logo {
     font-family: "Bungee", sans-serif;
-    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.2rem;
     color: #fff;
-    text-decoration: none;
-    text-transform: uppercase;
+    text-decoration: none !important;
+  }
+
+  &__mascotte {
+    width: auto;
+    height: 48px;
+  }
+
+  &__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid $white;
+    cursor: pointer;
+
+  &::after {
+    display: none; // pour cacher la flèche dropdown Bootstrap
+  }
   }
 }

@@ -33,9 +33,9 @@ class PlaysController < ApplicationController
     #end
   #end
 
-  def reveal
-    @answer = Answer.find_by(card: @card, user: current_user)
-  end
+  #def reveal
+    #@answer = Answer.find_by(card: @card, user: current_user)
+  #end
 
   def knew
     @answer = Answer.find_or_create_by(card: @card, user: current_user)

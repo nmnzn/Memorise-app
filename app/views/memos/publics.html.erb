@@ -1,0 +1,19 @@
+<div>
+  <div class="memos-header">
+    <h1>Mémos publics</h1>
+  </div>
+
+  <div class="memos-actions mb-4 mt-8">
+    <%= link_to "Mes Mémos", memos_path, class: "btn btn-lg btn-primary btn-shadow" %>
+  </div>
+
+  <div class="memos-page">
+    <% if @memos.any? %>
+      <div class="memos-list">
+        <%= render @memos %>
+      </div>
+    <% else %>
+      <p class="text-center mt-4">Aucun mémo public pour le moment.</p>
+    <% end %>
+  </div>
+</div>

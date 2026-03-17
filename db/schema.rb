@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_16_111029) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_17_112913) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -29,7 +29,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_16_111029) do
     t.text "answer"
     t.text "ask"
     t.datetime "created_at", null: false
+    t.integer "kind", default: 1, null: false
     t.bigint "memo_id", null: false
+    t.jsonb "qcm_choices"
     t.datetime "updated_at", null: false
     t.index ["memo_id"], name: "index_cards_on_memo_id"
   end
@@ -41,8 +43,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_16_111029) do
     t.index ["memo_id"], name: "index_chats_on_memo_id"
   end
 
+  create_table "memo_shares", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "memo_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["memo_id"], name: "index_memo_shares_on_memo_id"
+    t.index ["user_id"], name: "index_memo_shares_on_user_id"
+  end
+
   create_table "memos", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.boolean "is_public"
     t.string "name"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
@@ -75,6 +87,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_16_111029) do
   add_foreign_key "answers", "users"
   add_foreign_key "cards", "memos"
   add_foreign_key "chats", "memos"
+  add_foreign_key "memo_shares", "memos"
+  add_foreign_key "memo_shares", "users"
   add_foreign_key "memos", "users"
   add_foreign_key "messages", "chats"
 end

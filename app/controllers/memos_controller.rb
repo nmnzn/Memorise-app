@@ -1,16 +1,18 @@
 class MemosController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_memo, only: [:show, :edit, :update, :destroy, :toggle_visibility]
+  before_action :authorize_owner!, only: [:edit, :update, :destroy, :toggle_visibility]
+
   def index
-    @memos = current_user.memos
+    @memos = current_user.accessible_memos
   end
 
   def show
-    @memo = Memo.find(params[:id])
     @cards = @memo.cards
   end
 
   def new
     @memo = Memo.new
-    3.times { @memo.cards.build }
   end
 
   def create
@@ -20,26 +22,14 @@ class MemosController < ApplicationController
     if @memo.save
       redirect_to memo_path(@memo), notice: "Le mémo a bien été créé."
     else
-      while @memo.cards.size < 3
-        @memo.cards.build
-      end
       render :new, status: :unprocessable_entity
     end
   end
 
-  def destroy
-    @memo = Memo.find(params[:id])
-    @memo.destroy
-    redirect_to memos_path
-  end
-
   def edit
-    @memo = Memo.find(params[:id])
   end
 
   def update
-    @memo = Memo.find(params[:id])
-
     if @memo.update(memo_params)
       redirect_to memo_path(@memo)
     else
@@ -47,10 +37,38 @@ class MemosController < ApplicationController
     end
   end
 
+  def destroy
+    @memo.destroy
+    redirect_to memos_path
+  end
+
+  def toggle_visibility
+    @memo.update!(is_public: !@memo.is_public?)
+
+    notice_message =
+      if @memo.is_public?
+        "Le mémo est maintenant public."
+      else
+        "Le mémo est maintenant privé."
+      end
+
+    redirect_back fallback_location: memo_path(@memo), notice: notice_message
+  end
+
   private
 
+  def set_memo
+    @memo = current_user.accessible_memos.find(params[:id])
+  end
+
+  def authorize_owner!
+    return if @memo.user == current_user
+
+    redirect_to memo_path(@memo), alert: "Seul le propriétaire peut modifier ce mémo."
+  end
+
   def memo_params
-    params.require(:memo).permit(:name, cards_attributes: [:ask, :answer])
+    params.require(:memo).permit(:name)
   end
 
   def generate_cards_with_llm(system_prompt, user_prompt)

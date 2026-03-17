@@ -27,19 +27,20 @@ class MessagesController < ApplicationController
         return
       end
 
+      card_count = 0
       llm_cards.each do |card_data|
         next unless card_data.is_a?(Hash)
 
         question = card_data["question"] || card_data[:question]
-        answer = card_data["answer"] || card_data[:answer]
+        answer   = card_data["answer"]   || card_data[:answer]
 
         next if question.blank? || answer.blank?
 
-        @chat.memo.cards.create!(
-          ask: question,
-          answer: answer
-        )
+        kind = card_count.odd? ? :qcm : :flip
+        @chat.memo.cards.create!(ask: question, answer: answer, kind: kind)
+        card_count += 1
       end
+
 
       redirect_to memo_path(@chat.memo), notice: "Les cards ont bien été créées."
     else
@@ -57,7 +58,7 @@ class MessagesController < ApplicationController
   end
 
   def generate_cards_with_llm(system_prompt, user_prompt)
-    response = RubyLLM.chat.with_instructions(system_prompt).ask(user_prompt).content
+    response = RubyLLM.chat(model: "gpt-4o-mini").with_instructions(system_prompt).ask(user_prompt).content
     JSON.parse(response)
   end
 

@@ -20,5 +20,6 @@
   <div class="container">
     <%= render "chats/shared/chat", messages: @chat.messages %>
     <%= render "chats/shared/message_input", chat: @chat, message: @message %>
+    <%= button_to "Recharger", request.url %>
   </div>
 </div>

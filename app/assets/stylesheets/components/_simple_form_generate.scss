@@ -2,17 +2,17 @@
 .simple-form-generate {
 
     textarea {
-        background-color: $color-secondary;
+        background-color: white;
         border-radius: 20px;
-        box-shadow: 4px 4px 0 $color-success;
+        box-shadow: 4px 4px 0 $color-primary;
         height: 15vh;
         width: 80vw;
         margin-bottom: 20px;
         padding:10px;
-        border: solid $color-success;
+        border: solid $color-primary;
         border-width: 3px;
         border-style: inset; 
-        color: white; 
+        color:$color-primary; 
     }
 
     label {

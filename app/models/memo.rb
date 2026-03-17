@@ -6,4 +6,12 @@ class Memo < ApplicationRecord
   accepts_nested_attributes_for :cards, reject_if: :all_blank
 
   validates :name, presence: true
+
+  def accessible_by?(user)
+    self.user == user || shared_users.exists?(id: user.id)
+  end
+
+  def owned_by?(user)
+    self.user == user
+  end
 end

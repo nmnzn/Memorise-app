@@ -185,14 +185,17 @@
   &__actions {
     position: relative;
     z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
+  &__share,
   &__trash {
     flex-shrink: 0;
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background-color: $color-danger;
     border: 2px solid #000;
     box-shadow: 3px 3px 0 #000;
     display: flex;
@@ -201,5 +204,15 @@
     color: rgb(3, 3, 3);
     font-size: 1.1rem;
     z-index: 1;
+    text-decoration: none;
+    padding: 0;
+  }
+
+  &__share {
+    background-color: #f0b13f;
+  }
+
+  &__trash {
+    background-color: $color-danger;
   }
 }

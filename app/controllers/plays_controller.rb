@@ -1,4 +1,5 @@
 class PlaysController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_card, only: [:reveal, :knew, :did_not_know]
 
   def start
@@ -25,7 +26,7 @@ class PlaysController < ApplicationController
 
   def knew
     @answer = Answer.find_or_create_by(card: @card, user: current_user)
-    new_score = [@answer.score + 0.25, 1.0].min
+    new_score = [@answer.score.to_f + 0.25, 1.0].min
     @answer.update(score: new_score, value: new_score >= 1.0)
 
     session[:play_count] += 1
@@ -40,7 +41,7 @@ class PlaysController < ApplicationController
 
   def did_not_know
     @answer = Answer.find_or_create_by(card: @card, user: current_user)
-    new_score = [@answer.score - 0.25, 0.0].max
+    new_score = [@answer.score.to_f - 0.25, 0.0].max
     @answer.update(score: new_score, value: false)
 
     session[:play_count] += 1
@@ -55,9 +56,8 @@ class PlaysController < ApplicationController
 
   private
 
-
   def set_card
-    @card = current_user.cards.find(params[:id])
+    @card = current_user.accessible_cards.find(params[:id])
   end
 
   def next_unanswered_card(exclude: nil)

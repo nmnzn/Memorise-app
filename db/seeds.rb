@@ -10,7 +10,6 @@
 
 require 'faker'
 require 'json'
-require 'pry-rails'
 
 Faker::Config.locale = 'fr'
 

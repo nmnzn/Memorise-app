@@ -7,6 +7,10 @@ class MemosController < ApplicationController
     @memos = current_user.accessible_memos
   end
 
+  def publics
+    @memos = Memo.where(is_public: true)
+  end
+
   def show
     @cards = @memo.cards
   end
@@ -49,7 +53,11 @@ class MemosController < ApplicationController
   private
 
   def set_memo
-    @memo = current_user.accessible_memos.find(params[:id])
+    @memo = Memo.find(params[:id])
+
+    return if @memo.accessible_by?(current_user) || (@memo.respond_to?(:is_public) && @memo.is_public?)
+
+    redirect_to memos_path, alert: "Tu n'as pas accès à ce mémo."
   end
 
   def authorize_owner!
@@ -59,7 +67,7 @@ class MemosController < ApplicationController
   end
 
   def memo_params
-    params.require(:memo).permit(:name, cards_attributes: [:ask, :answer])
+    params.require(:memo).permit(:name, :is_public, cards_attributes: [:ask, :answer])
   end
 
   def generate_cards_with_llm(system_prompt, user_prompt)

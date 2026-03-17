@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   resources :memos do
+    collection do
+      get :publics
+    end
+
     resources :memo_shares, only: [:create, :destroy]
     resources :cards, only: [:new, :create, :show, :destroy, :edit, :update]
     resources :chats, only: [:new, :create, :show]

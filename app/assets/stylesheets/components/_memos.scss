@@ -143,6 +143,14 @@
   gap: 20px;
 }
 
+.memos-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
 .memo-item {
   display: flex;
   align-items: center;

@@ -3,8 +3,10 @@
   <div class="memos-header">
     <h1>Mes mémos</h1>
   </div>
-  <div class="text-center mb-4 mt-8">
-  <%= link_to "Nouveau Mémo", new_memo_path, class: " btn btn-lg btn-primary btn-shadow" %>
+
+  <div class="memos-actions mb-4 mt-8">
+    <%= link_to "Nouveau Mémo", new_memo_path, class: "btn btn-lg btn-primary btn-shadow" %>
+    <%= link_to "Mémos Publics", publics_memos_path, class: "btn btn-lg btn-primary btn-shadow" %>
   </div>
 
   <div class="memos-page">

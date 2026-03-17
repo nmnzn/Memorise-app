@@ -3,6 +3,8 @@ class Memo < ApplicationRecord
 
   has_many :cards, dependent: :destroy, inverse_of: :memo
   has_one :chat, dependent: :destroy
+  has_many :memo_shares, dependent: :destroy
+  has_many :shared_users, through: :memo_shares, source: :user
 
   has_many :memo_shares, dependent: :destroy
   has_many :shared_users, through: :memo_shares, source: :user

@@ -29,7 +29,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_112913) do
     t.text "answer"
     t.text "ask"
     t.datetime "created_at", null: false
+    t.integer "kind", default: 1, null: false
     t.bigint "memo_id", null: false
+    t.jsonb "qcm_choices"
     t.datetime "updated_at", null: false
     t.index ["memo_id"], name: "index_cards_on_memo_id"
   end

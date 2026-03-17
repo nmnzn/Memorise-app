@@ -1,7 +1,6 @@
-.<div class="container">
-    <%= link_to "Retour", memo_path(@memo), class:"btn btn-secondary" %>
-
-    <h1>Vous pouvez modifier le nom de votre mémo :</h1>
+<div class="simple-form">
+  <h1 class="page-title sticker-text mb-3">MODIFIER MON MÉMO</h1>
+    <%= link_to "Retour", memo_path(@memo), class: "btn btn-lg btn-primary btn-shadow" %>
 
     <%= simple_form_for [@memo] do |f| %>
     <%= f.input :name, label: "Nom actuel : #{@memo.name}", placeholder: "Saisir le nouveau nom" %>

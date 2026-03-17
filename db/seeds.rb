@@ -65,4 +65,8 @@ data.each do |memo_with_cards|
   puts "Memo created (#{memo.name} with #{memo.cards.count} cards) and different answers scores (one answer record per card-user) ☑️"
 end
 
+puts "Generating QCM choices... 🤖"
+Card.where(kind: 2, qcm_choices: nil).find_each { |c| QcmGeneratorJob.perform_now(c.id) }
+puts "QCM choices generated ✅"
+
 puts "✅ All set ! You have now in your DB : 1 user, 10 memos (topics), 5 cards (question and answer) per memo, 2 answers (recorded) per card (one true and one false)"

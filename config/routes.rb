@@ -14,8 +14,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   resources :memos do
-    member do
-      patch :toggle_visibility
+    collection do
+      get :publics
     end
 
     resources :memo_shares, only: [:create, :destroy]

@@ -6,19 +6,16 @@ class PlaysController < ApplicationController
     url = request.referer
 
     if url.match?(%r{/memos/\d+})
-      memo_id = extraire_id(url)
-      @memo = nil
-      @card = current_user.cards
+      memo_id = url.split("/").last.to_i
+      @memo = Memo.find(memo_id)
+      @cards = @memo.cards
     elsif params[:memo_id].nil?
       @memo = nil
-      @card = current_user.cards
-    else
-      @memo = Memo.find(params[:memo_id])
-      @card = @memo.cards
+      @cards = current_user.cards
     end
 
     session[:play_count] = 0
-    if @card.nil?
+    if @cards.nil?
       redirect_to memos_path, notice: "Bravo, tu as terminé toutes les cards."
     else
       @card = next_unanswered_card
@@ -84,7 +81,7 @@ class PlaysController < ApplicationController
       cards = current_user.cards.joins(:answers).where(answers: { user: current_user, value: false })
       cards = cards.where.not(id: exclude) if exclude
     else
-      memo_to_play = Memo.find(params[:memo_id])
+      memo_to_play = @memo
       cards = memo_to_play.cards.joins(:answers).where(answers: { user: current_user, value: false })
       cards = cards.where.not(id: exclude) if exclude
     end
@@ -96,19 +93,5 @@ class PlaysController < ApplicationController
     else
       cards.shuffle.first
     end
-  end
-
-  def extraire_id(url)
-    #ici je reverse la chaine de caractères pour commencer l'itération sur la fin de l'url comportant l'id, afin d'éviter des nombre dans le reste de l'url
-    extract = []
-    url.split.reverse.each do |car|
-      if car.to_i == 0 || car.to_i == 1 || car.to_i == 2 || car.to_i == 3 || car.to_i == 4 || car.to_i == 5 || car.to_i == 6 || car.to_i == 7 || car.to_i == 8 || car.to_i == 9
-        extract.push(car)
-      else
-        break
-      end
-    end
-    id = extract.reverse.join
-    raise
   end
 end

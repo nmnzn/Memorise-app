@@ -19,23 +19,9 @@ class PlaysController < ApplicationController
       redirect_to memos_path, notice: "Bravo, tu as terminé toutes les cards."
     else
       @card = next_unanswered_card
+      @mode = (@card.qcm? && @card.qcm_choices.present?) ? :qcm : :flip
     end
   end
-
-  #def show
-    #@cards = current_user.cards.joins(:answers).where(answers:
-    # { user: current_user, value: false }).shuffle
-    #redirect_to root_path, notice: "vous n'avez pas de card à jouer" if @cards.empty?
-    #@card = @cards.first
-
-    #if @card.nil?
-      #redirect_to memos_path, notice: "Bravo, tu as terminé toutes les cards."
-    #end
-  #end
-
-  #def reveal
-    #@answer = Answer.find_by(card: @card, user: current_user)
-  #end
 
   def knew
     @answer = Answer.find_or_create_by(card: @card, user: current_user)

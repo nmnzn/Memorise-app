@@ -13,6 +13,7 @@ class MemosController < ApplicationController
 
   def new
     @memo = Memo.new
+    3.times { @memo.cards.build }
   end
 
   def create
@@ -22,6 +23,9 @@ class MemosController < ApplicationController
     if @memo.save
       redirect_to memo_path(@memo), notice: "Le mémo a bien été créé."
     else
+      while @memo.cards.size < 3
+        @memo.cards.build
+      end
       render :new, status: :unprocessable_entity
     end
   end
@@ -55,7 +59,7 @@ class MemosController < ApplicationController
   end
 
   def memo_params
-    params.require(:memo).permit(:name)
+    params.require(:memo).permit(:name, cards_attributes: [:ask, :answer])
   end
 
   def generate_cards_with_llm(system_prompt, user_prompt)

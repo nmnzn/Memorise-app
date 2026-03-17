@@ -21,6 +21,29 @@
         <%= f.label :name, "Titre du mémo", class: "memo-new-form__label" %>
         <%= f.text_field :name, placeholder: "Ex: Ruby, Histoire, Anglais", class: "memo-new-form__input" %>
       </div>
+
+      <div class="memo-new-form__cards-section">
+        <h2 class="memo-new-form__subtitle">Ajoute des cards si tu veux</h2>
+
+        <%= f.simple_fields_for :cards do |card_form| %>
+          <div class="memo-new-form__card-block">
+            <div class="memo-new-form__field">
+              <%= card_form.label :ask, "Question", class: "memo-new-form__label" %>
+              <%= card_form.text_field :ask,
+                placeholder: "Ex: Qu'est-ce qu'une variable ?",
+                class: "memo-new-form__input" %>
+            </div>
+
+            <div class="memo-new-form__field">
+              <%= card_form.label :answer, "Réponse", class: "memo-new-form__label" %>
+              <%= card_form.text_field :answer,
+                placeholder: "Ex: Une variable stocke une valeur.",
+                class: "memo-new-form__input" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
       <%= f.submit "Créer", class: "btn btn-primary btn-shadow w-100 mt-4" %>
     <% end %>
   </div>

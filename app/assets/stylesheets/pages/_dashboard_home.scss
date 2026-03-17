@@ -13,7 +13,8 @@
 
   &__actions {
     display: flex;
-    gap: 16px;
+    justify-content: center;
+    gap: 32px;
     margin-bottom: 32px;
     padding: 18px;
     background: #2d176f;
@@ -85,9 +86,10 @@
     stroke-linecap: round;
   }
 
-  &__stats-text h2 {
+  &__stats-text h3 {
     margin: 0 0 8px;
-    font-size: 1.8rem;
+    align-content: center;
+    font-size: 1.4rem;
     font-weight: 900;
   }
 

@@ -10,7 +10,6 @@
 
 require 'faker'
 require 'json'
-require 'pry-rails'
 
 Faker::Config.locale = 'fr'
 
@@ -50,19 +49,20 @@ data.each do |memo_with_cards|
   )
   memo.save!
 
-    memo_with_cards["cards"].each do |card|
-      new_card = Card.new(
-        ask: card["ask"],
-        answer: card["answer"],
-        memo_id: memo.id
-      )
-      new_card.save!
-      new_card.answers.first.update(value: card["value"])
-      new_card.answers.first.update(score: card["score"])
-    end
+  card_count = 0
+  memo_with_cards["cards"].each do |card|
+    new_card = Card.new(
+      ask:     card["ask"],
+      answer:  card["answer"],
+      memo_id: memo.id,
+      kind:    card_count.odd? ? :qcm : :flip
+    )
+    new_card.save!
+    new_card.answers.first.update(value: card["value"])
+    new_card.answers.first.update(score: card["score"])
+    card_count += 1
+  end
   puts "Memo created (#{memo.name} with #{memo.cards.count} cards) and different answers scores (one answer record per card-user) ☑️"
 end
 
 puts "✅ All set ! You have now in your DB : 1 user, 10 memos (topics), 5 cards (question and answer) per memo, 2 answers (recorded) per card (one true and one false)"
-
-

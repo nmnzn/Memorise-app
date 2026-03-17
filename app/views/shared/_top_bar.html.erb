@@ -1,0 +1,20 @@
+<header class="top-bar">
+  <%= link_to root_path, class: "top-bar__logo" do %>
+  <%= image_tag "mascotte_home.png", class: "top-bar__mascotte" %>
+    Memorise
+  <% end %>
+
+<% if user_signed_in? %>
+  <div class="dropdown">
+    <%= image_tag "Profil.jpeg", class: "top-bar__avatar dropdown-toggle",
+        data: { bs_toggle: "dropdown" }, role: "button" %>
+
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li><%= link_to "Mon profil", edit_user_registration_path, class: "dropdown-item" %></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><%= link_to "Se déconnecter", destroy_user_session_path,
+          data: { turbo_method: :delete }, class: "dropdown-item" %></li>
+    </ul>
+  </div>
+  <% end %>
+</header>

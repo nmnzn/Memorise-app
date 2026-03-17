@@ -1,0 +1,7 @@
+    <%= simple_form_for [chat, message], html: { class: "simple-form-generate" } do |f| %>
+
+        <%= f.label :content, "Que souhaites-tu mémoriser ?" %>
+        <%= f.text_area :content, placeholder: "Parle nous du sujet que tu souhaites mémoriser" %>
+        <%= f.submit "Envoyer", class: "btn btn-success btn-sm fw-bold" %>
+
+    <% end %>

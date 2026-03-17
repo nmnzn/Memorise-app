@@ -18,19 +18,7 @@
   <% end %>
 
   <div class="container">
-    <%= simple_form_for [@chat, @message], html: { class: "simple-form-generate" } do |f| %>
-
-        <%= f.label :content, "Que souhaites-tu mémoriser ?" %>
-        <%= f.text_area :content, placeholder: "Parle nous du sujet que tu souhaites mémoriser" %>
-
-        <%= f.input :volume, as: :radio_buttons, collection: @volume_collection, label: "Nombre de cards à générer (\"Synthétique\" par défaut)" %>
-
-        <%= f.input :profondeur, as: :radio_buttons, collection: @profondeur_collection, label: "Type de connaissances (\"grandes lignes\" par défaut)" %>
-        <div class="d-flex justify-content-between">
-          <%= image_tag "mascotte_create", alt: "mascotte en train de peindre" %>
-          <%= f.submit "Créer", class: "btn btn-success btn-sm fw-bold" %>
-        </div>
-
-    <% end %>
+    <%= render "chats/shared/chat", messages: @chat.messages %>
+    <%= render "chats/shared/message_input", chat: @chat, message: @message %>
   </div>
 </div>

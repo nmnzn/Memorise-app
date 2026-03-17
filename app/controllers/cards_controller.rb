@@ -1,9 +1,4 @@
 class CardsController < ApplicationController
-  def show
-    @card = Card.find(params[:id])
-    @memo = @card.memo
-  end
-
   def new
     @card = Card.new
     @memo = Memo.find(params[:memo_id])
@@ -22,8 +17,12 @@ class CardsController < ApplicationController
 
   def destroy
     @card = Card.find(params[:id])
+    @memo = @card.memo
     @card.destroy
-    redirect_to memo_path(@card.memo)
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove("card_#{params[:id]}") }
+      format.html { redirect_to memo_path(@memo) }
+    end
   end
 
   def edit
@@ -35,7 +34,7 @@ class CardsController < ApplicationController
     @card = Card.find(params[:id])
     @memo = Memo.find(params[:memo_id])
     if @card.update(card_params)
-      redirect_to memo_card_path(@memo, @card)
+      redirect_to memo_path(@memo)
     else
       render :edit, status: :unprocessable_entity
     end

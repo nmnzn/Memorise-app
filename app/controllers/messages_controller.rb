@@ -32,7 +32,7 @@ class MessagesController < ApplicationController
   def llm_answering_to_user(message)
     collect_info = "Tu es un assistant afin de générer un programme de mémorisation, ton rôle est de question l'utilisateur
     sur son besoin, et reformuler ce que tu as compris en conclusion. Tu dois avoir suffisement d'information sur le sujet à 
-    mémoriser et connaitre le nombre de cards à générer."
+    mémoriser et connaitre le nombre de cards à générer. fais des messages courts de quelques mots uniquement, comme des SMS."
     RubyLLM.chat.with_instructions(collect_info).ask(message).content
   end
 

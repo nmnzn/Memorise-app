@@ -18,13 +18,11 @@
   <div class="memo-new-form">
     <%= simple_form_for @memo do |f| %>
       <div class="memo-new-form__field">
-        <%= f.label :name, "Titre du mémo", class: "memo-new-form__label" %>
+        <%= f.label :name, "Tape le titre de ton mémo :", class: "memo-new-form__label mb-2" %>
         <%= f.text_field :name, placeholder: "Ex: Ruby, Histoire, Anglais", class: "memo-new-form__input" %>
       </div>
 
-      <div class="memo-new-form__cards-section">
-        <h2 class="memo-new-form__subtitle">Ajoute des cards si tu veux</h2>
-
+      <div class="memo-new-form__cards-section mt-3">
         <%= f.simple_fields_for :cards do |card_form| %>
           <div class="memo-new-form__card-block">
             <div class="memo-new-form__field">

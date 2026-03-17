@@ -1,13 +1,9 @@
-<div class=>
-    <h1 class="page-title sticker-text mb-3">
-    <h1>Mon Memo</h1>
-  </div>
-
+<div>
+  <h1 class="page-title sticker-text mb-3"><%= @memo.name %></h1>
   <div class="memo-show-header">
     <%= link_to memos_path, class: "memo-show-header__back" do %>
       <i class="fa-solid fa-arrow-left"></i>
     <% end %>
-    <h1 class="memo-show-header__title"><%= @memo.name %></h1>
     <%= link_to "Nouvelle Card", new_memo_card_path(@memo), class: "btn btn-primary btn-shadow" %>
   </div>
 
@@ -25,10 +21,8 @@
     <% end %>
   </div>
 
-
   <div class="memo-show-danger">
     <%= link_to "Jouer ce mémo", play_start_path, class: "btn btn-primary btn-shadow" %>
-    <%= link_to "Nouvelle Card", new_memo_card_path(@memo), class: "btn btn-info btn-shadow" %>
     <%= link_to "Modifier Memo", edit_memo_path(@memo), class: "btn btn-info " %>
   </div>
 </div>

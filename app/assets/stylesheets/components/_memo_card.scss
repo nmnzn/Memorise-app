@@ -10,11 +10,16 @@
   border: 2px solid #000;
   box-shadow: 4px 4px 0 #000;
   border-radius: 1.25rem;
-  padding: 18px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 20px;
+    cursor: pointer;
+  }
 
   &__question {
     font-size: 0.95rem;
@@ -24,12 +29,46 @@
     line-height: 1.4;
   }
 
+  &__chevron {
+    color: $color-white;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+
+    &.rotated {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__body {
+    border-top: 2px solid rgba(0, 0, 0, 0.2);
+    padding: 14px 20px;
+  }
+
+  &__answer {
+    font-size: 0.9rem;
+    color: $color-white;
+    margin-bottom: 14px;
+    line-height: 1.5;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0 #000;
+    border-radius: 0.75rem;
+    padding: 10px 14px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
   &__btn {
     flex-shrink: 0;
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: $color-primary;
+    background-color: $color-danger;
     border: 2px solid #000;
     box-shadow: 3px 3px 0 #000;
     display: flex;
@@ -38,10 +77,21 @@
     color: #000;
     font-size: 1rem;
     text-decoration: none;
+    cursor: pointer;
 
     &:hover {
       box-shadow: 1px 1px 0 #000;
       transform: translate(2px, 2px);
+    }
+
+    &--delete {
+      background-color: $color-danger;
+      color: $color-white;
+    }
+
+    &--edit {
+      background-color: $color-primary;
+      color: #000;
     }
   }
 }

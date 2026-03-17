@@ -58,7 +58,7 @@ class MessagesController < ApplicationController
       sur le sujet à mémoriser et connaître le nombre de cards à générer. Une fois que tu as toutes les informations, reformule
       ce que tu as compris à l'utilisateur pour lui demander son accord.
       Fais des messages courts de quelques mots uniquement, comme des SMS. N'hésite pas à demander du complément d'information si pertinent selon le sujet, 
-      mais limite le durée de l'échange au maximum.
+      mais limite le durée de l'échange au maximum (idéalement 3-4 échanges).
       Au final on aura juste besoin de retenir le sujet à mémoriser en quelques lignes, quelques spécificités si pertinentes, et le nombre de questions à mémoriser.
 
       Voici l'historique des messages échangés (user = l'utilisateur et assistant = tes réponses précédentes) : #{history(@chat.messages)}
@@ -70,15 +70,20 @@ class MessagesController < ApplicationController
       La clé "complete" vaut false tant que tu n'as pas toutes les informations, et true quand tu es prêt à générer le programme ET que l'utilisateur 
       a donné son accord après ta reformulation.
       Lorsque complete est true, le message sera "Super, je génère le programme de mémorisation !".
+      UNIQUEMEMENT lorsque "complete" vaut true, tu peux résumer (afin qu'un LLM puisse générer des questions/réponses) 
+      le besoin de l'utilisation dans la clé "resume", SINON la clé "resume" reste une string vide.
+      ALORS, tu pourras également donner à la clé "number", le nombre de questions que l'utilisateur souhaite, SINON "number" reste vide.
     PROMPT
 
     output_schema = {
       type: "object",
       properties: {
         complete: { type: "boolean" },
-        message:  { type: "string" }
+        message:  { type: "string" },
+        resume:  { type: "string" },
+        number:  { type: "integer" },
       },
-      required: ["complete", "message"],
+      required: ["complete", "message", "resume", "number"],
       additionalProperties: false
     }
 

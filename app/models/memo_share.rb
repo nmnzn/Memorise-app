@@ -4,19 +4,3 @@ class MemoShare < ApplicationRecord
 
   validates :user_id, uniqueness: { scope: :memo_id }
 end
-
-
-
-
-
-
-
-
-
-
-mémo show boyton is_public
-
-
-
-
-champ sur les cards

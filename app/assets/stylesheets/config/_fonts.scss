@@ -6,6 +6,23 @@
 $body-font: "Figtree", "Helvetica", "sans-serif";
 $headers-font: "Bungee", "sans-serif";
 
+.page-title {
+  font-family: 'Bungee', sans-serif;
+  font-size: 2rem;
+  color: white;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding-top: 20px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.sticker-text {
+  -webkit-text-stroke: 2px black;
+  text-shadow: 3px 3px 0px #2979FF;
+  letter-spacing: 2px;
+}
+
 // To use a font file (.woff) uncomment following lines
 // @font-face {
 //   font-family: "Font Name";

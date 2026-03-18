@@ -49,7 +49,6 @@ class MessagesController < ApplicationController
             @chat.memo.cards.create!(ask: question, answer: answer, kind: kind)
             card_count += 1
           end
-          raise
           redirect_to memo_path(@chat.memo), notice: "Les cards ont bien été créées."
         end
       else

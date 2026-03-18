@@ -2,6 +2,7 @@
 
         <%#= f.label :content, "Que souhaites-tu mémoriser ?" %>
         <%= f.text_area :content, placeholder: "Parle nous du sujet que tu souhaites mémoriser" %>
-        <%= f.submit "Envoyer", class: "btn btn-success btn-sm fw-bold" %>
+        <div class="d-flex justify-content-end"><%= f.submit "Envoyer", class: "btn btn-secondary btn-sm fw-bold position-sticky" %></div>
+
 
     <% end %>

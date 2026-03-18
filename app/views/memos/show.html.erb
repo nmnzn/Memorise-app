@@ -22,7 +22,7 @@
   </div>
 
   <div class="memo-show-danger">
-    <%= link_to "Jouer ce mémo", play_start_path, class: "btn btn-primary btn-shadow" %>
+    <%= link_to "Jouer ce mémo", play_start_path(memo_id: @memo.id), class: "btn btn-primary btn-shadow" %>
     <%= link_to "Modifier Memo", edit_memo_path(@memo), class: "btn btn-info " %>
   </div>
 </div>

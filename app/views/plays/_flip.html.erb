@@ -1,9 +1,5 @@
 <div class="play-card">
-  <h2>Question de la card</h2>
-
-  <div class="play-question">
-    <%= card.ask %>
-  </div>
+  <div class="play-question"><%= card.ask %></div>
 
   <div class="play-answer-btn-wrap" data-play-target="revealBtn">
     <button type="button" class="play-answer-btn" data-action="play#toggleAnswer">
@@ -11,9 +7,7 @@
     </button>
   </div>
 
-  <div class="play-answer hidden" data-play-target="answer">
-    <%= card.answer %>
-  </div>
+  <div class="play-answer hidden" data-play-target="answer"><%= card.answer %></div>
 
   <div class="play-knowledge-actions hidden" data-play-target="actions">
     <%= button_to "Je savais",        knew_play_path(card),         method: :patch, class: "play-knowledge-btn play-knowledge-btn--success" %>

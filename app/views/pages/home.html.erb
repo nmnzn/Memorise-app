@@ -1,6 +1,7 @@
 <% if user_signed_in? %>
   <div class="dashboard-home">
-    <p>Bienvenue <%= current_user.email.split("@").first.capitalize %> ! Que souhaites-tu réviser aujourd’hui ?
+    <p class="text-center">
+      Bienvenue <%= current_user.email.split("@").first.capitalize %> ! <br>Que souhaites-tu <strong style="color: #F59E0B">mémoriser</strong> aujourd’hui ?
     </p>
 
     <div class="dashboard-home__actions">
@@ -25,7 +26,7 @@
       </div>
 
       <div class="dashboard-home__stats-text">
-        <h3>De flashcards que tu as déjà mémorisées !</h3>
+        <h3>De flashcards déjà mémorisées</h3>
         <p><%= @known_cards_count %> sur <%= @total_cards_count %> cards maîtrisées</p>
       </div>
     </div>

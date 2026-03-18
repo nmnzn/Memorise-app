@@ -3,9 +3,9 @@
     "name": "Histoire du surf",
     "cards": [
       { "ask": "Où est le spot Pipeline ?", "answer": "À Hawaii, North Shore", "score": 0.75, "value": false },
-      { "ask": "En quelle année le surf est-il devenu sport olympique ?", "answer": "En 2020, aux JO de Tokyo", "score": 0.5, "value": false },
+      { "ask": "En quelle année le surf est-il devenu sport olympique ?", "answer": "En 2020, aux JO de Tokyo", "score": 0.5, "value": false, "qcm_choices": ["En 2016, aux JO de Rio", "En 2020, aux JO de Tokyo", "En 2024, aux JO de Paris", "En 2012, aux JO de Londres"] },
       { "ask": "Qui est considéré comme le père du surf moderne ?", "answer": "Duke Kahanamoku", "score": 0.75, "value": false },
-      { "ask": "Quel est le nom de la plus grande compétition de surf au monde ?", "answer": "Le WSL Championship Tour", "score": 0.25, "value": false },
+      { "ask": "Quel est le nom de la plus grande compétition de surf au monde ?", "answer": "Le WSL Championship Tour", "score": 0.25, "value": false, "qcm_choices": ["Le WSL Championship Tour", "L'ISA World Surfing Games", "Le Billabong Pro", "Le Rip Curl Cup"] },
       { "ask": "D'où vient le surf historiquement ?", "answer": "De Polynésie, pratiqué par les Hawaïens", "score": 0.0, "value": false }
     ]
   },
@@ -13,9 +13,9 @@
     "name": "Capitales du monde",
     "cards": [
       { "ask": "Quelle est la capitale de l'Australie ?", "answer": "Canberra", "score": 0.75, "value": false },
-      { "ask": "Quelle est la capitale du Brésil ?", "answer": "Brasilia", "score": 1.0, "value": true },
+      { "ask": "Quelle est la capitale du Brésil ?", "answer": "Brasilia", "score": 1.0, "value": true, "qcm_choices": ["São Paulo", "Brasilia", "Rio de Janeiro", "Belo Horizonte"] },
       { "ask": "Quelle est la capitale du Canada ?", "answer": "Ottawa", "score": 0.25, "value": false },
-      { "ask": "Quelle est la capitale de l'Afrique du Sud ?", "answer": "Pretoria (capitale administrative)", "score": 0.5, "value": false },
+      { "ask": "Quelle est la capitale de l'Afrique du Sud ?", "answer": "Pretoria (capitale administrative)", "score": 0.5, "value": false, "qcm_choices": ["Johannesburg", "Le Cap", "Durban", "Pretoria (capitale administrative)"] },
       { "ask": "Quelle est la capitale de la Nouvelle-Zélande ?", "answer": "Wellington", "score": 0.0, "value": false }
     ]
   },
@@ -23,9 +23,9 @@
     "name": "Les bases de Ruby",
     "cards": [
       { "ask": "Comment afficher un texte dans la console en Ruby ?", "answer": "puts 'mon texte'", "score": 1.0, "value": true },
-      { "ask": "Comment déclarer un tableau vide en Ruby ?", "answer": "tableau = []", "score": 0.75, "value": false },
+      { "ask": "Comment déclarer un tableau vide en Ruby ?", "answer": "tableau = []", "score": 0.75, "value": false, "qcm_choices": ["tableau = {}", "tableau = ()", "tableau = []", "tableau = nil"] },
       { "ask": "Comment itérer sur un tableau en Ruby ?", "answer": "tableau.each { |el| puts el }", "score": 0.25, "value": false },
-      { "ask": "Quelle est la différence entre puts et print ?", "answer": "puts ajoute un saut de ligne, print non", "score": 0.5, "value": false },
+      { "ask": "Quelle est la différence entre puts et print ?", "answer": "puts ajoute un saut de ligne, print non", "score": 0.5, "value": false, "qcm_choices": ["puts ajoute un saut de ligne, print non", "print ajoute un saut de ligne, puts non", "puts et print sont identiques", "puts affiche en couleur, print non"] },
       { "ask": "Comment définir une méthode en Ruby ?", "answer": "def nom_methode ... end", "score": 0.0, "value": false }
     ]
   },
@@ -33,9 +33,9 @@
     "name": "Astronomie",
     "cards": [
       { "ask": "Quelle est la planète la plus grande du système solaire ?", "answer": "Jupiter", "score": 0.5, "value": false },
-      { "ask": "À quelle distance se trouve la Lune de la Terre ?", "answer": "Environ 384 400 km", "score": 1.0, "value": true },
+      { "ask": "À quelle distance se trouve la Lune de la Terre ?", "answer": "Environ 384 400 km", "score": 1.0, "value": true, "qcm_choices": ["Environ 150 000 000 km", "Environ 40 000 km", "Environ 1 000 000 km", "Environ 384 400 km"] },
       { "ask": "Qu'est-ce qu'une année-lumière ?", "answer": "La distance parcourue par la lumière en un an, soit ~9 461 milliards de km", "score": 0.25, "value": false },
-      { "ask": "Quelle est l'étoile la plus proche du Soleil ?", "answer": "Proxima Centauri", "score": 0.75, "value": false },
+      { "ask": "Quelle est l'étoile la plus proche du Soleil ?", "answer": "Proxima Centauri", "score": 0.75, "value": false, "qcm_choices": ["Sirius", "Alpha Centauri A", "Proxima Centauri", "Bételgeuse"] },
       { "ask": "Combien de lunes possède Saturne ?", "answer": "146 lunes recensées", "score": 0.0, "value": false }
     ]
   },
@@ -43,9 +43,9 @@
     "name": "Cuisine française",
     "cards": [
       { "ask": "Quelle région est l'origine de la bouillabaisse ?", "answer": "Marseille, en Provence", "score": 0.25, "value": false },
-      { "ask": "Quels sont les ingrédients d'un beurre blanc ?", "answer": "Beurre, échalotes, vin blanc et vinaigre", "score": 0.75, "value": false },
+      { "ask": "Quels sont les ingrédients d'un beurre blanc ?", "answer": "Beurre, échalotes, vin blanc et vinaigre", "score": 0.75, "value": false, "qcm_choices": ["Beurre, ail, citron et crème", "Beurre, échalotes, vin blanc et vinaigre", "Beurre, oignons, vin rouge et herbes", "Margarine, échalotes, cidre et moutarde"] },
       { "ask": "Qu'est-ce qu'un roux ?", "answer": "Un mélange de beurre et farine cuits, base de nombreuses sauces", "score": 1.0, "value": true },
-      { "ask": "De quelle ville est originaire le cassoulet ?", "answer": "Castelnaudary, dans l'Aude", "score": 0.5, "value": false },
+      { "ask": "De quelle ville est originaire le cassoulet ?", "answer": "Castelnaudary, dans l'Aude", "score": 0.5, "value": false, "qcm_choices": ["Toulouse, en Haute-Garonne", "Carcassonne, dans l'Aude", "Castelnaudary, dans l'Aude", "Montpellier, dans l'Hérault"] },
       { "ask": "Quelle est la différence entre crème fraîche et crème liquide ?", "answer": "La crème fraîche est épaisse et légèrement acide, la liquide est fluide et douce", "score": 0.0, "value": false }
     ]
   },
@@ -53,9 +53,9 @@
     "name": "Histoire de France",
     "cards": [
       { "ask": "En quelle année a eu lieu la prise de la Bastille ?", "answer": "Le 14 juillet 1789", "score": 1.0, "value": true },
-      { "ask": "Qui était le roi de France pendant la Révolution ?", "answer": "Louis XVI", "score": 0.5, "value": false },
+      { "ask": "Qui était le roi de France pendant la Révolution ?", "answer": "Louis XVI", "score": 0.5, "value": false, "qcm_choices": ["Louis XIV", "Louis XV", "Louis XVI", "Napoléon Bonaparte"] },
       { "ask": "Quand Napoléon a-t-il été exilé à Sainte-Hélène ?", "answer": "En 1815, après Waterloo", "score": 0.0, "value": false },
-      { "ask": "Quelle est la date de la Déclaration des droits de l'homme ?", "answer": "Le 26 août 1789", "score": 0.25, "value": false },
+      { "ask": "Quelle est la date de la Déclaration des droits de l'homme ?", "answer": "Le 26 août 1789", "score": 0.25, "value": false, "qcm_choices": ["Le 14 juillet 1789", "Le 4 août 1789", "Le 26 août 1789", "Le 5 mai 1789"] },
       { "ask": "Qui a fondé la Ve République française ?", "answer": "Charles de Gaulle, en 1958", "score": 0.75, "value": false }
     ]
   },
@@ -63,9 +63,9 @@
     "name": "Anatomie humaine",
     "cards": [
       { "ask": "Combien d'os compte le corps humain adulte ?", "answer": "206 os", "score": 0.75, "value": false },
-      { "ask": "Quel est le muscle le plus grand du corps ?", "answer": "Le grand fessier", "score": 0.0, "value": false },
+      { "ask": "Quel est le muscle le plus grand du corps ?", "answer": "Le grand fessier", "score": 0.0, "value": false, "qcm_choices": ["Le grand fessier", "Le grand dorsal", "Le quadriceps", "Le biceps fémoral"] },
       { "ask": "Quel organe produit l'insuline ?", "answer": "Le pancréas", "score": 1.0, "value": true },
-      { "ask": "Combien de litres de sang contient un adulte en moyenne ?", "answer": "Environ 5 litres", "score": 0.5, "value": false },
+      { "ask": "Combien de litres de sang contient un adulte en moyenne ?", "answer": "Environ 5 litres", "score": 0.5, "value": false, "qcm_choices": ["Environ 3 litres", "Environ 5 litres", "Environ 8 litres", "Environ 10 litres"] },
       { "ask": "Quel est le rôle des globules blancs ?", "answer": "Défendre l'organisme contre les infections", "score": 0.25, "value": false }
     ]
   },
@@ -73,9 +73,9 @@
     "name": "Cinéma américain",
     "cards": [
       { "ask": "Qui a réalisé Pulp Fiction ?", "answer": "Quentin Tarantino, en 1994", "score": 0.5, "value": false },
-      { "ask": "Quel film a remporté le premier Oscar de l'histoire ?", "answer": "Wings, en 1927", "score": 0.25, "value": false },
+      { "ask": "Quel film a remporté le premier Oscar de l'histoire ?", "answer": "Wings, en 1927", "score": 0.25, "value": false, "qcm_choices": ["Sunrise, en 1927", "Wings, en 1927", "Ben-Hur, en 1929", "All Quiet on the Western Front, en 1930"] },
       { "ask": "Qui joue le rôle de Tony Stark dans Iron Man ?", "answer": "Robert Downey Jr.", "score": 1.0, "value": true },
-      { "ask": "Dans quel film entend-on la réplique 'Je vois des gens morts' ?", "answer": "Sixième Sens (1999)", "score": 0.75, "value": false },
+      { "ask": "Dans quel film entend-on la réplique 'Je vois des gens morts' ?", "answer": "Sixième Sens (1999)", "score": 0.75, "value": false, "qcm_choices": ["L'Exorciste (1973)", "Shining (1980)", "Sixième Sens (1999)", "Blair Witch Project (1999)"] },
       { "ask": "Quel studio a produit la saga Star Wars ?", "answer": "Lucasfilm, distribué par 20th Century Fox puis Disney", "score": 0.0, "value": false }
     ]
   },
@@ -83,9 +83,9 @@
     "name": "Mathématiques",
     "cards": [
       { "ask": "Quelle est la valeur de Pi arrondie à 4 décimales ?", "answer": "3.1416", "score": 0.25, "value": false },
-      { "ask": "Qu'est-ce qu'un nombre premier ?", "answer": "Un entier supérieur à 1 divisible uniquement par 1 et lui-même", "score": 1.0, "value": true },
+      { "ask": "Qu'est-ce qu'un nombre premier ?", "answer": "Un entier supérieur à 1 divisible uniquement par 1 et lui-même", "score": 1.0, "value": true, "qcm_choices": ["Un entier pair divisible par 2", "Un nombre irrationnel non décimal", "Un entier divisible par lui-même seulement", "Un entier supérieur à 1 divisible uniquement par 1 et lui-même"] },
       { "ask": "Quelle est la formule de l'aire d'un cercle ?", "answer": "A = π × r²", "score": 0.75, "value": false },
-      { "ask": "Que signifie l'acronyme PGCD ?", "answer": "Plus Grand Commun Diviseur", "score": 0.0, "value": false },
+      { "ask": "Que signifie l'acronyme PGCD ?", "answer": "Plus Grand Commun Diviseur", "score": 0.0, "value": false, "qcm_choices": ["Plus Grand Commun Dénominateur", "Plus Grand Commun Diviseur", "Premier Groupe Commun de Division", "Plus Grand Chiffre Décimal"] },
       { "ask": "Combien font 2 puissance 10 ?", "answer": "1024", "score": 0.5, "value": false }
     ]
   },
@@ -93,9 +93,9 @@
     "name": "Écologie",
     "cards": [
       { "ask": "Qu'est-ce que l'effet de serre ?", "answer": "Le piégeage de la chaleur solaire par certains gaz atmosphériques", "score": 0.0, "value": false },
-      { "ask": "Quel est le principal gaz à effet de serre d'origine humaine ?", "answer": "Le CO2, dioxyde de carbone", "score": 0.75, "value": false },
+      { "ask": "Quel est le principal gaz à effet de serre d'origine humaine ?", "answer": "Le CO2, dioxyde de carbone", "score": 0.75, "value": false, "qcm_choices": ["Le méthane (CH4)", "L'ozone (O3)", "Le CO2, dioxyde de carbone", "La vapeur d'eau (H2O)"] },
       { "ask": "Qu'est-ce que la biodiversité ?", "answer": "La variété des espèces vivantes sur Terre et leurs interactions", "score": 0.5, "value": false },
-      { "ask": "Quel accord international porte sur le climat depuis 2015 ?", "answer": "L'Accord de Paris", "score": 1.0, "value": true },
+      { "ask": "Quel accord international porte sur le climat depuis 2015 ?", "answer": "L'Accord de Paris", "score": 1.0, "value": true, "qcm_choices": ["Le Protocole de Kyoto", "L'Accord de Paris", "Le Traité de Montréal", "La Convention de Rio"] },
       { "ask": "Qu'est-ce qu'une énergie renouvelable ?", "answer": "Une énergie issue de ressources naturelles inépuisables comme le soleil ou le vent", "score": 0.25, "value": false }
     ]
   }

@@ -1,9 +1,9 @@
-.<div class="container p-4">
+.<div class="container p-2">
     <div class="d-flex justify-content-between align-items-start p-3">
         <%= link_to memo_path(@chat.memo), class: "memo-item__arrow text-decoration-none" do %>
             <i class="fa-solid fa-arrow-left"></i>
         <% end %>
-        <h1 class="text-end text-headings-font-family">Générer des cards grâce à l'IA</h1>
+        <h1 class="text-headings-font-family">Générer des cards grâce à l'IA</h1>
     </div>
 
   <% if @chat.errors.any? %>
@@ -17,7 +17,7 @@
     </div>
   <% end %>
 
-  <div class="container">
+  <div class="container chat-container">
     <%= render "chats/shared/chat", messages: @chat.messages %>
     <%= render "chats/shared/message_input", chat: @chat, message: @message %>
   </div>

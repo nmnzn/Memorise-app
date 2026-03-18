@@ -4,9 +4,9 @@
     <span>ACCUEIL</span>
   <% end %>
 
-  <%= link_to memos_path, class: "bottom-bar__item" do %>
-    <i class="fa-solid fa-chart-simple"></i>
-    <span>MEMOS</span>
+  <%= link_to new_memo_path, class: "bottom-bar__item" do %>
+    <i class="fa-solid fa-plus"></i>
+    <span>NOUVEAU MEMO</span>
   <% end %>
 
   <div class="column_play">
@@ -21,9 +21,9 @@
 
   </div>
 
-  <%= link_to new_memo_path, class: "bottom-bar__item" do %>
-    <i class="fa-solid fa-plus"></i>
-    <span>NOUVEAU</span>
+  <%= link_to memos_path, class: "bottom-bar__item" do %>
+    <i class="fa-solid fa-chart-simple"></i>
+    <span>MES MEMOS</span>
   <% end %>
 
   <%= link_to publics_memos_path, class: "bottom-bar__item" do %>

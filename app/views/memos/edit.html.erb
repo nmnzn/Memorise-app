@@ -1,10 +1,17 @@
-.<div class="container">
-    <%= link_to "Retour", memo_path(@memo), class:"btn btn-secondary" %>
+<div class="memo-new-page">
+  <h1 class="page-title sticker-text">MODIFIER MON MÉMO</h1>
 
-    <h1>Vous pouvez modifier le nom de votre mémo :</h1>
+  <%= link_to memo_path(@memo), class: "memo-show-header__back" do %>
+    <i class="fa-solid fa-arrow-left"></i>
+  <% end %>
 
+  <div class="memo-new-form">
     <%= simple_form_for [@memo] do |f| %>
-    <%= f.input :name, label: "Nom actuel : #{@memo.name}", placeholder: "Saisir le nouveau nom" %>
-    <%= f.button :submit, "Enregistrer les modifications", class:"btn btn-warning" %>
+      <div class="memo-new-form__field">
+        <%= f.label :name, "Nom actuel : #{@memo.name}", class: "memo-new-form__label" %>
+        <%= f.text_field :name, placeholder: "Saisir le nouveau nom", class: "memo-new-form__input" %>
+      </div>
+      <%= f.submit "Enregistrer les modifications", class: "btn btn-primary btn-shadow w-100 mt-4" %>
     <% end %>
+  </div>
 </div>

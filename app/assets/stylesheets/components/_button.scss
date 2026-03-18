@@ -1,3 +1,8 @@
+// Fix iOS Safari double-tap delay
+button, a, input[type="submit"] {
+  touch-action: manipulation;
+}
+
 // Bouton de base — MD (taille par défaut)
 .btn {
   padding: 0.625rem 1.25rem;

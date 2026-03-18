@@ -1,9 +1,11 @@
 <div class="auth-page">
-  <div class="memos-header">
+  <div class="page-title sticker-text">
     <h1>Connexion</h1>
-    <p class="auth-sub mb-4
-    ">Content de te revoir !</p>
   </div>
+
+    <div class="text-center">
+    <p>Content de te revoir !</p>
+    </div>
 
   <div class="auth-card">
     <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>

@@ -1,6 +1,6 @@
 class PlaysController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_card, only: [:reveal, :knew, :did_not_know]
+  before_action :set_card, only: [:show, :reveal, :knew, :did_not_know]
 
   def start
 
@@ -22,6 +22,10 @@ class PlaysController < ApplicationController
       @card = next_unanswered_card
       @mode = (@card.qcm? && @card.qcm_choices.present?) ? :qcm : :flip
     end
+  end
+
+  def show
+    @mode = (@card.qcm? && @card.qcm_choices.present?) ? :qcm : :flip
   end
 
   def knew
@@ -47,11 +51,18 @@ class PlaysController < ApplicationController
     session[:play_count] += 1
     next_card = next_unanswered_card(exclude: @card.id)
 
-    if next_card
+    if @card.qcm?
+      session[:next_card_id] = next_card&.id
+      redirect_to reveal_play_path(@card)
+    elsif next_card
       redirect_to play_path(next_card)
     else
-      redirect_to play_path(@card)
+      redirect_to memos_path, notice: "Bravo, tu as terminé toutes les cards."
     end
+  end
+
+  def reveal
+    @next_card_id = session.delete(:next_card_id)
   end
 
   private

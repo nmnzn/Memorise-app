@@ -1,19 +1,19 @@
 class PlaysController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_memo, only: [:knew, :did_not_know]
   before_action :set_card, only: [:show, :reveal, :knew, :did_not_know]
 
   def start
 
-    url = request.referer
+  if params[:memo_id].present?
+    @memo = Memo.find(params[:memo_id])
+    session[:memo_id] = @memo.id
+  else
+    @memo = nil
+    session.delete(:memo_id)
+  end
 
-    if url.match?(%r{/memos/\d+})
-      memo_id = url.split("/").last.to_i
-      @memo = Memo.find(memo_id)
-      @cards = @memo.cards
-    elsif params[:memo_id].nil?
-      @memo = nil
-      @cards = current_user.cards
-    end
+  @cards = @memo ? @memo.cards : current_user.cards
 
     session[:play_count] = 0
     if @cards.nil?
@@ -71,6 +71,10 @@ class PlaysController < ApplicationController
     @card = current_user.accessible_cards.find(params[:id])
   end
 
+  def set_memo
+    @memo = session[:memo_id] ? Memo.find_by(id: session[:memo_id]) : nil
+  end
+
   def next_unanswered_card(exclude: nil)
     count = session[:play_count].to_i
 
@@ -91,4 +95,4 @@ class PlaysController < ApplicationController
       cards.shuffle.first
     end
   end
-end
+end 

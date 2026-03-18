@@ -125,7 +125,7 @@ class MessagesController < ApplicationController
       additionalProperties: false
     }
 
-    llm_response = RubyLLM.chat(model: "gpt-4o-mini").with_schema(output_schema).with_model("gpt-4.1-mini").with_instructions(collect_info).ask(message).content
+    llm_response = RubyLLM.chat.with_schema(output_schema).with_instructions(collect_info).ask(message).content
     # llm_hash = JSON.parse(llm_response)
     return llm_response
   end
@@ -168,6 +168,6 @@ class MessagesController < ApplicationController
       required: ["cards"],
       additionalProperties: false
     }
-    RubyLLM.chat(model: "gpt-4o-mini").with_schema(output_schema).with_instructions(instructions).ask(user_prompt).content
+    RubyLLM.chat.with_schema(output_schema).with_instructions(instructions).ask(user_prompt).content
   end
 end 

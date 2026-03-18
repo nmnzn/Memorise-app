@@ -1,4 +1,9 @@
 class CardsController < ApplicationController
+  def show
+    @card = Card.find(params[:id])
+    @memo = @card.memo
+  end
+
   def new
     @card = Card.new
     @memo = Memo.find(params[:memo_id])

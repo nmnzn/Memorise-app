@@ -16,6 +16,7 @@
 
     <% if @memo.user == current_user %>
       <%= link_to "Modifier", edit_memo_path(@memo), class: "btn btn-primary btn-shadow" %>
+      <%= button_to "Générer des cards IA", memo_chats_path(@memo), method: :post, class: "btn btn-secondary btn-shadow" %>
     <% end %>
   </div>
 

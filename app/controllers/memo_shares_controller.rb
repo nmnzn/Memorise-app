@@ -1,7 +1,8 @@
 class MemoSharesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_memo
-  before_action :authorize_owner!
+  before_action :authorize_share_access!, only: [:create]
+  before_action :authorize_owner!, only: [:destroy]
 
   def create
     email = params[:email].to_s.strip.downcase
@@ -49,7 +50,13 @@ class MemoSharesController < ApplicationController
   private
 
   def set_memo
-    @memo = current_user.memos.find(params[:memo_id])
+    @memo = Memo.find(params[:memo_id])
+  end
+
+  def authorize_share_access!
+    return if @memo.user == current_user || @memo.is_public?
+
+    redirect_to memos_path, alert: "Accès non autorisé."
   end
 
   def authorize_owner!

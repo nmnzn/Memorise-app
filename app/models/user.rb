@@ -8,18 +8,8 @@ class User < ApplicationRecord
   has_many :answers, dependent: :destroy
   has_many :cards, through: :memos
 
-  has_many :memo_shares, dependent: :destroy
-  has_many :shared_memos, through: :memo_shares, source: :memo
-
   def accessible_memos
-    Memo
-      .left_joins(:memo_shares)
-      .where(
-        "memos.user_id = :user_id OR memo_shares.user_id = :user_id OR memos.is_public = :is_public",
-        user_id: id,
-        is_public: true
-      )
-      .distinct
+    Memo.where(user: self).or(Memo.where(is_public: true)).distinct
   end
 
   def accessible_cards

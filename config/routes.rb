@@ -17,13 +17,15 @@ Rails.application.routes.draw do
     member do
       patch :toggle_visibility
     end
+    collection do
+      get :publics
+    end
 
-    resources :memo_shares, only: [:create, :destroy]
-    resources :cards, only: [:new, :create, :destroy, :edit, :update]
+    resources :cards, only: [:show, :new, :create, :destroy, :edit, :update]
     resources :chats, only: [:new, :create, :show]
   end
 
-  resources :chats do
+  resources :chats, only: [] do
     resources :messages, only: [:create]
   end
 

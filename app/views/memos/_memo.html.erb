@@ -30,21 +30,16 @@
           <i class="fa-solid fa-lock"></i>
         <% end %>
       <% end %>
-
-      <%= link_to memo_path(memo, anchor: "memo-share-section"),
-          class: "memo-item__share",
-          title: "Partager ce mémo",
-          onclick: "event.stopPropagation();" do %>
-        <i class="fa-solid fa-share"></i>
-      <% end %>
     <% end %>
 
-    <%= button_to memo_path(memo),
-        method: :delete,
-        form: { data: { turbo_confirm: "Supprimer ce mémo ?" } },
-        class: "memo-item__trash",
-        onclick: "event.stopPropagation();" do %>
-      <i class="fa-solid fa-trash"></i>
+    <% if memo.user == current_user %>
+      <%= button_to memo_path(memo),
+          method: :delete,
+          form: { data: { turbo_confirm: "Supprimer ce mémo ?" } },
+          class: "memo-item__trash",
+          onclick: "event.stopPropagation();" do %>
+        <i class="fa-solid fa-trash"></i>
+      <% end %>
     <% end %>
   </div>
 </div>

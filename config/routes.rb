@@ -17,6 +17,9 @@ Rails.application.routes.draw do
     collection do
       get :publics
     end
+    member do
+      patch :toggle_visibility
+    end
 
     resources :memo_shares, only: [:create, :destroy]
     resources :cards, only: [:new, :create, :destroy, :edit, :update]

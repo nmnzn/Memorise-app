@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   resources :memos do
+    member do
+      patch :toggle_visibility
+    end
     collection do
       get :publics
     end

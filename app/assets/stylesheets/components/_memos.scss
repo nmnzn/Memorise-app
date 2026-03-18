@@ -137,20 +137,6 @@
   }
 }
 
-.memos-publics-title {
-  text-align: center;
-  margin-top: 6rem;
-  margin-bottom: 2rem;
-
-  h1 {
-    margin: 0;
-    font-size: 2.4rem;
-    font-weight: 900;
-    color: $color-white;
-    line-height: 1.2;
-  }
-}
-
 .memos-list {
   display: flex;
   flex-direction: column;
@@ -165,72 +151,6 @@
   flex-wrap: wrap;
 }
 
-.memos-search {
-  padding: 0 16px;
-  margin: 0 auto 40px;
-  display: flex;
-  justify-content: center;
-
-  &__form {
-    width: 100%;
-    max-width: 760px;
-    display: flex;
-    justify-content: center;
-  }
-
-  &__field-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 520px;
-  }
-
-  &__input {
-    width: 100%;
-    background-color: $color-violet-variant;
-    border: 2px solid #000;
-    box-shadow: 4px 4px 0 #000;
-    border-radius: 999px;
-    padding: 16px 62px 16px 20px;
-    color: $color-white;
-    font-size: 1rem;
-    font-weight: 600;
-    outline: none;
-
-    &::placeholder {
-      color: rgba(255, 255, 255, 0.55);
-      font-weight: 500;
-    }
-
-    &:focus {
-      border-color: #000;
-      box-shadow: 5px 5px 0 $color-primary;
-    }
-  }
-
-  &__submit {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: 2px solid #000;
-    background-color: #f0b13f;
-    box-shadow: 2px 2px 0 #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #000;
-    padding: 0;
-    cursor: pointer;
-
-    i {
-      font-size: 1rem;
-    }
-  }
-}
-
 .memo-item {
   display: flex;
   align-items: center;
@@ -238,6 +158,7 @@
   background-color: $color-violet-variant;
   border: 3px solid #000;
   box-shadow: 5px 5px 0 #000;
+  padding: 18px;
   border-radius: 60rem;
   padding: 14px 14px 14px 20px;
   text-decoration: none;
@@ -306,6 +227,7 @@
   }
 
   &__visibility-btn,
+  &__share,
   &__trash {
     flex-shrink: 0;
     width: 44px;
@@ -325,6 +247,10 @@
 
   &__visibility-btn {
     background-color: #ffffff;
+  }
+
+  &__share {
+    background-color: #f0b13f;
   }
 
   &__trash {

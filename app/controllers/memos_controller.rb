@@ -9,10 +9,6 @@ class MemosController < ApplicationController
 
   def publics
     @memos = Memo.where(is_public: true)
-
-    if params[:query].present?
-      @memos = @memos.where("name ILIKE ?", "%#{params[:query]}%")
-    end
   end
 
   def show

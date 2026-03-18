@@ -18,3 +18,4 @@ class ChatsController < ApplicationController
     @profondeur_collection = Message.profondeur_collection
   end
 end
+

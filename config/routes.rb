@@ -24,7 +24,6 @@ Rails.application.routes.draw do
       patch :toggle_visibility
     end
 
-    resources :memo_shares, only: [:create, :destroy]
     resources :cards, only: [:new, :create, :destroy, :edit, :update]
     resources :chats, only: [:new, :create, :show]
   end

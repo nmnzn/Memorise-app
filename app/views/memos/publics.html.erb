@@ -1,10 +1,21 @@
 <div>
-  <div class="memos-header">
-    <h1>Mémos publics</h1>
+  <div class="memos-publics-title">
+    <h1>Mémos Public</h1>
   </div>
 
-  <div class="memos-actions mb-4 mt-8">
-    <%= link_to "Mes Mémos", memos_path, class: "btn btn-lg btn-primary btn-shadow" %>
+  <div class="memos-search">
+    <%= form_with url: publics_memos_path, method: :get, local: true, class: "memos-search__form" do %>
+      <div class="memos-search__field-wrapper">
+        <%= text_field_tag :query,
+            params[:query],
+            placeholder: "Rechercher un mémo public",
+            class: "memos-search__input" %>
+
+        <button type="submit" class="memos-search__submit" aria-label="Rechercher">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
+    <% end %>
   </div>
 
   <div class="memos-page">
@@ -13,7 +24,7 @@
         <%= render @memos %>
       </div>
     <% else %>
-      <p class="text-center mt-4">Aucun mémo public pour le moment.</p>
+      <p class="text-center mt-4">Aucun mémo public trouvé.</p>
     <% end %>
   </div>
 </div>

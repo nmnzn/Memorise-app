@@ -48,7 +48,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_17_112913) do
     t.bigint "memo_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["memo_id", "user_id"], name: "index_memo_shares_on_memo_id_and_user_id", unique: true
     t.index ["memo_id"], name: "index_memo_shares_on_memo_id"
     t.index ["user_id"], name: "index_memo_shares_on_user_id"
   end

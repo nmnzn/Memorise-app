@@ -1,28 +1,48 @@
-<div>
-  <h1 class="page-title sticker-text mb-3"><%= @memo.name %></h1>
+<div class="memo-show-page">
   <div class="memo-show-header">
     <%= link_to memos_path, class: "memo-show-header__back" do %>
       <i class="fa-solid fa-arrow-left"></i>
     <% end %>
-    <%= link_to "Nouvelle Card", new_memo_card_path(@memo), class: "btn btn-primary btn-shadow" %>
-  </div>
 
+    <h1 class="memo-show-header__title"><%= @memo.name %></h1>
 
-  <div class="memo-cards-grid">
-    <%= render partial: "cards/card", collection: @cards, as: :card, locals: { memo: @memo } %>
-  </div>
-
-  <div class="memo-cards-grid mt-3 justify-content-center">
+    <span class="memo-show-header__count">
+      <%= @cards.count %> cards
+    </span>
   </div>
 
   <div class="memo-show-actions">
-    <%= button_to memo_chats_path(@memo), class: "btn-lg btn-secondary btn-shadow " do %>
-      <i class="fa-solid fa-wand-magic-sparkles me-1"></i> Générer les questions
+    <%= link_to "Jouer", play_path(@memo), class: "btn btn-primary btn-shadow" %>
+
+    <% if @memo.user == current_user %>
+      <%= link_to "Modifier", edit_memo_path(@memo), class: "btn btn-primary btn-shadow" %>
     <% end %>
   </div>
 
-  <div class="memo-show-danger">
-    <%= link_to "Jouer ce mémo", play_start_path, class: "btn btn-primary btn-shadow" %>
-    <%= link_to "Modifier Memo", edit_memo_path(@memo), class: "btn btn-info " %>
+  <div class="memos-page">
+    <% if @cards.any? %>
+      <div class="memos-list">
+        <% @cards.each do |card| %>
+          <%= link_to memo_card_path(@memo, card), class: "memo-item" do %>
+            <div class="memo-item__info">
+              <span class="memo-item__name"><%= card.ask %></span>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-center mt-4">Aucune card pour le moment.</p>
+    <% end %>
   </div>
+
+  <% if @memo.user == current_user %>
+    <div class="memo-show-danger">
+      <%= button_to memo_path(@memo),
+          method: :delete,
+          form: { data: { turbo_confirm: "Supprimer ce mémo ?" } },
+          class: "btn btn-danger btn-shadow" do %>
+        Supprimer le mémo
+      <% end %>
+    </div>
+  <% end %>
 </div>

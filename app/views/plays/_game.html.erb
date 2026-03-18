@@ -1,0 +1,17 @@
+<div class="play-page"
+    data-controller="play"
+    data-play-correct-value="<%= card.answer %>">
+
+  <div class="play-topbar">
+    <%= link_to memos_path, class: "play-back" do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+  </div>
+
+  <% if mode == :qcm %>
+    <%= render "qcm", card: card %>
+  <% else %>
+    <%= render "flip", card: card %>
+  <% end %>
+
+</div>

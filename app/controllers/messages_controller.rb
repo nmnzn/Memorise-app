@@ -4,33 +4,61 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
     @message.chat = @chat
     @message.role = "user"
-    if @message.save
-      #appeler une méthode qui renvoie une réponse du LLM pour l'afficher dans le chat
-      chat_history = history(@chat.messages)
 
-      hash_response_from_llm = llm_answering_to_user(@message.content, chat_history)
+    if @message.content.blank?
+      @message.errors.add(:content, "Le sujet ne peut pas être vide.")
+      render "chats/show", status: :unprocessable_entity
+    else
+      if @message.save
+        #appeler une méthode qui renvoie une réponse du LLM pour l'afficher dans le chat
+        chat_history = history(@chat.messages)
 
-      assistant_message = hash_response_from_llm["message"]
+        hash_response_from_llm = llm_answering_to_user(@message.content, chat_history)
 
-      assistant_resume = hash_response_from_llm["resume"]
+        assistant_message = hash_response_from_llm["message"]
+        assistant_resume = hash_response_from_llm["resume"]
+        assistant_nb_cards = hash_response_from_llm["number"]
 
-      assistant_nb_cards = hash_response_from_llm["number"]
-
-      unless hash_response_from_llm["complete"]
-        message_from_llm = Message.new(content: assistant_message, role: "assistant", chat_id: @chat.id)
-        if message_from_llm.save!
-          redirect_to memo_chat_path(@chat.memo, @chat)
+        unless hash_response_from_llm["complete"]
+          message_from_llm = Message.new(content: assistant_message, role: "assistant", chat_id: @chat.id)
+          if message_from_llm.save!
+            redirect_to memo_chat_path(@chat.memo, @chat)
+          else
+            render "chats/show", status: :unprocessable_entity
+          end
         else
-          render "chats/show", status: :unprocessable_entity
+          #appeler le LLM de génération de cards et lui donner l'historique de la conversation
+          object_with_array_of_hash_cards_from_llm = generate_cards_with_llm(assistant_resume, assistant_nb_cards)
+          llm_cards = object_with_array_of_hash_cards_from_llm["cards"]
+          unless llm_cards.is_a?(Array)
+            @message.errors.add(:base, "La génération des cards a échoué.")
+            render "chats/show", status: :unprocessable_entity
+            return
+          end
+
+          card_count = 0
+          llm_cards.each do |card_data|
+            next unless card_data.is_a?(Hash)
+
+            question = card_data["question"] || card_data[:question]
+            answer   = card_data["answer"]   || card_data[:answer]
+
+            next if question.blank? || answer.blank?
+
+            kind = card_count.odd? ? :qcm : :flip
+            @chat.memo.cards.create!(ask: question, answer: answer, kind: kind)
+            card_count += 1
+          end
+          raise
+          redirect_to memo_path(@chat.memo), notice: "Les cards ont bien été créées."
         end
       else
-        #appeler le LLM de génération de cards et lui donner l'historique de la conversation
-        test = generate_cards_with_llm(assistant_resume, assistant_nb_cards)
-        raise
+        render "chats/show", status: :unprocessable_entity
       end
-    else
-      render "chats/show", status: :unprocessable_entity
     end
+  rescue JSON::ParserError
+    @message.errors.add(:base, "La réponse de l'IA est invalide.")
+    render "chats/show", status: :unprocessable_entity
   end
 
 
@@ -141,6 +169,6 @@ class MessagesController < ApplicationController
       required: ["cards"],
       additionalProperties: false
     }
-    response_with_cards = RubyLLM.chat(model: "gpt-4o-mini").with_schema(output_schema).with_instructions(instructions).ask(user_prompt).content
+    RubyLLM.chat(model: "gpt-4o-mini").with_schema(output_schema).with_instructions(instructions).ask(user_prompt).content
   end
 end 

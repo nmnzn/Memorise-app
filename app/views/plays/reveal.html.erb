@@ -1,15 +1,12 @@
-<div class="container py-5">
-  <div class="visual-panel w-75 mx-auto text-center">
+<div class="play-page" data-controller="reveal"
+    data-reveal-next-url-value="<%= @next_card_id ? play_path(@next_card_id) : memos_path %>">
 
-    <p class="mini-label">Question</p>
-    <h2 class="mb-4"><%= @card.ask %></h2>
-    <hr style="border-color: rgba(255,255,255,0.1);">
-    <p class="mini-label mt-4">Réponse</p>
-    <h3 class="mb-5"><%= @card.answer %></h3>
-    <div class="d-flex justify-content-center gap-3 flex-wrap">
-      <%= button_to "Je sais", answer_path(@answer), method: :patch ,params: { card_id:@card.id, value: true }, class: "memorise-nav-button" %>
-      <%= button_to "Je ne sais pas", answer_path(@answer), method: :patch ,params: { card_id:@card.id, value: false }, class: "memorise-nav-button" %>
-      <%= link_to "Question suivante", play_path, class: "memorise-nav-button" %>
+  <div class="play-card">
+    <h2>Bonne réponse</h2>
+    <div class="play-reveal-answer"><%= @card.answer %></div>
+    <div class="play-reveal-bar">
+      <div class="play-reveal-bar__fill" data-reveal-target="bar"></div>
     </div>
   </div>
+
 </div>

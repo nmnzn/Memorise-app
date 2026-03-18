@@ -192,3 +192,28 @@
 .hidden {
   display: none;
 }
+
+.play-reveal-answer {
+  font-size: 1rem;
+  font-weight: 600;
+  color: $color-white;
+  line-height: 1.5;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1rem;
+  padding: 16px 18px;
+}
+
+.play-reveal-bar {
+  height: 6px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 60rem;
+  overflow: hidden;
+}
+
+.play-reveal-bar__fill {
+  height: 100%;
+  width: 0%;
+  background-color: $color-primary;
+  border-radius: 60rem;
+}

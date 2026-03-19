@@ -1,65 +1,70 @@
-class MemoSharesController < ApplicationController
+class CardsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_memo
-  before_action :authorize_share_access!, only: [:create]
-  before_action :authorize_owner!, only: [:destroy]
+  before_action :set_card, only: [:show, :edit, :update, :destroy]
+  before_action :set_memo_from_params, only: [:new, :create]
+  before_action :authorize_memo_owner!, only: [:new, :create, :edit, :update, :destroy]
+
+  def show
+    @memo = @card.memo
+  end
+
+  def new
+    @card = Card.new
+  end
 
   def create
-    email = params[:email].to_s.strip.downcase
-    user = User.find_by(email: email)
+    @card = Card.new(card_params)
+    @card.memo = @memo
 
-    if email.blank?
-      redirect_to memo_path(@memo), alert: "Veuillez renseigner un email."
-      return
-    end
-
-    if user.nil?
-      redirect_to memo_path(@memo), alert: "Aucun utilisateur trouvé avec cet email."
-      return
-    end
-
-    if user == current_user
-      redirect_to memo_path(@memo), alert: "Vous êtes déjà propriétaire de ce mémo."
-      return
-    end
-
-    memo_share = MemoShare.new(memo: @memo, user: user)
-
-    if memo_share.save
-      @memo.cards.find_each do |card|
-        Answer.find_or_create_by!(card: card, user: user) do |answer|
-          answer.value = false
-          answer.score = 0.0 if answer.respond_to?(:score)
-        end
-      end
-
-      redirect_to memo_path(@memo), notice: "#{user.email} a maintenant accès à ce mémo."
+    if @card.save
+      redirect_to new_memo_card_path(@memo)
     else
-      redirect_to memo_path(@memo), alert: "Ce mémo est déjà partagé avec cet utilisateur."
+      render :new, status: :unprocessable_entity
     end
   end
 
   def destroy
-    memo_share = @memo.memo_shares.find(params[:id])
-    shared_user_email = memo_share.user.email
-    memo_share.destroy
+    @memo = @card.memo
+    @card.destroy
 
-    redirect_to memo_path(@memo), notice: "Le partage avec #{shared_user_email} a été supprimé."
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove("card_#{params[:id]}") }
+      format.html { redirect_to memo_path(@memo) }
+    end
+  end
+
+  def edit
+    @memo = @card.memo
+  end
+
+  def update
+    @memo = @card.memo
+
+    if @card.update(card_params)
+      redirect_to memo_path(@memo)
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private
 
-  def set_memo
+  def set_card
+    @card = Card.find(params[:id])
+  end
+
+  def set_memo_from_params
     @memo = Memo.find(params[:memo_id])
   end
 
-  def authorize_share_access!
-    return if @memo.user == current_user || @memo.is_public?
+  def authorize_memo_owner!
+    memo = @card&.memo || @memo
+    return if memo.user == current_user
 
-    redirect_to memos_path, alert: "Accès non autorisé."
+    redirect_to memos_path, alert: "Seul le propriétaire du mémo peut modifier ses cards."
   end
 
-  def authorize_owner!
-    redirect_to memos_path, alert: "Accès non autorisé." unless @memo.user == current_user
+  def card_params
+    params.require(:card).permit(:ask, :answer)
   end
 end

@@ -19,6 +19,20 @@
 
   <div class="memo-item__actions">
     <% if memo.user == current_user %>
+      <%= button_to toggle_favorite_memo_path(memo),
+          method: :patch,
+          class: "memo-item__favorite-btn",
+          title: memo.favorite_label,
+          onclick: "event.stopPropagation();" do %>
+        <% if memo.favorite? %>
+          <i class="fa-solid fa-star"></i>
+        <% else %>
+          <i class="fa-regular fa-star"></i>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% if memo.user == current_user %>
       <%= button_to toggle_visibility_memo_path(memo),
           method: :patch,
           class: "memo-item__visibility-btn",

@@ -4,7 +4,7 @@ class PagesController < ApplicationController
   def home
     return unless user_signed_in?
 
-    @memos = current_user.memos.includes(:cards)
+    @favorite_memos = current_user.memos.includes(:cards).where(favorite: true)
 
     @total_cards_count = current_user.memos.joins(:cards).count
     @known_cards_count = current_user.answers.where(value: true).count

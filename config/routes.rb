@@ -16,7 +16,9 @@ Rails.application.routes.draw do
   resources :memos do
     member do
       patch :toggle_visibility
+      patch :toggle_favorite
     end
+
     collection do
       get :publics
     end

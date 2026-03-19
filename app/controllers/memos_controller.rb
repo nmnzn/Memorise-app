@@ -1,10 +1,10 @@
 class MemosController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_memo, only: [:show, :edit, :update, :destroy, :toggle_visibility]
-  before_action :authorize_owner!, only: [:edit, :update, :destroy, :toggle_visibility]
+  before_action :set_memo, only: [:show, :edit, :update, :destroy, :toggle_visibility, :toggle_favorite]
+  before_action :authorize_owner!, only: [:edit, :update, :destroy, :toggle_visibility, :toggle_favorite]
 
   def index
-    @memos = current_user.accessible_memos
+    @memos = current_user.memos
   end
 
   def publics
@@ -63,6 +63,19 @@ class MemosController < ApplicationController
     redirect_back fallback_location: memo_path(@memo), notice: notice_message
   end
 
+  def toggle_favorite
+    @memo.update!(favorite: !@memo.favorite?)
+
+    notice_message =
+      if @memo.favorite?
+        "Le mémo a été ajouté aux favoris."
+      else
+        "Le mémo a été retiré des favoris."
+      end
+
+    redirect_back fallback_location: memos_path, notice: notice_message
+  end
+
   private
 
   def set_memo
@@ -80,7 +93,7 @@ class MemosController < ApplicationController
   end
 
   def memo_params
-    params.require(:memo).permit(:name, :is_public, cards_attributes: [:ask, :answer])
+    params.require(:memo).permit(:name, :is_public, :favorite, cards_attributes: [:ask, :answer])
   end
 
   def generate_cards_with_llm(system_prompt, user_prompt)

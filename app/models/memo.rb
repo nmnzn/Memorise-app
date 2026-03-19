@@ -24,4 +24,8 @@ class Memo < ApplicationRecord
   def visibility_label
     is_public? ? "Public" : "Privé"
   end
+
+  def favorite_label
+    favorite? ? "Retirer des favoris" : "Ajouter aux favoris"
+  end
 end

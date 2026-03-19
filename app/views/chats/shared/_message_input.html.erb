@@ -1,8 +1,13 @@
 <%= turbo_frame_tag "message_form" do %>
-  <%= simple_form_for [chat, message], html: { class: "simple-form-generate" } do |f| %>
+  <%= simple_form_for [chat, message], html: { class: "simple-form-generate", data: { controller: "chat-submit", action: "submit->chat-submit#loading" } } do |f| %>
     <div class="chat-input-row">
       <%= f.text_area :content, placeholder: "Parle nous du sujet que tu souhaites mémoriser", data: { controller: "auto-resize", action: "input->auto-resize#resize" } %>
-      <%= f.submit "→", class: "btn chat-send-btn" %>
+      <button type="submit" class="btn chat-send-btn text-center" data-chat-submit-target="button">
+        <span data-chat-submit-target="icon"><i class="fa-solid fa-arrow-right fa"></i></span>
+        <span data-chat-submit-target="spinner" class="d-none">
+          <span class="spinner-border spinner-border-sm" role="status"></span>
+        </span>
+      </button>
     </div>
   <% end %>
 <% end %>

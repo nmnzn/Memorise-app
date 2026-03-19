@@ -81,13 +81,30 @@
   width: 42px;
   height: 42px;
   flex-shrink: 0;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: 900;
   padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .spinner-border {
+    color: #000;
+    width: 18px;
+    height: 18px;
+    border-width: 2.5px;
+  }
 
   &:active {
     box-shadow: none;
     transform: translate(3px, 3px);
+  }
+
+  &:disabled {
+    background-color: $color-primary;
+    color: #000;
+    border-color: #000;
+    opacity: 1;
   }
 }
 

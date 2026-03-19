@@ -233,15 +233,21 @@
 
 .memo-item {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 10px;
   background-color: $color-violet-variant;
   border: 3px solid #000;
   box-shadow: 5px 5px 0 #000;
   border-radius: 60rem;
-  padding: 14px 14px 14px 20px;
+  padding: 10px 12px 5px 20px;
   text-decoration: none;
   position: relative;
+
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
   &__info {
     display: flex;
@@ -252,7 +258,7 @@
   }
 
   &__name {
-    font-size: 1rem;
+    font-size: 1.30rem;
     font-weight: 700;
     color: $color-white;
   }
@@ -302,12 +308,14 @@
     z-index: 1;
     display: flex;
     align-items: center;
+    margin-right: 5px;
     gap: 10px;
   }
 
   &__favorite-btn,
   &__visibility-btn,
-  &__trash {
+  &__trash,
+  &__play-btn {
     flex-shrink: 0;
     width: 44px;
     height: 44px;
@@ -325,7 +333,7 @@
   }
 
   &__favorite-btn {
-    background-color: #f0b13f;
+    background-color: $color-primary;
   }
 
   &__visibility-btn {
@@ -334,5 +342,58 @@
 
   &__trash {
     background-color: $color-danger;
+  }
+
+  &__play-btn {
+    background-color: $color-primary;
+  }
+
+  &__bottom {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 40px;
+    padding: 0 10px 4px;
+  }
+
+  &__progress-wrap {
+    position: relative;
+    width: 55%;
+    align-self: stretch;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 60rem;
+    overflow: hidden;
+    box-shadow: 2px 2px 0 #000;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 2px solid #000;
+      border-radius: 60rem;
+      pointer-events: none;
+      z-index: 2;
+    }
+  }
+
+  &__progress-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #000;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  &__progress-bar {
+    height: 100%;
+    background-color: $color-tertiary;
+    border-radius: 60rem;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    transition: width 0.3s ease;
   }
 }

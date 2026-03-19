@@ -1,59 +1,58 @@
+<% total = memo.cards.count %>
+<% answered = Answer.where(card: memo.cards, user: current_user, value: true).count %>
+<% progress = total > 0 ? (answered.to_f / total * 100).round : 0 %>
+
 <div class="memo-item"
     data-controller="navigate"
     data-navigate-url-value="<%= memo_path(memo) %>"
     data-action="click->navigate#go">
 
-  <div class="memo-item__info">
-    <span class="memo-item__name"><%= memo.name %></span>
+  <div class="memo-item__top">
+    <div class="memo-item__info">
+      <span class="memo-item__name"><%= memo.name %></span>
 
-    <div class="memo-item__meta">
-      <span class="memo-item__badge">
-        <%= Answer.where(card: memo.cards, user: current_user, value: true).count %> / <%= memo.cards.count %>
-      </span>
+    </div>
 
-      <span class="memo-item__visibility <%= memo.is_public? ? 'memo-item__visibility--public' : 'memo-item__visibility--private' %>">
-        <%= memo.visibility_label %>
-      </span>
+    <div class="memo-item__actions">
+      <% if memo.user == current_user %>
+        <%= button_to toggle_favorite_memo_path(memo),
+            method: :patch,
+            class: "memo-item__favorite-btn",
+            title: memo.favorite_label,
+            onclick: "event.stopPropagation();" do %>
+          <% if memo.favorite? %>
+            <i class="fa-solid fa-star"></i>
+          <% else %>
+            <i class="fa-regular fa-star"></i>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= link_to play_path(memo), class: "memo-item__play-btn", onclick: "event.stopPropagation();" do %>
+        <i class="fa-solid fa-play"></i>
+      <% end %>
     </div>
   </div>
 
-  <div class="memo-item__actions">
-    <% if memo.user == current_user %>
-      <%= button_to toggle_favorite_memo_path(memo),
-          method: :patch,
-          class: "memo-item__favorite-btn",
-          title: memo.favorite_label,
-          onclick: "event.stopPropagation();" do %>
-        <% if memo.favorite? %>
-          <i class="fa-solid fa-star"></i>
-        <% else %>
-          <i class="fa-regular fa-star"></i>
-        <% end %>
-      <% end %>
-    <% end %>
-
+  <div class="memo-item__bottom">
     <% if memo.user == current_user %>
       <%= button_to toggle_visibility_memo_path(memo),
           method: :patch,
-          class: "memo-item__visibility-btn",
+          class: "memo-item__visibility #{memo.is_public? ? 'memo-item__visibility--public' : 'memo-item__visibility--private'}",
           title: (memo.is_public? ? "Rendre privé" : "Rendre public"),
           onclick: "event.stopPropagation();" do %>
-        <% if memo.is_public? %>
-          <i class="fa-solid fa-lock-open"></i>
-        <% else %>
-          <i class="fa-solid fa-lock"></i>
-        <% end %>
+        <%= memo.visibility_label %>
       <% end %>
+    <% else %>
+      <span class="memo-item__visibility <%= memo.is_public? ? 'memo-item__visibility--public' : 'memo-item__visibility--private' %>">
+        <%= memo.visibility_label %>
+      </span>
     <% end %>
 
-    <% if memo.user == current_user %>
-      <%= button_to memo_path(memo),
-          method: :delete,
-          form: { data: { turbo_confirm: "Supprimer ce mémo ?" } },
-          class: "memo-item__trash",
-          onclick: "event.stopPropagation();" do %>
-        <i class="fa-solid fa-trash"></i>
-      <% end %>
-    <% end %>
+    <div class="memo-item__progress-wrap">
+      <div class="memo-item__progress-bar" style="width: <%= progress %>%"></div>
+      <span class="memo-item__progress-label"><%= answered %> / <%= total %></span>
+    </div>
   </div>
+
 </div>

@@ -1,32 +1,23 @@
 
 .simple-form-generate {
 
-    textarea {
-        background-color: $color-secondary;
-        border-radius: 20px;
-        box-shadow: 4px 4px 0 $color-violet-variant;
-        height: 7vh;
-        width: 80vw;
-        margin-bottom: 20px;
-        padding:10px;
-        border: solid $color-violet-variant;
-        border-width: 3px;
-        border-style: inset; 
-        color:$color-primary; 
-        color: white
-    }
+  textarea {
+    background-color: $color-secondary;
+    border-radius: 1rem;
+    border: 2px solid #000;
+    box-shadow: 3px 3px 0 #000;
+    width: 100%;
+    padding: 10px 14px;
+    color: white;
+    font-weight: 600;
+  }
 
-    label {
-        color: white;
-        font-family: $headings-font-family;
-    }
+  label {
+    color: white;
+    font-family: $headings-font-family;
+  }
 
-    ::placeholder {
-        color : $color-violet-variant;
-        padding: 10px;
-    }
-
-    img {
-        height: 10vh;
-    }
+  ::placeholder {
+    color: $color-violet-variant;
+  }
 }

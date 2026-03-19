@@ -32,15 +32,6 @@
       <% end %>
     <% end %>
 
-    <% if memo.user == current_user || memo.is_public? %>
-      <%= link_to memo_path(memo, anchor: "memo-share-section"),
-          class: "memo-item__share",
-          title: "Partager ce mémo",
-          onclick: "event.stopPropagation();" do %>
-        <i class="fa-solid fa-share"></i>
-      <% end %>
-    <% end %>
-
     <% if memo.user == current_user %>
       <%= button_to memo_path(memo),
           method: :delete,

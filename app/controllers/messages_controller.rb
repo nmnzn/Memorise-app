@@ -22,7 +22,12 @@ class MessagesController < ApplicationController
         unless hash_response_from_llm["complete"]
           message_from_llm = Message.new(content: assistant_message, role: "assistant", chat_id: @chat.id)
           if message_from_llm.save!
-            redirect_to memo_chat_path(@chat.memo, @chat)
+            @messages = @chat.messages.reload
+            respond_to do |format|
+              format.turbo_stream
+              format.html { redirect_to memo_chat_path(@chat.memo, @chat) }
+            end
+
           else
             render "chats/show", status: :unprocessable_entity
           end
@@ -66,7 +71,7 @@ class MessagesController < ApplicationController
 
 
 
- private
+  private
 
   require 'json'
 
@@ -170,4 +175,4 @@ class MessagesController < ApplicationController
     }
     RubyLLM.chat.with_schema(output_schema).with_instructions(instructions).ask(user_prompt).content
   end
-end 
+end

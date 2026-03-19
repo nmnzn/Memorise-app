@@ -1,4 +1,4 @@
-class CardsController < ApplicationController
+class MemoSharesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_card, only: [:show, :edit, :update, :destroy]
   before_action :set_memo_from_params, only: [:new, :create]

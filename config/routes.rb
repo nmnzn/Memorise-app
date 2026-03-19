@@ -21,7 +21,8 @@ Rails.application.routes.draw do
       get :publics
     end
 
-    resources :cards, only: [:show, :new, :create, :destroy, :edit, :update]
+    resources :memo_shares, only: [:create, :destroy]
+    resources :cards, only: [:new, :create, :destroy, :edit, :update]
     resources :chats, only: [:new, :create, :show]
   end
 

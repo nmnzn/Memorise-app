@@ -8,17 +8,19 @@
   <div class="memo-card__body hidden" data-card-target="body">
     <p class="memo-card__answer"><%= card.answer %></p>
 
-    <div class="memo-card__actions">
-      <%= link_to edit_memo_card_path(card.memo, card), class: "memo-card__btn memo-card__btn--edit" do %>
-        <i class="fa-solid fa-pen"></i>
-      <% end %>
+    <% if card.memo.user == current_user %>
+      <div class="memo-card__actions">
+        <%= link_to edit_memo_card_path(card.memo, card), class: "memo-card__btn memo-card__btn--edit" do %>
+          <i class="fa-solid fa-pen"></i>
+        <% end %>
 
-      <%= button_to memo_card_path(card.memo, card), method: :delete,
-          form: { data: { turbo_confirm: "Supprimer cette carte ?" } },
-          class: "memo-card__btn memo-card__btn--delete" do %>
-        <i class="fa-solid fa-trash"></i>
-      <% end %>
-    </div>
+        <%= button_to memo_card_path(card.memo, card), method: :delete,
+            form: { data: { turbo_confirm: "Supprimer cette carte ?" } },
+            class: "memo-card__btn memo-card__btn--delete" do %>
+          <i class="fa-solid fa-trash"></i>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 
 </article>

@@ -35,8 +35,8 @@ end
 
 puts ">> SEED - USER : test@test.com / password123"
 
-# création de 10 mémos avec 5 cards chacun et mise à jour de la table answers avec des scores au hasard (si score = 1 alors value = true)
-puts 'SEEDING  10 MEMOS with 5 CARDS each...'
+# création de 3 mémos avec cards chacun et enregistrement d'une answer avec des scores au hasard (si score = 1 alors value = true)
+puts 'SEEDING  3 MEMOS with CARDS ...'
 
 file_path = File.join(__dir__, "seed.json")
 file = File.open(file_path).read
@@ -45,6 +45,8 @@ data = JSON.parse file
 data.each do |memo_with_cards|
   memo = Memo.new(
     name: memo_with_cards["name"],
+    favorite: memo_with_cards["favorite"],
+    is_public: memo_with_cards["is_public"],
     user_id: User.first.id
   )
   memo.save!
@@ -60,10 +62,15 @@ data.each do |memo_with_cards|
       qcm_choices: card["qcm_choices"]
     )
     new_card.save!
-    new_card.answers.first.update(value: card["value"], score: card["score"])
+
+    # new_card.answers.first.update(value: card["value"], score: card["score"])
+    
+    answer = Answer.new(card_id: new_card.id, user_id: memo.user_id, score: card["score"], value: card["value"])
+    answer.save!
+
     card_count += 1
   end
-  puts "Memo created (#{memo.name} with #{memo.cards.count} cards) and different answers scores (one answer record per card-user) ☑️"
+  puts "Memo created (#{memo.name} with #{memo.cards.count} cards) and a record in the table answers. ☑️"
 end
 
-puts "✅ All set ! You have now in your DB : 1 user, 10 memos (topics), 5 cards (question and answer) per memo, 2 answers (recorded) per card (one true and one false)"
+puts "✅ All set ! You have now in your DB : 1 user, 3 memos (topics) with cards (question and answer)"

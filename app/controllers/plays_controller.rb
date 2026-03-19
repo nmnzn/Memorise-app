@@ -1,12 +1,13 @@
 class PlaysController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_memo, only: [:knew, :did_not_know]
-  before_action :set_card, only: [:show, :reveal, :knew, :did_not_know]
+  before_action :set_memo, only: %i[knew did_not_know]
+  before_action :set_card, only: %i[show reveal knew did_not_know]
 
   def start
+    # Extract memo from referer if playing a specific memo
     url_provenance = request.referer
-    if url_provenance.match?(/\/memos\/\d+/)
-      memo_id = url_provenance.match(/\/memos\/(\d+)/)[1]
+    if url_provenance.match?(%r{/memos/\d+})
+      memo_id = url_provenance.match(%r{/memos/(\d+)})[1]
       @memo = Memo.find(memo_id)
       session[:memo_id] = @memo.id
     else
@@ -14,27 +15,25 @@ class PlaysController < ApplicationController
       session.delete(:memo_id)
     end
 
-  # if params[:memo_id].present?
-  #   @memo = Memo.find(params[:memo_id])
-  #   session[:memo_id] = @memo.id
-  # else
-  #   @memo = nil
-  #   session.delete(:memo_id)
-  # end
+    # Determine which cards to play: memo cards or all user cards
+    @cards = @memo ? @memo.cards : current_user.cards
 
-  @cards = @memo ? @memo.cards : current_user.cards
-
+    # Initialize play session counter
     session[:play_count] = 0
-    if @cards.nil?
+    if @cards.empty?
       redirect_to memos_path, notice: "Bravo, tu as terminé toutes les cards."
     else
       @card = next_unanswered_card
-      @mode = (@card.qcm? && @card.qcm_choices.present?) ? :qcm : :flip
+      if @card
+        @mode = @card.qcm? && @card.qcm_choices.present? ? :qcm : :flip
+      else
+        redirect_to memos_path, notice: "Bravo, tu as terminé toutes les cards."
+      end
     end
   end
 
   def show
-    @mode = (@card.qcm? && @card.qcm_choices.present?) ? :qcm : :flip
+    @mode = @card.qcm? && @card.qcm_choices.present? ? :qcm : :flip
   end
 
   def knew
@@ -85,23 +84,40 @@ class PlaysController < ApplicationController
   end
 
   def next_unanswered_card(exclude: nil)
+    # Get the current play count to determine card selection strategy.
     count = session[:play_count].to_i
 
-    if @memo == nil
-      cards = current_user.cards.joins(:answers).where(answers: { user: current_user, value: false })
-      cards = cards.where.not(id: exclude) if exclude
-    else
-      memo_to_play = @memo
-      cards = memo_to_play.cards.joins(:answers).where(answers: { user: current_user, value: false })
-      cards = cards.where.not(id: exclude) if exclude
-    end
+    # Determine which cards to study from (memo or all user cards).
+    base_cards = @memo ? @memo.cards : current_user.cards
+
+    # Exclude current card if specified.
+    base_cards = base_cards.where.not(id: exclude) if exclude
+
+    # Keep cards that are not yet mastered by the current user.
+    mastered_card_ids = current_user.answers
+                                    .where(card_id: base_cards.select(:id), value: true)
+                                    .select(:card_id)
+
+    study_cards = base_cards.where.not(id: mastered_card_ids).to_a
+    return nil if study_cards.empty?
+
+    # Build a per-user score map once to avoid SQL joins on other users' answers.
+    answers_by_card_id = current_user.answers
+                                     .where(card_id: study_cards.map(&:id))
+                                     .index_by(&:card_id)
+
+    # Select next card based on spaced repetition strategy.
+    sorted_by_score = study_cards.sort_by { |card| answers_by_card_id[card.id]&.score || 0.5 }
 
     if count % 6 == 0 && count > 0
-      cards.order("answers.score DESC").first
+      # Every 6 cards: review hardest cards (lowest score first).
+      sorted_by_score.first
     elsif count % 3 == 0 && count > 0
-      cards.order("answers.score ASC").first
+      # Every 3 cards: review easiest cards (highest score first).
+      sorted_by_score.last
     else
-      cards.shuffle.first
+      # Otherwise: random selection for variety.
+      study_cards.sample
     end
   end
-end 
+end

@@ -4,14 +4,23 @@ class PlaysController < ApplicationController
   before_action :set_card, only: [:show, :reveal, :knew, :did_not_know]
 
   def start
+    url_provenance = request.referer
+    if url_provenance.match?(/\/memos\/\d+/)
+      memo_id = url_provenance.match(/\/memos\/(\d+)/)[1]
+      @memo = Memo.find(memo_id)
+      session[:memo_id] = @memo.id
+    else
+      @memo = nil
+      session.delete(:memo_id)
+    end
 
-  if params[:memo_id].present?
-    @memo = Memo.find(params[:memo_id])
-    session[:memo_id] = @memo.id
-  else
-    @memo = nil
-    session.delete(:memo_id)
-  end
+  # if params[:memo_id].present?
+  #   @memo = Memo.find(params[:memo_id])
+  #   session[:memo_id] = @memo.id
+  # else
+  #   @memo = nil
+  #   session.delete(:memo_id)
+  # end
 
   @cards = @memo ? @memo.cards : current_user.cards
 

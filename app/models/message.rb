@@ -1,7 +1,7 @@
 class Message < ApplicationRecord
   belongs_to :chat
 
-  acts_as_message
+  # acts_as_message
 
   attr_reader :volume, :profondeur
 

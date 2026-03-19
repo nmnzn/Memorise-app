@@ -10,6 +10,14 @@
     padding: 10px 14px;
     color: white;
     font-weight: 600;
+    -webkit-appearance: none;
+    appearance: none;
+
+    &::-webkit-search-cancel-button,
+    &::-webkit-contacts-auto-fill-button,
+    &::-webkit-credentials-auto-fill-button {
+      display: none;
+    }
   }
 
   label {

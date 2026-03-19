@@ -11,10 +11,13 @@
 
 
 .chat-card {
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  margin: 0.5rem 1rem 1rem;
+  // Ajuste cette valeur pour l'espace sous la card (au-dessus du bouton play)
+  margin: 0.5rem 1rem 45px;
   background-color: $color-violet-variant;
   border: 2px solid #000;
   box-shadow: 4px 4px 0 #000;
@@ -22,7 +25,8 @@
 }
 
 .chat-messages {
-  max-height: 55dvh;
+  flex: 1;
+  min-height: 0;
   overflow-y: scroll;
 }
 
@@ -72,6 +76,7 @@
 }
 
 .chat-send-btn {
+  touch-action: manipulation;
   background-color: $color-primary;
   color: #000;
   border: 2px solid #000;
@@ -112,4 +117,16 @@
   overflow: hidden;
   min-height: 40px;
   max-height: 150px;
+}
+
+body:has(.chat-page .simple-form-generate textarea:focus) .bottom-bar {
+  display: none;
+}
+
+body:has(.chat-page .simple-form-generate textarea:focus) {
+  padding-bottom: 10px;
+}
+
+body:has(.chat-page .simple-form-generate textarea:focus) .chat-card {
+  margin-bottom: 10px;
 }

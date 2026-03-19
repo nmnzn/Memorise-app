@@ -8,4 +8,8 @@ export default class extends Controller {
     this.iconTarget.classList.add("d-none")
     this.spinnerTarget.classList.remove("d-none")
   }
+
+  preventBlur(event) {
+    event.preventDefault()
+  }
 }

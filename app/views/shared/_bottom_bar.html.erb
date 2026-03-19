@@ -12,11 +12,13 @@
   <div class="column_play">
 
     <%= link_to play_start_path, class: "bottom-bar__fab" do %>
-        <i class="fa-solid fa-play"></i>
+      <i class="fa-solid fa-play"></i>
     <% end %>
 
     <%= link_to play_start_path, class: "bottom-bar__item" do %>
-        <span>JOUER</span>
+      <span>
+        <% if request.path.match?(/\/memos\/\d+/) %>JOUER CE MEMO<% else %>JOUER MES MEMOS<% end %>
+      </span>
     <% end %>
 
   </div>

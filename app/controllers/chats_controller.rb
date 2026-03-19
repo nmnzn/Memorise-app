@@ -14,8 +14,8 @@ class ChatsController < ApplicationController
     @memo = Memo.find(params[:memo_id])
     @chat = Chat.find(params[:id])
     @message = Message.new
-    @volume_collection = Message.volume_collection
-    @profondeur_collection = Message.profondeur_collection
+    # @volume_collection = Message.volume_collection
+    # @profondeur_collection = Message.profondeur_collection
   end
 end
 

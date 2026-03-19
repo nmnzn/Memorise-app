@@ -100,8 +100,8 @@ class MessagesController < ApplicationController
     Une fois tout clair → fais un court récap avant de lancer la génération
 
     Quelques règles :
-    Messages courts et chaleureux, style SMS
-    Max 4 échanges
+    Messages courts et chaleureux, pas de blabla, style SMS
+    Max 4 échanges, pas plus, pour éviter de perdre l'utilisateur
     Si l'utilisateur demande plus de 100 cartes → explique gentiment la limite et demande combien il veut finalement
     Si le sujet est trop récent ou inconnu → sois honnête, explique que tu n'as pas d'infos fiables et propose de reformuler
     Format JSON uniquement (aucun texte autour) : {"complete": false, "message": "..."}

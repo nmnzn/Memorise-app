@@ -305,6 +305,7 @@
     gap: 10px;
   }
 
+  &__favorite-btn,
   &__visibility-btn,
   &__trash {
     flex-shrink: 0;
@@ -321,6 +322,10 @@
     z-index: 1;
     text-decoration: none;
     padding: 0;
+  }
+
+  &__favorite-btn {
+    background-color: #f0b13f;
   }
 
   &__visibility-btn {

@@ -6,9 +6,6 @@ class Memo < ApplicationRecord
   has_many :memo_shares, dependent: :destroy
   has_many :shared_users, through: :memo_shares, source: :user
 
-  has_many :memo_shares, dependent: :destroy
-  has_many :shared_users, through: :memo_shares, source: :user
-
   accepts_nested_attributes_for :cards, reject_if: :all_blank
 
   validates :name, presence: true
@@ -23,5 +20,9 @@ class Memo < ApplicationRecord
 
   def visibility_label
     is_public? ? "Public" : "Privé"
+  end
+
+  def favorite_label
+    favorite? ? "Retirer des favoris" : "Ajouter aux favoris"
   end
 end

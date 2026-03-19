@@ -31,11 +31,11 @@
       </div>
     </div>
 
-    <h2 class="dashboard-home__subtitle">Tes autres mémos</h2>
+    <h2 class="dashboard-home__subtitle">Tes mémos favoris</h2>
 
-    <% if @memos.any? %>
+    <% if @favorite_memos.any? %>
       <div class="dashboard-home__list">
-        <% @memos.each do |memo| %>
+        <% @favorite_memos.each do |memo| %>
           <% total_cards = memo.cards.count %>
           <% known_cards = memo.cards.joins(:answers).where(answers: { user: current_user, value: true }).distinct.count %>
           <% percent = total_cards.zero? ? 0 : ((known_cards.to_f / total_cards) * 100).round %>
@@ -57,7 +57,7 @@
         <% end %>
       </div>
     <% else %>
-      <p class="dashboard-home__empty">Tu n’as pas encore de mémo.</p>
+      <p class="dashboard-home__empty">Tu n’as pas encore de mémo favori.</p>
     <% end %>
   </div>
 <% else %>

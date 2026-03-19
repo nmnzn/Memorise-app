@@ -17,11 +17,13 @@
     </div>
   <% end %>
 
-  <div class="chat-messages">
-    <%= render "chats/shared/chat", messages: @chat.messages %>
-  </div>
+  <div class="chat-card">
+    <div class="chat-messages">
+      <%= render "chats/shared/chat", messages: @chat.messages %>
+    </div>
 
-  <div class="chat-input">
-    <%= render "chats/shared/message_input", chat: @chat, message: @message %>
+    <div class="chat-input">
+      <%= render "chats/shared/message_input", chat: @chat, message: @message %>
+    </div>
   </div>
 </div>

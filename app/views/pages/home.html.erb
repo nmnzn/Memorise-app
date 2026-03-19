@@ -40,7 +40,7 @@
           <% known_cards = memo.cards.joins(:answers).where(answers: { user: current_user, value: true }).distinct.count %>
           <% percent = total_cards.zero? ? 0 : ((known_cards.to_f / total_cards) * 100).round %>
 
-          <%= link_to memo_path(memo), class: "dashboard-home__card" do %>
+          <%= link_to play_start_path, class: "dashboard-home__card" do %>
             <div class="dashboard-home__card-text">
               <h3><%= memo.name %></h3>
               <p><%= known_cards %>/<%= total_cards %></p>
@@ -51,7 +51,7 @@
             </div>
 
             <div class="dashboard-home__play">
-              Play
+              Jouer
             </div>
           <% end %>
         <% end %>

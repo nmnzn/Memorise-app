@@ -3,8 +3,11 @@
     data-play-correct-value="<%= card.answer %>">
 
   <div class="play-topbar">
-    <%= link_to memos_path, class: "play-back" do %>
-      <i class="fa-solid fa-arrow-left"></i>
+    <%#= link_to memos_path, class: "play-back" do %>
+      <!-- <i class="fa-solid fa-arrow-left"></i> -->
+    <%# end %>
+    <%= link_to memos_path, class: "btn btn-secondary btn-shadow w-20 mt-4" do %>
+      Terminer
     <% end %>
   </div>
 

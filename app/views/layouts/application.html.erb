@@ -15,7 +15,9 @@
   <main class="main-content">
     <%= yield %>
   </main>
-  <%= render "shared/bottom_bar" %>
+<% unless request.url.match?(%r{/play(/|$|\?)}) %>
+    <%= render "shared/bottom_bar" %>
+<% end %>
 </body>
 
 </html>

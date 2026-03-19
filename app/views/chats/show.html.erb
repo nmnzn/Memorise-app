@@ -1,10 +1,11 @@
 <div class="chat-page">
-  <div class="chat-header d-flex justify-content-between align-items-center p-3">
-    <%= link_to memo_path(@chat.memo), class: "memo-item__arrow text-decoration-none" do %>
-      <i class="fa-solid fa-arrow-left"></i>
-    <% end %>
-    <h1 class="text-headings-font-family">Générer des cards grâce à l'IA</h1>
+  <div class="page-title sticker-text mb-4 mt-5">
+    <h1>Générer des cards grâce à l'IA</h1>
   </div>
+
+  <%= link_to memo_path(@chat.memo), class: "memo-show-header__back ms-3 mt-2 d-inline-flex mb-2" do %>
+    <i class="fa-solid fa-arrow-left"></i>
+  <% end %>
 
   <% if @chat.errors.any? %>
     <div class="alert alert-danger mx-3">

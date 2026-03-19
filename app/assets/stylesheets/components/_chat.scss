@@ -1,0 +1,52 @@
+.chat-page {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header {
+  flex-shrink: 0;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: scroll;
+}
+
+.chat-input {
+  flex-shrink: 0;
+}
+
+.chat-messages-list {
+  padding: 1rem;
+  overflow-y: scroll;
+  height: 100%;
+}
+
+.chat-bubble--user {
+  background-color: $color-tertiary;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  max-width: 75%;
+  word-wrap: break-word;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.chat-bubble--assistant {
+  background-color: $color-violet-variant;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  max-width: 75%;
+  word-wrap: break-word;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.simple-form-generate textarea {
+  resize: none;
+  overflow: hidden;
+  min-height: 40px;
+  max-height: 150px;
+}
+

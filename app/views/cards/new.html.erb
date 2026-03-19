@@ -6,20 +6,27 @@
   <h1 class="page-title sticker-text">Créer une nouvelle card</h1>
 </div>
 
-    <div class="pt-2">
-        <h3 class="text-headings-font-family fw-bold"><%= @memo.name %></h3>
-        <p class="text-secondary">Il y a actuellement <span class="text-primary"><%= @memo.cards.count %>card(s)</span> dans ton mémo.</p>
+    <div class="pt-2 text-center">
+        <h3 class="text-headings-font-family fw-bold text-center"><%= @memo.name %></h3>
+        <p class="text-secondary text-center">Il y a actuellement <span class="text-primary"><%= @memo.cards.count %> card(s)</span> dans ton mémo.</p>
     </div>
 
-    <div>
-        <%= simple_form_for [@memo, @card], html: { class: "simple-form" } do |f| %>
-            <%= f.input :ask, :label => 'Question à mémoriser', :placeholder => "Quel est le nom du chien de la grand-mère de mon voisin ?" %>
-            <%= f.input :answer, :label => 'Réponse à la question', :placeholder => "Son chien s'appelle Jacquot 🐶" %>
-    <div class="d-flex justify-content-center align-items-center mt-2">
-        <%= f.submit "Enregistrer", class: "btn btn-primary btn-shadow", id: "btn" %>
-    </div>
+<div>
+    <%= simple_form_for [@memo, @card], html: { class: "simple-form" } do |f| %>
 
-            </div>
-        <% end %>
+        <div class="card-input-wrapper">
+            <%= f.input :ask, label: 'Question à mémoriser', placeholder: "Ex : Quel est le nom du chien de la grand-mère de mon voisin ?" %>
+        </div>
+
+        <div class="card-input-wrapper">
+            <%= f.input :answer, label: 'Réponse à la question', placeholder: "Ex : Son chien s'appelle Jacquot 🐶" %>
+        </div>
+
+        <div class="d-flex justify-content-center align-items-center mt-3">
+            <%= f.submit "Enregistrer", class: "btn btn-primary btn-shadow", id: "btn" %>
+        </div>
+
+    <% end %>
+</div>
     </div>
 </div>

@@ -1,9 +1,9 @@
 <%= turbo_frame_tag "chat_messages" do %>
   <div class="chat-messages-list" data-controller="auto-scroll-bottom">
-      <% if messages.empty? %>
-        <p>Que souhaitez vous mémoriser ?</p>
-        <p>Laisse-toi guider pour générer ton programme de mémorisation.</p>
-      <% else %>
+      <div class="d-flex justify-content-start mb-2">
+        <div class="chat-bubble--assistant">Que souhaitez-vous mémoriser ? Laisse-toi guider pour générer ton programme de mémorisation. 🧠</div>
+      </div>
+      <% unless messages.empty? %>
         <% messages.each do |message| %>
           <% if message.role == "user" %>
             <div class="d-flex justify-content-end mb-2">

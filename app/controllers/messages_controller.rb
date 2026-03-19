@@ -54,7 +54,12 @@ class MessagesController < ApplicationController
             @chat.memo.cards.create!(ask: question, answer: answer, kind: kind)
             card_count += 1
           end
-          redirect_to memo_path(@chat.memo), notice: "Les cards ont bien été créées."
+          @redirect_url = memo_path(@chat.memo)
+          @messages = @chat.messages.reload
+          respond_to do |format|
+            format.turbo_stream
+            format.html { redirect_to @redirect_url, notice: "Les cards ont bien été créées." }
+          end
         end
       else
         render "chats/show", status: :unprocessable_entity

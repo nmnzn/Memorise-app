@@ -28,7 +28,7 @@
         <% end %>
       <% end %>
 
-      <%= link_to play_path(memo), class: "memo-item__play-btn", onclick: "event.stopPropagation();" do %>
+      <%= link_to play_start_path(memo_id: memo.id), class: "memo-item__play-btn", onclick: "event.stopPropagation();" do %>
         <i class="fa-solid fa-play"></i>
       <% end %>
     </div>

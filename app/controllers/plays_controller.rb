@@ -4,11 +4,8 @@ class PlaysController < ApplicationController
   before_action :set_card, only: %i[show reveal knew did_not_know]
 
   def start
-    # Extract memo from referer if playing a specific memo
-    url_provenance = request.referer
-    if url_provenance.match?(%r{/memos/\d+})
-      memo_id = url_provenance.match(%r{/memos/(\d+)})[1]
-      @memo = Memo.find(memo_id)
+    if params[:memo_id]
+      @memo = Memo.find(params[:memo_id])
       session[:memo_id] = @memo.id
     else
       @memo = nil

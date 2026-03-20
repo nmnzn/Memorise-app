@@ -13,7 +13,11 @@
     "cards": [
       { "ask": "Quelle est la capitale de l'Australie ?", "answer": "Canberra", "score": 0.75, "value": false },
       { "ask": "Quelle est la capitale du Brésil ?", "answer": "Brasilia", "score": 1.0, "value": true, "qcm_choices": ["São Paulo", "Brasilia", "Rio de Janeiro", "Belo Horizonte"] },
-      { "ask": "Quelle est la capitale du Canada ?", "answer": "Ottawa", "score": 0.25, "value": false }
+      { "ask": "Quelle est la capitale du Canada ?", "answer": "Ottawa", "score": 0.25, "value": false },
+      { "ask": "Quelle est la capitale du Japon ?", "answer": "Tokyo", "score": 0.5, "value": false, "qcm_choices": ["Osaka", "Tokyo", "Kyoto", "Hiroshima"] },
+      { "ask": "Quelle est la capitale de l'Argentine ?", "answer": "Buenos Aires", "score": 0.0, "value": false },
+      { "ask": "Quelle est la capitale de l'Égypte ?", "answer": "Le Caire", "score": 0.75, "value": false, "qcm_choices": ["Alexandrie", "Le Caire", "Louxor", "Assouan"] },
+      { "ask": "Quelle est la capitale de la Norvège ?", "answer": "Oslo", "score": 0.25, "value": false }
     ]
   },
   {

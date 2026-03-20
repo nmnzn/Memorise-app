@@ -87,8 +87,11 @@ class PlaysController < ApplicationController
     # Determine which cards to study from (memo or all user cards).
     base_cards = @memo ? @memo.cards : current_user.cards
 
-    # Exclude current card if specified.
-    base_cards = base_cards.where.not(id: exclude) if exclude
+    # Exclude current card if specified, unless it's the only remaining card.
+    if exclude
+      remaining = base_cards.where.not(id: exclude)
+      base_cards = remaining if remaining.exists?
+    end
 
     # Keep cards that are not yet mastered by the current user.
     mastered_card_ids = current_user.answers

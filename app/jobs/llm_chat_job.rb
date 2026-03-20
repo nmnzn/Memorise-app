@@ -1,52 +1,64 @@
-class MessagesController < ApplicationController
-  def create
-    @chat = Chat.find(params[:chat_id])
-    @message = Message.new(message_params)
-    @message.chat = @chat
-    @message.role = "user"
+class LlmChatJob < ApplicationJob
+  queue_as :default
+  include Rails.application.routes.url_helpers
 
-    if @message.content.blank?
-      @message.errors.add(:content, "Le sujet ne peut pas être vide.")
-      render "chats/show", status: :unprocessable_entity
-    elsif @message.save
-      LlmChatJob.perform_later(@chat.id, @message.id)
-      @messages = @chat.messages.reload
-      respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_to memo_chat_path(@chat.memo, @chat) }
+  def perform(chat_id, user_message_id)
+    chat = Chat.find(chat_id)
+    user_message = Message.find(user_message_id)
+    messages = chat.messages.order(:created_at)
+    history = build_history(messages)
+
+    hash_response = llm_answering_to_user(user_message.content, history)
+
+    if hash_response["complete"]
+      object_with_cards = generate_cards_with_llm(hash_response["resume"], hash_response["number"], history)
+      llm_cards = object_with_cards["cards"]
+
+      if llm_cards.is_a?(Array)
+        card_count = 0
+        llm_cards.each do |card_data|
+          next unless card_data.is_a?(Hash)
+          question = card_data["question"] || card_data[:question]
+          answer   = card_data["answer"]   || card_data[:answer]
+          next if question.blank? || answer.blank?
+          kind = card_count.odd? ? :qcm : :flip
+          chat.memo.cards.create!(ask: question, answer: answer, kind: kind)
+          card_count += 1
+        end
       end
+
+      Message.create!(content: hash_response["message"], role: "assistant", chat_id: chat.id)
+
+      broadcast_update(chat, "chat_messages", partial: "chats/shared/chat", locals: { messages: chat.messages.reload })
+      broadcast_update(chat, "redirect-handler", html: "<div data-controller=\"auto-redirect\" data-auto-redirect-url-value=\"#{memo_path(chat.memo)}\"></div>")
     else
-      render "chats/show", status: :unprocessable_entity
+      Message.create!(content: hash_response["message"], role: "assistant", chat_id: chat.id)
+
+      broadcast_update(chat, "chat_messages", partial: "chats/shared/chat", locals: { messages: chat.messages.reload })
+      broadcast_update(chat, "message_form", partial: "chats/shared/message_input", locals: { chat: chat, message: Message.new })
     end
+  rescue => e
+    Rails.logger.error "LlmChatJob failed for chat #{chat_id}: #{e.message}"
+    chat = Chat.find_by(id: chat_id)
+    return unless chat
+    broadcast_update(chat, "message_form", partial: "chats/shared/message_input", locals: { chat: chat, message: Message.new })
+    broadcast_update(chat, "chat_messages", partial: "chats/shared/chat", locals: { messages: chat.messages.reload })
   end
-
-
-
-
-
-
 
   private
 
-  require 'json'
-
-  def message_params
-    params.require(:message).permit(:content)
-  end
-
-  def history(messages)
-    history = []
-    messages.each do |message|
-      history.push("Role: #{message.role}, Message: #{message.content} -")
+  def broadcast_update(chat, target, partial: nil, locals: {}, html: nil)
+    if html
+      Turbo::StreamsChannel.broadcast_update_to(chat, target: target, html: html)
+    else
+      rendered = ApplicationController.renderer.render(partial: partial, locals: locals)
+      Turbo::StreamsChannel.broadcast_update_to(chat, target: target, html: rendered)
     end
-    return history.join
   end
 
-  # def build_conversation_history
-  #   @chat.messages.each do |message|
-  #     @ruby_llm_chat.add_message(message)
-  #   end
-  # end
+  def build_history(messages)
+    messages.map { |m| "Role: #{m.role}, Message: #{m.content} -" }.join
+  end
 
   def llm_answering_to_user(message, history)
     collect_info = <<~PROMPT
@@ -59,7 +71,7 @@ class MessagesController < ApplicationController
 
     Quelques règles :
     Messages courts et chaleureux, pas de blabla, style SMS
-    Evite trop de redondance dans tes messages sauf lorsque tu récapitules en fin de conversation avant de générer le programme. 
+    Evite trop de redondance dans tes messages sauf lorsque tu récapitules en fin de conversation avant de générer le programme.
     Idéalement, il y a 3-4 échanges, si besoin tu peux étendre légèrement la conversation. L'important est de comprendre le besoin utilisateur et attendre son accord pour lancer la génération de cartes.
     Si l'utilisateur demande plus de 50 cartes → explique gentiment la limite et demande combien il veut finalement
     Si le sujet est trop récent ou inconnu → sois honnête, explique que tu n'as pas d'infos fiables et propose de reformuler
@@ -84,15 +96,8 @@ class MessagesController < ApplicationController
       additionalProperties: false
     }
 
-    Rails.logger.info "\n=== LLM HISTORY ===\n#{history}\n==================\n"
-    llm_response = RubyLLM.chat.with_schema(output_schema).with_instructions(collect_info).ask(message).content
-    # llm_hash = JSON.parse(llm_response)
-    return llm_response
+    RubyLLM.chat.with_schema(output_schema).with_instructions(collect_info).ask(message).content
   end
-
-
-
-
 
   def generate_cards_with_llm(user_prompt, nb_cards, history)
     instructions = <<~PROMPT
@@ -107,7 +112,7 @@ class MessagesController < ApplicationController
       3) Pour rappel, tu génères 50 cards au maximum.
       4) Tu peux mettre quelques emojis pertinents. Ne crée pas de code ou autre élément, propose juste les questions/réponses. Garde un langage agréable et du quotidien, sans être trop familier.
       5) Ne donne aucune explication, aucun commentaire, aucune introduction. Uniquement les cards (question/réponse).
-      
+
       Historique de la conversation pour alimenter tes questions/réponses en plus du prompt utilisateur : #{history}
     PROMPT
 
@@ -130,6 +135,7 @@ class MessagesController < ApplicationController
       required: ["cards"],
       additionalProperties: false
     }
+
     RubyLLM.chat.with_schema(output_schema).with_instructions(instructions).ask(user_prompt).content
   end
 end

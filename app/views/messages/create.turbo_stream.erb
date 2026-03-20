@@ -1,13 +1,12 @@
 <%= turbo_stream.update "chat_messages" do %>
   <%= render "chats/shared/chat", messages: @messages %>
-<% end %>
-
-<% if @redirect_url %>
-  <%= turbo_stream.update "redirect-handler" do %>
-    <div data-controller="auto-redirect" data-auto-redirect-url-value="<%= @redirect_url %>"></div>
-  <% end %>
-<% else %>
-  <%= turbo_stream.update "message_form" do %>
-    <%= render "chats/shared/message_input", chat: @chat, message: Message.new %>
-  <% end %>
+  <div class="chat-messages-list pt-0">
+    <div class="d-flex justify-content-start mb-2">
+      <div class="chat-bubble--assistant">
+        <span class="typing-indicator">
+          <span></span><span></span><span></span>
+        </span>
+      </div>
+    </div>
+  </div>
 <% end %>

@@ -6,7 +6,7 @@
 
 <% if user_signed_in? %>
   <div class="dropdown">
-    <%= image_tag "Profil.jpeg", class: "top-bar__avatar dropdown-toggle",
+    <%= image_tag current_user.email == "test@test.com" ? "Profil.jpeg" : "mascotte_home.png", class: "top-bar__avatar dropdown-toggle",
         data: { bs_toggle: "dropdown" }, role: "button" %>
 
     <ul class="dropdown-menu dropdown-menu-end">

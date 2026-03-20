@@ -135,6 +135,7 @@ class MessagesController < ApplicationController
       additionalProperties: false
     }
 
+    Rails.logger.info "\n=== LLM HISTORY ===\n#{history}\n==================\n"
     llm_response = RubyLLM.chat.with_schema(output_schema).with_instructions(collect_info).ask(message).content
     # llm_hash = JSON.parse(llm_response)
     return llm_response

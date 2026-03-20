@@ -100,12 +100,10 @@ class MessagesController < ApplicationController
 
   def llm_answering_to_user(message, history)
     collect_info = <<~PROMPT
-
-    Tu es un assistant sympa qui aide à créer un programme de mémorisation. Ton rôle est de comprendre le besoin de l'utilisateur, à son rythme, pour générer des cartes de mémorisation.
-    Déroule la conversation dans cet ordre :
+    Tu es un assistant sympa qui aide à créer un programme de mémorisation.
 
     Si le sujet n'est pas encore donné → demande-le avec curiosité, tu peux utiliser des emojis.
-    Si le nombre de cartes n'est pas donné → demande-le naturellement (max 50, précise le à l'utilisateur s'il en demande plus que 50)
+    Si le nombre de cartes n'est pas donné → demande-le naturellement (max 50, précise le à l'utilisateur s'il en demande plus que 50, sinon ne parle pas de cette limite)
     Si le sujet est large ou vague → pose une petite question de précision
     Une fois tout clair et que tu es sûr d'avoir suffisemment d'information pour générer un programme de mémorisation (question/réponses) → fais un court récap avant de lancer la génération ET demande l'accord à l'utlisateur pour générer le programme.
 
@@ -120,7 +118,7 @@ class MessagesController < ApplicationController
     complete: false → tant que tu n'as pas tout ce qu'il faut ET que tu n'as pas obtenu l'accord de l'utilisateur pour générer le prorgamme de mémorisation.
     complete: true → une fois le récap validé par l'utilisateur ET que tu as son accord pour générer le programme (en réponse de ton récapitulatif). Message : "Super, je génère le programme !"
     Quand complete: true → ajoute "resume" (résumé du besoin) et "number" (nombre de cartes)
-    Historique : #{history}
+    Historique de la conversation : #{history}
 
     PROMPT
 
@@ -150,17 +148,17 @@ class MessagesController < ApplicationController
     instructions = <<~PROMPT
       Tu es Memorise, une application faite pour aider l'utilisateur à se souvenir des choses, simplement et naturellement. Ton ton : clair, concis, utile. Pas de blabla. Pas de texte inutile.
 
-      Ton objectif : proposer des cards (question et réponse associée) pertinentes pour l'utilisateur, en te basant uniquement sur ce qui est explicitement présent dans la conversation : le sujet demandé et quelques précisions au besoin.
+      Ton objectif : proposer des cards (question et réponse associée) pertinentes pour l'utilisateur, en te basant uniquement sur ce qui est explicitement présent dans la conversation et dans le prompt utilisateur : le sujet demandé et quelques précisions au besoin.
       Avec le sujet donné, génère des paires question - réponse pertinentes, concises, et intéressantes.
 
       Méthode :
       1) Comprends l'intention : déduis les éléments les plus utiles à mémoriser à partir du sujet demandé.
       2) Génère #{nb_cards} cards (question/réponse).
       3) Pour rappel, tu génères 50 cards au maximum.
-      4) Ne crée pas de code ou autre élément, propose juste les questions/réponses. Garde un langage agréable et du quotidien, sans être trop familier.
+      4) Tu peux mettre quelques emojis pertinents. Ne crée pas de code ou autre élément, propose juste les questions/réponses. Garde un langage agréable et du quotidien, sans être trop familier.
       5) Ne donne aucune explication, aucun commentaire, aucune introduction. Uniquement les cards (question/réponse).
       
-      Historique de la conversation pour alimenter tes questions/réponses : #{history}
+      Historique de la conversation pour alimenter tes questions/réponses en plus du prompt utilisateur : #{history}
     PROMPT
 
     output_schema = {

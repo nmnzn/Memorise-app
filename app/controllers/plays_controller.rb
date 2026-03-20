@@ -18,13 +18,13 @@ class PlaysController < ApplicationController
     # Initialize play session counter
     session[:play_count] = 0
     if @cards.empty?
-      redirect_to memos_path, notice: "Bravo, tu as terminé toutes les cards."
+      redirect_to (@memo ? memo_path(@memo) : memos_path), notice: "Bravo, tu as terminé toutes les cards."
     else
       @card = next_unanswered_card
       if @card
         @mode = @card.qcm? && @card.qcm_choices.present? ? :qcm : :flip
       else
-        redirect_to memos_path, notice: "Bravo, tu as terminé toutes les cards."
+        redirect_to (@memo ? memo_path(@memo) : memos_path), notice: "Bravo, tu as terminé toutes les cards."
       end
     end
   end
@@ -44,7 +44,7 @@ class PlaysController < ApplicationController
     if next_card
       redirect_to play_path(next_card)
     else
-      redirect_to memos_path, notice: "Bravo, tu as terminé toutes les cards."
+      redirect_to (@memo ? memo_path(@memo) : memos_path), notice: "Bravo, tu as terminé toutes les cards."
     end
   end
 
@@ -62,7 +62,7 @@ class PlaysController < ApplicationController
     elsif next_card
       redirect_to play_path(next_card)
     else
-      redirect_to memos_path, notice: "Bravo, tu as terminé toutes les cards."
+      redirect_to (@memo ? memo_path(@memo) : memos_path), notice: "Bravo, tu as terminé toutes les cards."
     end
   end
 
@@ -100,8 +100,8 @@ class PlaysController < ApplicationController
 
     # Build a per-user score map once to avoid SQL joins on other users' answers.
     answers_by_card_id = current_user.answers
-                                     .where(card_id: study_cards.map(&:id))
-                                     .index_by(&:card_id)
+                                    .where(card_id: study_cards.map(&:id))
+                                    .index_by(&:card_id)
 
     # Select next card based on spaced repetition strategy.
     sorted_by_score = study_cards.sort_by { |card| answers_by_card_id[card.id]&.score || 0.5 }

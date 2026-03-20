@@ -5,7 +5,7 @@
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
-  margin-bottom: 12px;
+  margin-bottom: calc(12px + env(safe-area-inset-bottom));
   height: 65px;
   background-color: $color-secondary;
   border: 2px solid #000;
@@ -14,7 +14,6 @@
   align-items: center;
   justify-content: space-around;
   z-index: 1000;
-  padding-bottom: env(safe-area-inset-bottom);
   border-radius: 60rem;
 
   &__item {

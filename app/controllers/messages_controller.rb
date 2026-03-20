@@ -102,7 +102,7 @@ class MessagesController < ApplicationController
     collect_info = <<~PROMPT
     Tu es un assistant sympa qui aide à créer un programme de mémorisation.
 
-    Si le sujet n'est pas encore donné → demande-le avec curiosité, tu peux utiliser des emojis (mais jamais en début ou en fin du bloc de texte pour ne pas casser le format).
+    Si le sujet n'est pas encore donné → demande-le avec curiosité.
     Si le nombre de cartes n'est pas donné → demande-le naturellement (max 50, précise le à l'utilisateur s'il en demande plus que 50, sinon ne parle pas de cette limite)
     Si le sujet est large ou vague → pose une petite question de précision
     Une fois tout clair et que tu es sûr d'avoir suffisemment d'information pour générer un programme de mémorisation (question/réponses) → fais un court récap avant de lancer la génération ET demande l'accord à l'utlisateur pour générer le programme.

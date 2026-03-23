@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 gem "faker"
-gem "ruby_llm", "~> 1.13.2"
+gem "ruby_llm", "~> 1.14.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.1.2"
